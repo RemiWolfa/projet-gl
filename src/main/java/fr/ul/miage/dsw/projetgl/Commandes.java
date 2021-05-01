@@ -1,7 +1,15 @@
 public class Commandes{
   
+  while ((line = br.readLine()) != null) {
+    System.out.println(line);
+  }
   
-  public class connexion{
+  public void parser(String cmd){
+    
+  }
+    
+  
+  public class Connexion{
     private final int id;
   }
   
