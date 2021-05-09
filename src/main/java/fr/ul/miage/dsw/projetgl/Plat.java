@@ -3,7 +3,7 @@ package fr.ul.miage.dsw.projetgl;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Plat {
+public class Plat extends Item{
 
 	private String nom;
 	private Categorie categorie;

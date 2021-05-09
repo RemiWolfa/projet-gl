@@ -2,6 +2,6 @@ package fr.ul.miage.dsw.projetgl;
 
 public enum EtatReservation {
 	
-	reservé, libre;
+	enAttente, entrée, principal, dessert,terminée ;
 
 }

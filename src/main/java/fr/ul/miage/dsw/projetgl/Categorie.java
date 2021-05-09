@@ -5,15 +5,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-public class Categorie implements List<item> {
+public class Categorie extends Item {
 
 	private String nom;
-
+	private List<Item> cat;
 	// categorieMere:
 	private Categorie categorieMere;
 
-	public List<item> getContent() {
-		return categorieMere;
+	public List<Categorie> getContent() {
+		return null;
 	}
 
 	public int size() {
@@ -47,7 +47,7 @@ public class Categorie implements List<item> {
 		return false;
 	}
 
-	public Iterator<item> iterator() {
+	public Iterator<Item> iterator() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -62,7 +62,7 @@ public class Categorie implements List<item> {
 		return null;
 	}
 
-	public boolean add(item e) {
+	public boolean add(Item e) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -77,12 +77,12 @@ public class Categorie implements List<item> {
 		return false;
 	}
 
-	public boolean addAll(Collection<? extends item> c) {
+	public boolean addAll(Collection<? extends Item> c) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	public boolean addAll(int index, Collection<? extends item> c) {
+	public boolean addAll(int index, Collection<? extends Item> c) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -102,22 +102,22 @@ public class Categorie implements List<item> {
 
 	}
 
-	public item get(int index) {
+	public Item get(int index) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public item set(int index, item element) {
+	public Item set(int index, Item element) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public void add(int index, item element) {
+	public void add(int index, Item element) {
 		// TODO Auto-generated method stub
 
 	}
 
-	public item remove(int index) {
+	public Item remove(int index) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -132,17 +132,17 @@ public class Categorie implements List<item> {
 		return 0;
 	}
 
-	public ListIterator<item> listIterator() {
+	public ListIterator<Item> listIterator() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public ListIterator<item> listIterator(int index) {
+	public ListIterator<Item> listIterator(int index) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public List<item> subList(int fromIndex, int toIndex) {
+	public List<Item> subList(int fromIndex, int toIndex) {
 		// TODO Auto-generated method stub
 		return null;
 	}
