@@ -3,4 +3,12 @@
   <groupId>fr.ul.miage.dsw</groupId>
   <artifactId>projet-gl</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  
+  <dependencies>
+   <dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongodb-driver-sync</artifactId>
+			<version>4.2.2</version>
+		</dependency>
+  </dependencies>
 </project>
