@@ -14,12 +14,12 @@ public class Stock {
 	public void incrementerStock(MatierePremiere mp) {
 		
 		//listStock.add();
-		stock++;
+		//stock++;
 	}
 	
 	public void decrementerStock() {
 		
-		stock--;
+		//stock--;
 	}
 	
 	public List<Stock> chargerStock(){

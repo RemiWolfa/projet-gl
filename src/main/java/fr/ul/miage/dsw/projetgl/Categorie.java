@@ -7,10 +7,17 @@ import java.util.ListIterator;
 
 public class Categorie extends Item {
 
-	private String nom;
 	private List<Item> cat;
+	private String nom;
 	// categorieMere:
 	private Categorie categorieMere;
+
+	
+	
+	public Categorie(String nom) {
+		// TODO Auto-generated constructor stub
+		this.nom = nom;
+	}
 
 	public List<Categorie> getContent() {
 		return null;

@@ -15,13 +15,13 @@ public class Commande {
 	public Utilisateur user;
 	public Table table;
 	
-	//type commande plutôt (à la place de boolean)
+	//type commande plutot (Ã  la place de boolean)
 	public Commande saisirCommande(Plat[] plats, Table table) {
-		Commande cmd = new Commande();
-		// jr vais ecraser la liste des plats qu'on a déjà ?
-		cmd.plats = plats;
-		cmd.table = table;
-		return cmd;
+//		Commande cmd = new Commande();
+//		// jr vais ecraser la liste des plats qu'on a dï¿½jï¿½ ?
+//		cmd.plats = plats;
+//		cmd.table = table;
+		return null;
 		
 	}
 	 public List<Commande> listerCommandes(){
@@ -40,7 +40,7 @@ public class Commande {
 	 
 	 public List<Commande> AfficherCommandesPretes() {
 		 List<Commande> listCommande = new ArrayList<>();
-		 if(this.etatCommande == EtatCommande.prête) {
+		 if(this.etatCommande == null) {
 			 listCommande.add(null);
 		 }
 		 return listCommande;

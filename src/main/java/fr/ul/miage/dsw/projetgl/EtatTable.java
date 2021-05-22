@@ -1,6 +1,6 @@
 package fr.ul.miage.dsw.projetgl;
 
 public enum EtatTable {
-	sale, propre, occupée;
+	sale, propre, occupee;
 
 }
