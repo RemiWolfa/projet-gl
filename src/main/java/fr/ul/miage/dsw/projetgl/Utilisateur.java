@@ -1,15 +1,17 @@
 package fr.ul.miage.dsw.projetgl;
 
+import fr.ul.miage.dsw.projetgl.database.UserCollection;
+
 public class Utilisateur {
 	
-	public int num;
 	public Type typeUser;
-	public int getNum() {
-		return num;
+	public String identifiant;
+	
+	public Utilisateur(String identifiant, Type typeUser) {
+		this.typeUser = typeUser;
+		this.identifiant = identifiant;
 	}
-	public void setNum(int num) {
-		this.num = num;
-	}
+	
 	public Type getTypeUser() {
 		return typeUser;
 	}
@@ -21,6 +23,10 @@ public class Utilisateur {
 	public Utilisateur connexion(int identifiant) {
 		return null;
 		
+	}
+	
+	public boolean save() {
+		return UserCollection.save(this);
 	}
 
 }

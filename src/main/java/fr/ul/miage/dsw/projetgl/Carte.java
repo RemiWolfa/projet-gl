@@ -1,18 +1,28 @@
 package fr.ul.miage.dsw.projetgl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import fr.ul.miage.dsw.projetgl.database.CarteCollection;
+import fr.ul.miage.dsw.projetgl.database.PlatCollection;
+
 public class Carte {
-	
+
 	public Date dateCarte;
-	public List<Plat> plats;
-	
-	
-	
-	
-	
-	
+	public ArrayList<Plat> plats;
+
+	public Carte() {
+		this(new Date());
+	}
+
+	public Carte(Date date) {
+		this.dateCarte = Tools.skipTime(date);
+	}
+
+
 	public Date getDateCarte() {
 		return dateCarte;
 	}
@@ -25,15 +35,14 @@ public class Carte {
 		return plats;
 	}
 
-	public void setPlats(List<Plat> plats) {
-		this.plats = plats;
-	}
-
 	@Override
 	public String toString() {
 		return "Carte [dateCarte=" + dateCarte + ", plats=" + plats + "]";
 	}
-	
-	
+
+	public boolean save() {
+		return CarteCollection.save(this);
+	}
+
 
 }

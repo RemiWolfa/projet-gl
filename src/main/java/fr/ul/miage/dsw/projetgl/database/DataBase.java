@@ -25,7 +25,14 @@ public class DataBase {
 
 		createCollectionsIfNotExist(database);
 		
-		TableCollection.collection = database.getCollection("tables");
+		TableCollection.collection = database.getCollection("Tables");
+		UserCollection.collection= database.getCollection("Utilisateurs"); 
+		ReservationCollection.collection = database.getCollection("Reservations");
+		EtageCollection.collection = database.getCollection("Etages");
+		CarteCollection.collection = database.getCollection("Cartes");
+		PlatCollection.collection = database.getCollection("Plats");
+		MatierePremiereCollection.collection = database.getCollection("MatierePremieres");
+		CategorieCollection.collection = database.getCollection("Categories");
 	}
 
 	private static void createCollectionsIfNotExist(MongoDatabase database) {
