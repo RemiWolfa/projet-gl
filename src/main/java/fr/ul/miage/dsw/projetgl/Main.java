@@ -1,4 +1,4 @@
-package genie;
+package fr.ul.miage.dsw.projetgl;
 
 import java.util.Scanner;
 
