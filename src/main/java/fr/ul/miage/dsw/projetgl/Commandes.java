@@ -1,14 +1,8 @@
 public class Commandes{
   
-  private String commande ="";
-  
-  while ((line = br.readLine()) != null) {
-    System.out.println(line);
-  }
-  
   public void parser(String cmd){
-    
-     String[] split = cmd.toLowerCase().split("-"); 
+		  
+		  String[] split = cmd.toLowerCase().split("-"); 
 		  
 		  String[] spl;
 		  HashMap<String, String> map = new HashMap<String, String>();
@@ -19,13 +13,13 @@ public class Commandes{
 				  spl[0] = spl[0].replaceAll(" ", "");
 				  spl[1] = spl[1].replaceAll(" ", "");
 				  map.put(spl[0], spl[1]);
+				  System.out.println(split[i]);
 			  
 		  }
 		  
-		  for( String str : split) {
 			  
 			  try {
-				 switch(str) {
+				 switch(split[0].replaceAll(" ", "")) {
 				 case "connexion" :
 					 
 				 case "deconnexion" :
@@ -47,10 +41,9 @@ public class Commandes{
 			     
 				 }
 			  }
-			  catch() {
+			  catch(Exception e) {
 				  
 			  }
-		  }
 	    
 	  }
     
