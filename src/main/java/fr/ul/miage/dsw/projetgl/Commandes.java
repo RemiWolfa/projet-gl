@@ -21,24 +21,35 @@ public class Commandes{
 			  try {
 				 switch(split[0].replaceAll(" ", "")) {
 				 case "connexion" :
+					 int id = Integer.parseInt(map.get("id"));
+					// connexion(id);
+					 System.out.println(id);
 					 
 				 case "deconnexion" :
 				 case "inscription" :
+					 String nomUser = map.get("nomUser");
+					 String mdp = map.get("mdp");
+					 String mail = map.get("mail");
+					 
 				 case "affichercommande" :
+					 int numero = Integer.parseInt(map.get("numero"));
 				 case "prevenircommande" :
+					 int num = Integer.parseInt(map.get("numero"));
 				 case "commandetable" :
 				 case "visualisercommande" :
 				 case "transmettrecommande" :
 				 case "afficherplatrentables" :
 				 case "consulteraffectationserveur" :
 				 case "modifierraffectationserveur" :
+					 int numeroServeur = Integer.parseInt(map.get("numeroServeur"));
+					 int numeroTable = Integer.parseInt(map.get("numeroTable"));
 				 case "tablesdispo" :
 				 case "tauxrotation" :
 				 case "profitservice" :
 				 case "stock" :
 				 case "voirfactures" :
 				 case "creeremploi" :
-			     
+					 String emploi = map.get("emploi");
 				 }
 			  }
 			  catch(Exception e) {
