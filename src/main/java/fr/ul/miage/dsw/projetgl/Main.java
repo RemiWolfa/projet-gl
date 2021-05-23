@@ -1,9 +1,11 @@
 package fr.ul.miage.dsw.projetgl;
 
+
 import java.util.ArrayList;
 import java.util.Date;
 
 import fr.ul.miage.dsw.projetgl.database.DataBase;
+
 
 public class Main {
 	
@@ -70,4 +72,16 @@ public class Main {
 			System.out.println("Utilisateur de type:"+Utilisateur.connectedUser.typeUser);
 	}
 
-}
+	 //public static void main(String[] args) {
+	   /*   Scanner scanner = new Scanner( System.in);
+	     
+	      while(true){
+	        System.out.print( "Bonjour ! Que souhaitez vous faire ? \n" );
+	        String  line = scanner.nextLine();
+	        Commandes cmd = new Commandes();
+	        cmd.parser(line);
+	      }   
+	            
+	     }
+	  */
+	}
