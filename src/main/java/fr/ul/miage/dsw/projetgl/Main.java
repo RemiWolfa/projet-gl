@@ -13,7 +13,9 @@ public class Main {
 		new Table(1).save();
 		Serveur serveur = new Serveur("0001");
 		serveur.affecterTable(new Table(1));
-		System.out.println(""+serveur.save());
+		System.out.println("création d'un utilisateur:"+serveur.save());
+		
+		Utilisateur.connexion("0001"); 
 		
 		Reservation reservation = new Reservation();
 		reservation.numReservation = 0;
@@ -62,6 +64,10 @@ public class Main {
 		categorie.add(new Plat("steak"));
 		categorie.add(new Categorie("viande blanche"));
 		categorie.save();
+		
+		System.out.println("connection:"+Utilisateur.connexion("0001"));
+		if(Utilisateur.connectedUser != null)
+			System.out.println("Utilisateur de type:"+Utilisateur.connectedUser.typeUser);
 	}
 
 }

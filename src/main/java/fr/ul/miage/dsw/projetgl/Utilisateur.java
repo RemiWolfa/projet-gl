@@ -4,6 +4,8 @@ import fr.ul.miage.dsw.projetgl.database.UserCollection;
 
 public class Utilisateur {
 	
+	public static Utilisateur connectedUser;
+	
 	public Type typeUser;
 	public String identifiant;
 	
@@ -12,6 +14,11 @@ public class Utilisateur {
 		this.identifiant = identifiant;
 	}
 	
+	public Utilisateur(String identifiant, String typeString) {
+		this.identifiant = identifiant;
+		this.typeUser = Type.valueOf(typeString);
+	}
+
 	public Type getTypeUser() {
 		return typeUser;
 	}
@@ -20,8 +27,10 @@ public class Utilisateur {
 	}
 	
 	//la fonction de connexion
-	public Utilisateur connexion(int identifiant) {
-		return null;
+	public static boolean connexion(String identifiant) {
+		Utilisateur.connectedUser  = UserCollection.getUser(identifiant);
+		return Utilisateur.connectedUser != null;
+			
 		
 	}
 	

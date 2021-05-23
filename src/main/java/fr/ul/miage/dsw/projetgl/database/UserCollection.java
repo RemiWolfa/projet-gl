@@ -42,5 +42,19 @@ public static MongoCollection<Document> collection;
 		
 	}
 	
+	public static Utilisateur getUser(String identifiant) {
+		Document doc = UserCollection.collection.find(new Document("Identifiant", identifiant)).first();
+		if(doc != null) {
+			Utilisateur user;
+			if(doc.getString("Type").equalsIgnoreCase("serveur")) {
+				user = new Serveur(identifiant);
+			}else {
+				user = new Utilisateur(identifiant, doc.getString("Type"));
+			}
+			return user;
+		}
+		return null;
+	}
+	
 
 }
