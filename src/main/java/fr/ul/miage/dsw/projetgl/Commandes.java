@@ -124,7 +124,6 @@ public class Commandes{
 			 }
 			 catch(IncorrectParam e) {
 				 System.out.println(e.getMessage());
-				 e.printStackTrace();
 			  }
 			 
 	  }
