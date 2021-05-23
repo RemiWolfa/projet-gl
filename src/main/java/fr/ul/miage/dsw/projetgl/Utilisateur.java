@@ -18,7 +18,8 @@ public class Utilisateur {
 		this.identifiant = identifiant;
 		this.typeUser = Type.valueOf(typeString);
 	}
-	
+
+
 	//la fonction de connexion
 	public static boolean connexion(String identifiant) {
 		Utilisateur.connectedUser  = UserCollection.getUser(identifiant);

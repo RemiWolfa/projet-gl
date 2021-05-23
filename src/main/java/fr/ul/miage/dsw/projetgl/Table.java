@@ -14,6 +14,10 @@ public class Table {
 		this.etage = 0;//TOFIX
 	}
 	
+	public Table() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public void save() {
 		TableCollection.save(this);
 	}

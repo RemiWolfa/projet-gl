@@ -24,12 +24,10 @@ public class CommandeTest {
 		Commande cmd = new Commande();
 		cmd = cmd.saisirCommande(plats,t);	
 
-		assertAll(() -> assertEquals(plat1.getNom(), Plat.getNom(), () ->  plat1.getNom()),
-				() -> assertEquals(plat2.getNom(), Plat.getNom(), () ->  plat2.getNom()));
-		
-//		assertEquals(t.getNum(),Table.num);
-//		assertEquals(plat1.getNom(), Plat.getNom());
-//		assertEquals(plat2.getNom(), Plat.getNom());
+		Plat plat = new Plat();
+		assertAll(() -> assertEquals(plat1.nom, plat.nom, () ->  plat1.nom),
+				() -> assertEquals(plat2.nom, plat.nom, () ->  plat2.nom));
+
 	}
 	
 	@Test
@@ -40,10 +38,10 @@ public class CommandeTest {
 		plats[0] = plat1;
 		plats[1] = plat2;
 		Table t = new Table(5);
-		
+		Table table = new Table();
 		Commande cmd = new Commande();
 		cmd = cmd.saisirCommande(plats,t);	
-		assertEquals(t.getNum(),Table.num);
+		assertEquals(t.num,table.num);
 	}
 	
 	

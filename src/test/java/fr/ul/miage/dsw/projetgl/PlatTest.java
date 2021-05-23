@@ -21,9 +21,9 @@ public class PlatTest {
 		Plat p2 = new Plat("Hamburger");
 		Plat p3 = new Plat("Lasagnes");
 
-		p1.setCategorie(cat1);
-		p2.setCategorie(cat2);
-		p3.setCategorie(cat2);
+		p1.categorie = cat1;
+		p2.categorie = cat2;
+		p3.categorie = cat2;
 		
 		List<Plat> resultatAttendue = new ArrayList<>();
 		resultatAttendue.add(p2);
