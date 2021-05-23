@@ -1,26 +1,30 @@
 package fr.ul.miage.dsw.projetgl;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import fr.ul.miage.dsw.projetgl.database.CategorieCollection;
+
 public class Categorie extends Item {
 
-	private List<Item> cat;
-	private String nom;
+	public List<Item> categories; //fils
+	public String nom;
 	// categorieMere:
-	private Categorie categorieMere;
+	public Categorie categorieMere;
 
 	
 	
 	public Categorie(String nom) {
-		// TODO Auto-generated constructor stub
 		this.nom = nom;
+		this.categories = new ArrayList<Item>();
 	}
-
-	public List<Categorie> getContent() {
-		return null;
+	
+	public boolean add(Item item) {
+		this.categories.add(item);
+		return true;
 	}
 
 	public int size() {
@@ -31,22 +35,6 @@ public class Categorie extends Item {
 	public boolean isEmpty() {
 		// TODO Auto-generated method stub
 		return false;
-	}
-
-	public String getNom() {
-		return nom;
-	}
-
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
-
-	public Categorie getCategorieMere() {
-		return categorieMere;
-	}
-
-	public void setCategorieMere(Categorie categorieMere) {
-		this.categorieMere = categorieMere;
 	}
 
 	public boolean contains(Object o) {
@@ -69,10 +57,7 @@ public class Categorie extends Item {
 		return null;
 	}
 
-	public boolean add(Item e) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	
 
 	public boolean remove(Object o) {
 		// TODO Auto-generated method stub
@@ -152,6 +137,10 @@ public class Categorie extends Item {
 	public List<Item> subList(int fromIndex, int toIndex) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public boolean save() {
+		return CategorieCollection.save(this);
 	}
 
 }

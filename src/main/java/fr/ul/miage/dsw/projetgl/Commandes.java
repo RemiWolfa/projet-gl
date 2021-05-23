@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 package fr.ul.miage.dsw.projetgl;
 
+=======
+/*import java.util.Date;
+>>>>>>> origin/master
 
 public class Commandes{
   
@@ -81,4 +85,4 @@ public class Commandes{
 
   }
   
-}
+}*/

@@ -1,26 +1,34 @@
 package fr.ul.miage.dsw.projetgl;
 
+import fr.ul.miage.dsw.projetgl.database.UserCollection;
+
 public class Utilisateur {
 	
-	public int num;
+	public static Utilisateur connectedUser;
+	
 	public Type typeUser;
-	public int getNum() {
-		return num;
-	}
-	public void setNum(int num) {
-		this.num = num;
-	}
-	public Type getTypeUser() {
-		return typeUser;
-	}
-	public void setTypeUser(Type typeUser) {
+	public String identifiant;
+	
+	public Utilisateur(String identifiant, Type typeUser) {
 		this.typeUser = typeUser;
+		this.identifiant = identifiant;
+	}
+	
+	public Utilisateur(String identifiant, String typeString) {
+		this.identifiant = identifiant;
+		this.typeUser = Type.valueOf(typeString);
 	}
 	
 	//la fonction de connexion
-	public Utilisateur connexion(int identifiant) {
-		return null;
+	public static boolean connexion(String identifiant) {
+		Utilisateur.connectedUser  = UserCollection.getUser(identifiant);
+		return Utilisateur.connectedUser != null;
+			
 		
+	}
+	
+	public boolean save() {
+		return UserCollection.save(this);
 	}
 
 }

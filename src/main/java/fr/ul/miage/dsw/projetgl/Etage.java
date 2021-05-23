@@ -1,44 +1,32 @@
 package fr.ul.miage.dsw.projetgl;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
+
+import fr.ul.miage.dsw.projetgl.database.EtageCollection;
 
 public class Etage {
 
 	public int numEtage;
-	public Table[] tables;
+	public List<Table> tables;
 	
-	
-	public Table[] listerTables(EtatTable etatTable) {
-		
-		return tables;
-		
+	public Etage() {
+		this.tables = new ArrayList<Table>();
 	}
 	
-	public Table[] listerTables(EtatReservation etatReservation) {
-		
-		return tables;
-		
+	public Etage(int num) {
+		this();
+		this.numEtage = num;
 	}
 
-	@Override
-	public String toString() {
-		return "Etage [numEtage=" + numEtage + ", tables=" + Arrays.toString(tables) + "]";
+
+	public void addTable(Table table) {
+		this.tables.add(table);
+	}
+	
+	public boolean save() {
+		return EtageCollection.save(this);
 	}
 
-	public int getNumEtage() {
-		return numEtage;
-	}
-
-	public void setNumEtage(int numEtage) {
-		this.numEtage = numEtage;
-	}
-
-	public Table[] getTables() {
-		return tables;
-	}
-
-	public void setTables(Table[] tables) {
-		this.tables = tables;
-	}
 	
 }
