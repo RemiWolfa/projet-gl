@@ -15,35 +15,17 @@ public class Plat extends Item{
 		this.nom = nom;
 	}
 	public Plat() {
-		// TODO Auto-generated constructor stub
 	}
 	
-	public List<Plat> trouverPlat(String nom){
-//		List<Plat> lp = new ArrayList<Plat>();
-//		while(this.nom == nom) {
-//			// ins�rer dans la liste
-//		}
+	public Plat trouverPlat(String nom){
 		return null;
 	}
 	
-	public List<Plat> trouverPlat(Categorie categorie){
-		
-//		List<Plat> lp = new ArrayList<Plat>();
-//		while(this.categorie == categorie) {
-			// ins�rer dans le plat
-			
-			//lp.add();
-	//}
-		return null;
-
-		
+	public static List<Plat> trouverPlat(Categorie categorie){
+		return null;	
 	}
 	
 	public Plat definirPlat(List<MatierePremiere> mp, String nom, Categorie categorie) {
-//		Plat p = new Plat();
-//		p.nom = nom;
-//		p.categorie = categorie;
-//		p.matierePremiere = mp;
 		return null;
 	}
 	

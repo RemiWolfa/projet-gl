@@ -1,8 +1,11 @@
+package fr.ul.miage.dsw.projetgl;
+
+
 public class Commandes{
   
   
   public class connexion{
-    private final int id;
+    private final int id = 0;
   }
   
   

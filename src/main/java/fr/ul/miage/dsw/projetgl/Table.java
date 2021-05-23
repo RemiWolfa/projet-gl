@@ -7,12 +7,12 @@ public class Table {
 		this.num = num;
 	}
 
-	public static int getNum() {
+	public int getNum() {
 		return num;
 	}
 
 	public void setNum(int num) {
 		this.num = num;
 	}
-
+	
 }

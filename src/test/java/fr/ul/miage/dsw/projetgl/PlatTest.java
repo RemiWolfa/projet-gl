@@ -6,12 +6,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class PlatTest {
 	
 	@Test
-	public void trouverPlatTest() {
+	@DisplayName("Vérification catégories")
+	
+	public void assertEqualsCategoriePlats() {
 		Categorie cat1 = new Categorie("Poisson");
 		Categorie cat2 = new Categorie("Viande");
 		Plat p1 = new Plat("pizza fruit de mer");
@@ -28,12 +31,9 @@ public class PlatTest {
 
 		
 		List<Plat> resultatObtenue = new ArrayList<>();
-		resultatObtenue = p1.trouverPlat(cat2);
+		resultatObtenue = Plat.trouverPlat(cat2);
 		
 		assertEquals(resultatAttendue,resultatObtenue);
-//		assertTrue(resultatObtenue.contains(p1));	
-//		assertTrue(resultatObtenue.contains(p2));
-//		assertTrue(resultatObtenue.contains(p3));
 
 	}
 	

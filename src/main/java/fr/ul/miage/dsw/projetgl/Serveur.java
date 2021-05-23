@@ -35,7 +35,7 @@ public class Serveur extends Utilisateur{
 		
 	}
 	
-	public Boolean affecterTable(Table table) {
+	public static Boolean affecterTable(Table table) {
 		return false;
 		//
 	}
