@@ -10,7 +10,6 @@ public class MatierePremiere {
 
 	public MatierePremiere(String nom) {
 		this.nom = nom;
-		// TODO Auto-generated constructor stub
 	}
 	
 	public boolean save() {

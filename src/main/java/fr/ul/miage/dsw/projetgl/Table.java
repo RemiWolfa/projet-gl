@@ -13,14 +13,6 @@ public class Table {
 		this.etat = "Tempo";//TOFIX
 		this.etage = 0;//TOFIX
 	}
-
-	public int getNum() {
-		return num;
-	}
-
-	public void setNum(int num) {
-		this.num = num;
-	}
 	
 	public void save() {
 		TableCollection.save(this);

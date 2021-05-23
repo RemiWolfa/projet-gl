@@ -13,7 +13,7 @@ public class Categorie extends Item {
 	public List<Item> categories; //fils
 	public String nom;
 	// categorieMere:
-	private Categorie categorieMere;
+	public Categorie categorieMere;
 
 	
 	
@@ -27,10 +27,6 @@ public class Categorie extends Item {
 		return true;
 	}
 
-	public List<Categorie> getContent() {
-		return null;
-	}
-
 	public int size() {
 		// TODO Auto-generated method stub
 		return 0;
@@ -39,22 +35,6 @@ public class Categorie extends Item {
 	public boolean isEmpty() {
 		// TODO Auto-generated method stub
 		return false;
-	}
-
-	public String getNom() {
-		return nom;
-	}
-
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
-
-	public Categorie getCategorieMere() {
-		return categorieMere;
-	}
-
-	public void setCategorieMere(Categorie categorieMere) {
-		this.categorieMere = categorieMere;
 	}
 
 	public boolean contains(Object o) {

@@ -3,18 +3,22 @@ package fr.ul.miage.dsw.projetgl;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class ServeurTest {
 	
 	@Test
-	public void affecterTableTest() {
+	@DisplayName("Vérifier si la table se trouve dans la base")
+	public void assertTableTrue() {
 		Table t1 = new Table(10);
-		Table t2 = new Table(300);
-		Serveur serveur = new Serveur();
 		
-		assertTrue(serveur.affecterTable(t1));
-		assertFalse(serveur.affecterTable(t2));
+		assertTrue(Serveur.affecterTable(t1));
+	}
+	
+	public void assertTableFalse() {
+		Table t2 = new Table(-1);			
+		assertFalse(Serveur.affecterTable(t2));
 	}
 
 }

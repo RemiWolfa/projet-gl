@@ -8,18 +8,13 @@ public class Commande {
 	
 	public int num;
 	public Date date;
-	public ArrayList<Plat> plats;
+	public List<Plat> plats;
 	public EtatCommande etatCommande;
-	// pk stocker user ici ?
 	public Utilisateur user;
 	public Table table;
 	
 	//type commande plutot (à la place de boolean)
 	public Commande saisirCommande(Plat[] plats, Table table) {
-//		Commande cmd = new Commande();
-//		// jr vais ecraser la liste des plats qu'on a d�j� ?
-//		cmd.plats = plats;
-//		cmd.table = table;
 		return null;
 		
 	}
@@ -28,7 +23,6 @@ public class Commande {
 		return null;
 	 }
 
-	 //envoyer()
 	 public void passerCommande() {
 		 
 	 }

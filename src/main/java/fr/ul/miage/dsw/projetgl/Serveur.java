@@ -7,6 +7,7 @@ public class Serveur extends Utilisateur{
 	
 	public List<Table> tables;
 
+	
 	public Serveur(String identifiant) {
 		super(identifiant, Type.serveur);
 		// TODO Auto-generated constructor stub
@@ -19,14 +20,6 @@ public class Serveur extends Utilisateur{
 	}
 
 	
-
-	public List<Table> getTable() {
-		return tables;
-	}
-
-	public void setTable(List<Table> table) {
-		this.tables = table;
-	}
 	
 	public List<Table> getTable(int numEtage) {
 		
