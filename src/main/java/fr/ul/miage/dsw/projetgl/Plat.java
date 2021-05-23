@@ -3,19 +3,22 @@ package fr.ul.miage.dsw.projetgl;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.ul.miage.dsw.projetgl.database.PlatCollection;
+
 public class Plat extends Item{
 
 	
-	private static String nom;
-	private Categorie categorie;
-	private List<MatierePremiere> matierePremiere;
+	public String nom;
+	public Categorie categorie;
+	public List<MatierePremiere> matierePremiere;
 	
 	
 	public Plat(String nom){
+		this();
 		this.nom = nom;
 	}
 	public Plat() {
-		// TODO Auto-generated constructor stub
+		this.matierePremiere = new ArrayList<MatierePremiere>();
 	}
 	
 	public List<Plat> trouverPlat(String nom){
@@ -48,7 +51,7 @@ public class Plat extends Item{
 	}
 	
 	
-	public static String getNom() {
+	public String getNom() {
 		return nom;
 	}
 	public void setNom(String nom) {
@@ -67,7 +70,9 @@ public class Plat extends Item{
 		this.matierePremiere = matierePremiere;
 	}
 	
-	
+	public boolean save() {
+		return PlatCollection.save(this);
+	}
 
 	
 }

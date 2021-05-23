@@ -7,9 +7,8 @@ import java.util.Date;
 public class Commande {
 	
 	public int num;
-	public Date dateDebut;
-	public Date dateFin;
-	public Plat[] plats;
+	public Date date;
+	public ArrayList<Plat> plats;
 	public EtatCommande etatCommande;
 	// pk stocker user ici ?
 	public Utilisateur user;

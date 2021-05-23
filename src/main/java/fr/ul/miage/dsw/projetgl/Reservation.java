@@ -3,13 +3,17 @@ package fr.ul.miage.dsw.projetgl;
 import java.util.Date;
 import java.util.List;
 
+import fr.ul.miage.dsw.projetgl.database.ReservationCollection;
+
 public class Reservation {
+	
 	public int numReservation;
 	public Date dateArrivee;
 	public Date dateDepart;
 	public List<Commande> commandes;
 	public Table table;
 	public EtatReservation etatReservation;
+	
 	public int getNumReservation() {
 		return numReservation;
 	}
@@ -45,6 +49,10 @@ public class Reservation {
 	}
 	public void setEtatReservation(EtatReservation etatReservation) {
 		this.etatReservation = etatReservation;
+	}
+	
+	public boolean save() {
+		return ReservationCollection.save(this);
 	}
 	
 	
