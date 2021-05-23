@@ -47,6 +47,7 @@ public class Commandes{
 					 if(co.checkParamConnexion(id)) {
 						 
 					 }
+					 break;
 					 
 				 case "deconnexion" :
 				 case "inscription" :
@@ -57,6 +58,7 @@ public class Commandes{
 					 if(ins.checkParamInscription(nomUser, mdp, mail)) {
 						 
 					 }
+					  break;
 					 
 				 case "affichercommande" :
 					 String numero = map.get("numero");
@@ -69,7 +71,8 @@ public class Commandes{
 					 PrevenirCommande pc = new PrevenirCommande();
 					 if(pc.checkParamCommande(num)) {
 						 
-					 };
+					 }
+					  break;
 					
 				 case "commandetable" :
 					 num= map.get("numero");
@@ -79,13 +82,15 @@ public class Commandes{
 					 CommandeTable ct = new CommandeTable();
 					 if(ct.checkParamCommande(num, plat, idC)) {
 						 
-					 };
+					 }
+					  break;
 				 case "visualisercommande" :
 					 num = map.get("numero");
 					 VisualiserCommande vc = new VisualiserCommande();
 					 if(vc.checkParamCommande(num)) {
 						 
 					 }
+					  break;
 				 case "transmettrecommande" :
 					 
 					 num = map.get("numero");
@@ -93,6 +98,7 @@ public class Commandes{
 					 if(tm.checkParamCommande(num)){
 						 
 					 }
+					  break;
 					 
 				 case "afficherplatrentables" :
 				 case "consulteraffectationserveur" :
@@ -104,6 +110,7 @@ public class Commandes{
 					 if(mas.checkParamServeur(numeroServeur, numeroTable)) {
 						 
 					 }
+					  break;
 				 case "tablesdispo" :
 				 case "tauxrotation" :
 				 case "profitservice" :
@@ -112,6 +119,7 @@ public class Commandes{
 					 if(ps.checkDate(date)) {
 						 
 					 }
+					  break;
 				 case "stock" :
 				 case "voirfactures" :
 				 case "creeremploi" :
@@ -120,6 +128,7 @@ public class Commandes{
 					 if(ce.checkNomEmploi(nomEmploi)) {
 						 
 					 }
+					  break;
 				 }
 			 }
 			 catch(IncorrectParam e) {
