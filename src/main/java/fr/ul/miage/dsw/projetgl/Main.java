@@ -1,18 +1,19 @@
-package fr.ul.miage.dsw.projetgl;
+package genie;
+
+import java.util.Scanner;
 
 public class Main {
-  
-  
-  public static void main(String[] args) {
-      try ( Scanner scanner = new Scanner( System.in ) ) {
-     
-      while(true){
-        System.out.print( "Bonjour ! Que souhaitez vous faire ?" );
-        String  line = scanner.nextLine();
-        Commandes cmd = new Commandes();
-        cmd.parser("connexion -numServeur 3 -table 1");
-      }   
-            
-     }
-  }
-}
+
+	 public static void main(String[] args) {
+	      Scanner scanner = new Scanner( System.in);
+	     
+	      while(true){
+	        System.out.print( "Bonjour ! Que souhaitez vous faire ? \n" );
+	        String  line = scanner.nextLine();
+	        Commandes cmd = new Commandes();
+	        cmd.parser(line);
+	      }   
+	            
+	     }
+	  
+	}
