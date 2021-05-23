@@ -50,6 +50,7 @@ public class Commandes{
 					 break;
 					 
 				 case "deconnexion" :
+					 break;
 				 case "inscription" :
 					 String nomUser = map.get("nomuser");
 					 String mdp = map.get("mdp");
@@ -66,6 +67,7 @@ public class Commandes{
 					 if(ac.checkParamCommande(numero)) {
 						 
 					 }
+					 break;
 				 case "prevenircommande" :
 					 num = map.get("numero");
 					 PrevenirCommande pc = new PrevenirCommande();
@@ -101,7 +103,9 @@ public class Commandes{
 					  break;
 					 
 				 case "afficherplatrentables" :
+					 break;
 				 case "consulteraffectationserveur" :
+					 break;
 				 case "modifierraffectationserveur" :
 					 String numeroServeur = map.get("numeroServeur");
 					 String numeroTable = map.get("numeroTable");
@@ -112,7 +116,9 @@ public class Commandes{
 					 }
 					  break;
 				 case "tablesdispo" :
+					 break;
 				 case "tauxrotation" :
+					 break;
 				 case "profitservice" :
 					 String date = map.get("date");
 					 ProfitService ps = new ProfitService();
@@ -121,7 +127,9 @@ public class Commandes{
 					 }
 					  break;
 				 case "stock" :
+					 break;
 				 case "voirfactures" :
+					 break;
 				 case "creeremploi" :
 					 String nomEmploi = map.get("nomEmploi");
 					 CreerEmploi ce = new CreerEmploi();
