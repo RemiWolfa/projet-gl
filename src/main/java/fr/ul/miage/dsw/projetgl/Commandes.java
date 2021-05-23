@@ -34,13 +34,14 @@ public class Commandes{
 		  }
 		  
 		 
+			 try {
+
+			 String num;
 			  
-			  try {
-				 String num;
-				  
-				 switch(split[0].replaceAll(" ", "")) {
+			 switch(split[0].replaceAll(" ", "")) {
+				
 				 
-				 case "connexion" :
+			 case "connexion" :
 					 String id = map.get("id");
 					 Connexion co = new Connexion();
 					 if(co.checkParamConnexion(id)) {
@@ -53,7 +54,6 @@ public class Commandes{
 					 String mdp = map.get("mdp");
 					 String mail = map.get("mail");
 					 Inscription ins = new Inscription();
-					 System.out.println("here ");
 					 if(ins.checkParamInscription(nomUser, mdp, mail)) {
 						 
 					 }
@@ -121,16 +121,17 @@ public class Commandes{
 						 
 					 }
 				 }
+			 }
+			 catch(IncorrectParam e) {
+				 System.out.println(e.getMessage());
+				 e.printStackTrace();
 			  }
-			  catch(Exception e) {
-				  
-			  }
-	    
+			 
 	  }
 	  
 	  public class IncorrectParam extends Exception { 
 		  
-		    public IncorrectParam(String errorMessage) {
+		    public IncorrectParam(String errorMessage) { 
 		        super(errorMessage);
 		    }
 		}
@@ -173,7 +174,6 @@ public class Commandes{
             	throw new IncorrectParam("Format du mail incorrect : " + mail);
             }
 
-            System.out.println("sdcss");
             return true;
 	    	
 	    }
@@ -283,7 +283,7 @@ public class Commandes{
 
 	  }
 	  public class ProfitService {
-		String format = "yyyy-MM-dd'T'HH:mm";
+		String format = "yyyy/MM/dd";
 		
 		public Boolean checkDate(String date) throws IncorrectParam {
 			DateFormat sdf = new SimpleDateFormat(format);
