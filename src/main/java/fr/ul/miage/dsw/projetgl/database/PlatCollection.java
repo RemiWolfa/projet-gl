@@ -31,7 +31,7 @@ public class PlatCollection {
 		return PlatCollection.collection.countDocuments(new Document("Nom", plat.nom)) > 0;
 	}
 	
-	public static List<String> getPlatNames(ArrayList<Plat> plats) {
+	public static List<String> getPlatNames(List<Plat> plats) {
 		ArrayList<String> names = new ArrayList<String>();
 		for(Plat plat : plats) {
 			names.add(plat.nom);
