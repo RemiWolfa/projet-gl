@@ -1,10 +1,58 @@
 public class Commandes{
   
+  private String commande ="";
+  
   while ((line = br.readLine()) != null) {
     System.out.println(line);
   }
   
   public void parser(String cmd){
+    
+     String[] split = cmd.toLowerCase().split("-"); 
+		  
+		  String[] spl;
+		  HashMap<String, String> map = new HashMap<String, String>();
+		  for(int i=1; i<split.length;i++) {
+			  
+			  
+				  spl = split[i].split(" ");
+				  spl[0] = spl[0].replaceAll(" ", "");
+				  spl[1] = spl[1].replaceAll(" ", "");
+				  map.put(spl[0], spl[1]);
+			  
+		  }
+		  
+		  for( String str : split) {
+			  
+			  try {
+				 switch(str) {
+				 case "connexion" :
+					 
+				 case "deconnexion" :
+				 case "inscription" :
+				 case "affichercommande" :
+				 case "prevenircommande" :
+				 case "commandetable" :
+				 case "visualisercommande" :
+				 case "transmettrecommande" :
+				 case "afficherplatrentables" :
+				 case "consulteraffectationserveur" :
+				 case "modifierraffectationserveur" :
+				 case "tablesdispo" :
+				 case "tauxrotation" :
+				 case "profitservice" :
+				 case "stock" :
+				 case "voirfactures" :
+				 case "creeremploi" :
+			     
+				 }
+			  }
+			  catch() {
+				  
+			  }
+		  }
+	    
+	  }
     
   }
     
