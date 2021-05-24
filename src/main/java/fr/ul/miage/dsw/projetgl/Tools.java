@@ -1,8 +1,11 @@
 package fr.ul.miage.dsw.projetgl;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Scanner;
 
 import fr.ul.miage.dsw.projetgl.database.CarteCollection;
@@ -11,20 +14,22 @@ import fr.ul.miage.dsw.projetgl.database.PlatCollection;
 public class Tools {
 
 	public static Date skipTime(Date date) {
-
-		//FIXME ne retire pas le time
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-		cal.set(Calendar.HOUR_OF_DAY, 0);
-		cal.set(Calendar.MINUTE, 0);
-		cal.set(Calendar.SECOND, 0);
-		cal.set(Calendar.MILLISECOND, 0);
-		return cal.getTime();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String sDate= sdf.format(date);
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE);
+        Date date2;
+		try {
+			date2 = format.parse(sDate);
+			return date2;
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+        return date;
 	}
 
 	public static Plat readPlat() {
 		System.out.println("Rechercher plats dans : ");
-		System.out.println("1 . Catégorie");
+		System.out.println("1. Catégorie");
 		System.out.println("2. Carte du jour");
 		System.out.println("3. Par nom");
 		System.out.println("4. Terminer");
