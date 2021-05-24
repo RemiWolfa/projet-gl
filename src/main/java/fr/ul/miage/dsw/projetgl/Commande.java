@@ -3,6 +3,7 @@ package fr.ul.miage.dsw.projetgl;
 import java.util.List;
 
 import fr.ul.miage.dsw.projetgl.database.PlatCollection;
+import fr.ul.miage.dsw.projetgl.enumeration.EtatCommande;
 
 import java.util.ArrayList;
 import java.util.Date;

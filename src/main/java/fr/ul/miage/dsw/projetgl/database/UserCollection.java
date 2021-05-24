@@ -68,6 +68,7 @@ public static MongoCollection<Document> collection;
 		Utilisateur user;
 		if(doc.getString("Type").equalsIgnoreCase("serveur")) {
 			user = new Serveur(doc.getString("Identifiant"), doc.getString("Nom"));
+			((Serveur)user).tables = TableCollection.getTablesFromNumbers((ArrayList<Integer>) doc.get("Tables"));
 		}else {
 			user = new Utilisateur(doc.getString("Identifiant"), doc.getString("Nom"), doc.getString("Type"));
 		}

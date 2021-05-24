@@ -3,9 +3,9 @@ package fr.ul.miage.dsw.projetgl.dashboard;
 import java.util.ArrayList;
 
 import fr.ul.miage.dsw.projetgl.Tools;
-import fr.ul.miage.dsw.projetgl.TypeUtilisateur;
 import fr.ul.miage.dsw.projetgl.Utilisateur;
 import fr.ul.miage.dsw.projetgl.database.UserCollection;
+import fr.ul.miage.dsw.projetgl.enumeration.TypeUtilisateur;
 
 public class DirecteurDashBoard {
 
@@ -13,7 +13,7 @@ public class DirecteurDashBoard {
 		System.out.println("----------------");
 		System.out.println("1. Créer un utilisateur");
 		System.out.println("2. Modifier un utilisateur");
-		System.out.println("2. Quitter");
+		System.out.println("3. Quitter");
 
 		int i = Tools.getIntegerInput();
 		switch(i) {

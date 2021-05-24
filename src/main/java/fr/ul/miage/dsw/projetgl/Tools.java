@@ -5,8 +5,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.Scanner;
+
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
 
 import fr.ul.miage.dsw.projetgl.database.CarteCollection;
 import fr.ul.miage.dsw.projetgl.database.PlatCollection;
@@ -83,8 +86,29 @@ public class Tools {
 		return scan.nextLine();
 	}
 	
+	public static Date getDateInput() {//TODO ajouter des conditions
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Jour:");
+		int day = scan.nextInt();
+		
+		System.out.println("Mois:");
+		int month = scan.nextInt();
+		
+		System.out.println("Année:");
+		int year = scan.nextInt();
+		
+		System.out.println("Heure:");
+		int hour = scan.nextInt();
+
+		Date date = new GregorianCalendar(year, month - 1, day).getTime();
+		date.setHours(hour);
+		return date;
+	}
+	
 	public static void error(String error) {
 		System.out.println("Erreur : "+error);
 	}
+
+	
 
 }

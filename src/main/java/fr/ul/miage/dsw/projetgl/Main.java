@@ -5,8 +5,12 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import fr.ul.miage.dsw.projetgl.dashboard.DirecteurDashBoard;
+import fr.ul.miage.dsw.projetgl.dashboard.MaitreHotelDashBoard;
+import fr.ul.miage.dsw.projetgl.dashboard.ServeurDashBoard;
 import fr.ul.miage.dsw.projetgl.database.CarteCollection;
 import fr.ul.miage.dsw.projetgl.database.DataBase;
+import fr.ul.miage.dsw.projetgl.enumeration.EtatCommande;
+import fr.ul.miage.dsw.projetgl.enumeration.EtatReservation;
 
 
 public class Main {
@@ -66,7 +70,7 @@ public class Main {
 		if(Utilisateur.connectedUser != null)
 			System.out.println("Utilisateur de type:"+Utilisateur.connectedUser.typeUser);
 		
-		DirecteurDashBoard.readCommand();
+		ServeurDashBoard.readCommand();
 	}
 
 	 //public static void main(String[] args) {

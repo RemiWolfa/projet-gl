@@ -3,6 +3,10 @@ package fr.ul.miage.dsw.projetgl;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.ul.miage.dsw.projetgl.database.TableCollection;
+import fr.ul.miage.dsw.projetgl.enumeration.EtatReservation;
+import fr.ul.miage.dsw.projetgl.enumeration.TypeUtilisateur;
+
 public class Serveur extends Utilisateur{
 	
 	public List<Table> tables;
@@ -30,6 +34,11 @@ public class Serveur extends Utilisateur{
 		
 		return tables;
 		
+	}
+	
+	public List<Table> getTablesFromDB(){ //recupère les tables à jours
+		this.tables = TableCollection.updateTables(this.tables);
+		return this.tables;
 	}
 	
 	public Boolean affecterTable(Table table) {
