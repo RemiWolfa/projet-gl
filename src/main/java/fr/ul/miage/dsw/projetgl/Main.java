@@ -68,8 +68,24 @@ public class Main {
 		categorie.save();
 		
 		System.out.println("connection:"+Utilisateur.connexion("0001"));
-		if(Utilisateur.connectedUser != null)
+		if(Utilisateur.connectedUser != null) {
 			System.out.println("Utilisateur de type:"+Utilisateur.connectedUser.typeUser);
+			Serveur srv = new Serveur("0001");
+			srv.afficherTables();
+			
+		}
+		
+		
+//		System.out.println("###########################");
+//		if(Utilisateur.connectedUser != null) {
+//			if((Serveur) Utilisateur.connectedUser.typeUser) {
+//				
+//			}
+//		}
+//			System.out.println("Utilisateur de type:"+Utilisateur.connectedUser.typeUser);
+		
+		
+
 	}
 
 	 //public static void main(String[] args) {

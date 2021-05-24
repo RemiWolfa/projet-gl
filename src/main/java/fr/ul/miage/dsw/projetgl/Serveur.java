@@ -7,7 +7,6 @@ public class Serveur extends Utilisateur{
 	
 	public List<Table> tables;
 
-	
 	public Serveur(String identifiant) {
 		super(identifiant, Type.serveur);
 		// TODO Auto-generated constructor stub
@@ -38,5 +37,24 @@ public class Serveur extends Utilisateur{
 		this.tables.add(table);
 		return true;
 	}
+	
+	public void afficherTables() {
+	
+		List<Table> tableList = new ArrayList<>();
+		if(Utilisateur.connectedUser != null) {
+			for(int i=0; i<= tables.size(); i++) {
+				
+				tableList.add(tables.get(i));
+			}
+		}
+		
+		tableList.toString();
+	}
+
+	@Override
+	public String toString() {
+		return "Serveur [tables=" + tables + "]";
+	}
+	
 	
 }
