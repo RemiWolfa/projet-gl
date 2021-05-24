@@ -1,14 +1,11 @@
 package fr.ul.miage.dsw.projetgl.database;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import org.bson.Document;
 
 import com.mongodb.client.MongoCollection;
 
 import fr.ul.miage.dsw.projetgl.Serveur;
-import fr.ul.miage.dsw.projetgl.Table;
 import fr.ul.miage.dsw.projetgl.Utilisateur;
 
 public class UserCollection {
@@ -21,6 +18,7 @@ public static MongoCollection<Document> collection;
 		
 		Document userDocument = new Document();
 		userDocument.append("Type", user.typeUser.toString());
+		userDocument.append("Nom", user.nom);
 		userDocument.append("Identifiant", user.identifiant);
 		
 		if(user instanceof Serveur) {
@@ -49,7 +47,7 @@ public static MongoCollection<Document> collection;
 			if(doc.getString("Type").equalsIgnoreCase("serveur")) {
 				user = new Serveur(identifiant);
 			}else {
-				user = new Utilisateur(identifiant, doc.getString("Type"));
+				user = new Utilisateur(identifiant, doc.getString("Nom"), doc.getString("Type"));
 			}
 			return user;
 		}
