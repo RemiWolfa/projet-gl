@@ -7,7 +7,7 @@ import fr.ul.miage.dsw.projetgl.database.CarteCollection;
 
 public class Carte {
 
-	public Date dateCarte;
+	private Date dateCarte;
 	public List<Plat> plats;
 
 	public Carte() {
@@ -16,6 +16,10 @@ public class Carte {
 
 	public Carte(Date date) {
 		this.dateCarte = Tools.skipTime(date);
+	}
+	
+	public Date getDate() {
+		return this.dateCarte;
 	}
 
 	@Override

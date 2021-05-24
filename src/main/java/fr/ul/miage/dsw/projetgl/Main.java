@@ -42,7 +42,6 @@ public class Main {
 		etage.save();
 		
 		Carte carte = new Carte();
-		carte.dateCarte = new Date();
 		carte.plats = new ArrayList<Plat>();
 		carte.plats.add(new Plat("frites"));
 		

@@ -26,7 +26,7 @@ public class CarteCollection {
 			return false;
 
 		Document carteDocument = new Document();
-		carteDocument.append("Date", carte.dateCarte);
+		carteDocument.append("Date", carte.getDate());
 		if(carte.plats != null)
 			carteDocument.append("Plats", PlatCollection.getPlatNames(carte.plats));
 
@@ -36,13 +36,13 @@ public class CarteCollection {
 
 
 	public static boolean exist(Carte carte) {
-		return CarteCollection.collection.countDocuments(new Document("Date", carte.dateCarte)) > 0;
+		return CarteCollection.collection.countDocuments(new Document("Date", carte.getDate())) > 0;
 	}
 
 
 	public static ArrayList<Plat> getToDayPlats() {
 		List<Bson> aggregates = Arrays.asList(//TODO
-				//Aggregates.match(Filters.eq("Date", Tools.skipTime(new Date()).toString())),
+				Aggregates.match(Filters.eq("Date", Tools.skipTime(new Date()))),
 				Aggregates.unwind("$Plats"),
 				Aggregates.lookup("Plats", "Plats", "Nom", "Plat")
 				);
