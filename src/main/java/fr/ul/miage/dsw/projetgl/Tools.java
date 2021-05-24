@@ -9,7 +9,6 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.Scanner;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
 
 import fr.ul.miage.dsw.projetgl.database.CarteCollection;
 import fr.ul.miage.dsw.projetgl.database.PlatCollection;
@@ -108,7 +107,5 @@ public class Tools {
 	public static void error(String error) {
 		System.out.println("Erreur : "+error);
 	}
-
-	
 
 }

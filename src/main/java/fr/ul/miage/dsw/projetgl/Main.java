@@ -69,7 +69,6 @@ public class Main {
 		System.out.println("connection:"+Utilisateur.connexion("0001"));
 		if(Utilisateur.connectedUser != null)
 			System.out.println("Utilisateur de type:"+Utilisateur.connectedUser.typeUser);
-		
 		ServeurDashBoard.readCommand();
 	}
 
