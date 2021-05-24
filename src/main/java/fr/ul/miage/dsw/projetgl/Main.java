@@ -4,6 +4,7 @@ package fr.ul.miage.dsw.projetgl;
 import java.util.ArrayList;
 import java.util.Date;
 
+import fr.ul.miage.dsw.projetgl.database.CarteCollection;
 import fr.ul.miage.dsw.projetgl.database.DataBase;
 
 
@@ -19,23 +20,17 @@ public class Main {
 		
 		Utilisateur.connexion("0001"); 
 		
-		Reservation reservation = new Reservation();
-		reservation.numReservation = 0;
-		reservation.dateArrivee = new Date();
+		Reservation reservation = new Reservation(new Date());
 		reservation.table = new Table(1);
-		Commande entre = new Commande();
+		Commande entre = new Commande(reservation);
 		entre.date = new Date();
 		entre.etatCommande = EtatCommande.conclue;
-		entre.num = 0;
 		
-		ArrayList<Plat> plats = new ArrayList<Plat>();
-		plats.add(new Plat("niçoise"));
-		plats.add(new Plat("frites"));
-		entre.plats = plats;
+		System.out.println("ajouter pizza:"+ entre.ajouterPlat(new Plat("pizza")));
+		entre.ajouterPlat(new Plat("frites"));
 		entre.user = serveur;
 		
-		reservation.commandes = new ArrayList<Commande>();
-		reservation.commandes.add(entre);
+		reservation.ajouterCommande(entre);
 		
 		reservation.etatReservation = EtatReservation.entree;
 		
@@ -52,7 +47,7 @@ public class Main {
 		carte.plats.add(new Plat("frites"));
 		
 		Plat pizza = new Plat("pizza");
-		pizza.matierePremiere.add(new MatierePremiere("fromage"));
+		pizza.matierePremieres.add(new MatierePremiere("fromage"));
 		pizza.save();
 		
 		carte.plats.add(pizza);
@@ -70,6 +65,8 @@ public class Main {
 		System.out.println("connection:"+Utilisateur.connexion("0001"));
 		if(Utilisateur.connectedUser != null)
 			System.out.println("Utilisateur de type:"+Utilisateur.connectedUser.typeUser);
+		
+		System.out.println(Tools.readPlat().nom);
 	}
 
 	 //public static void main(String[] args) {

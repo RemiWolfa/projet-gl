@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.bson.Document;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 
 import fr.ul.miage.dsw.projetgl.Plat;
@@ -19,9 +20,9 @@ public class PlatCollection {
 
 		Document platDocument = new Document();
 		platDocument.append("Nom", plat.nom);
-		if(plat.matierePremiere != null)
-			platDocument.append("Plats", MatierePremiereCollection.getMatierePremiereNames(plat.matierePremiere));
-		
+		if(plat.matierePremieres != null)
+			platDocument.append("MatierePremieres", MatierePremiereCollection.getMatierePremiereNames(plat.matierePremieres));
+
 		PlatCollection.collection.insertOne(platDocument);
 		return true;
 	}
@@ -30,13 +31,25 @@ public class PlatCollection {
 	public static boolean exist(Plat plat) {
 		return PlatCollection.collection.countDocuments(new Document("Nom", plat.nom)) > 0;
 	}
-	
+
 	public static List<String> getPlatNames(List<Plat> plats) {
 		ArrayList<String> names = new ArrayList<String>();
 		for(Plat plat : plats) {
 			names.add(plat.nom);
 		}
 		return names;
+	}
+
+
+	public static ArrayList<Plat> getPlatsByName(String name) {
+		ArrayList<Plat> plats = new ArrayList<Plat>();
+
+		PlatCollection.collection.find(new Document("Nom", new BasicDBObject("$regex", ".*"+name+".*"))).forEach(
+				PlatDocument -> {
+					plats.add(new Plat(PlatDocument.getString("Nom")));
+				}
+				);
+		return plats;
 	}
 
 }
