@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import fr.ul.miage.dsw.projetgl.database.ReservationCollection;
+import fr.ul.miage.dsw.projetgl.enumeration.EtatReservation;
 
 public class Reservation {
 	

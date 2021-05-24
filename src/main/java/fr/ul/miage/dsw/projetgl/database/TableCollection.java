@@ -41,4 +41,25 @@ public class TableCollection {
 		return numbers;
 	}
 
+	public static List<Table> updateTables(List<Table> oldTables) {
+		ArrayList<Integer> tableNums = TableCollection.getTableNumbers(oldTables);
+		return TableCollection.getTablesFromNumbers(tableNums);
+	}
+
+	public static List<Table> getTablesFromNumbers(ArrayList<Integer> tableNums) {		
+		ArrayList<Table> tables = new ArrayList<Table>();
+		
+		Document in = new Document("$in", tableNums);
+		Document requestDoc = new Document("Numero", in);
+		TableCollection.collection.find(requestDoc).forEach(
+				tableDoc -> {
+					Table table = new Table(tableDoc.getInteger("Numero"));
+					table.etat = tableDoc.getString("Etat");
+					table.etage = tableDoc.getInteger("Etage");
+					tables.add(table);
+				}
+				);
+		return tables;
+	}
+
 }

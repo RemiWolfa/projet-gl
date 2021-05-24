@@ -1,6 +1,7 @@
 package fr.ul.miage.dsw.projetgl;
 
 import fr.ul.miage.dsw.projetgl.database.UserCollection;
+import fr.ul.miage.dsw.projetgl.enumeration.TypeUtilisateur;
 
 public class Utilisateur {
 	
