@@ -8,14 +8,14 @@ public class Serveur extends Utilisateur{
 	public List<Table> tables;
 
 	
-	public Serveur(String identifiant) {
-		super(identifiant, Type.serveur);
+	public Serveur(String identifiant, String nom) {
+		super(identifiant, nom, TypeUtilisateur.serveur);
 		// TODO Auto-generated constructor stub
 		this.tables = new ArrayList<Table>();
 	}
 
-	public Serveur(List<Table> table, String identifiant) {
-		super(identifiant, Type.serveur);
+	public Serveur(List<Table> table, String nom, String identifiant) {
+		super(identifiant, nom, TypeUtilisateur.serveur);
 		this.tables = table;
 	}
 

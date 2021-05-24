@@ -82,5 +82,9 @@ public class Tools {
 		Scanner scan = new Scanner(System.in);
 		return scan.nextLine();
 	}
+	
+	public static void error(String error) {
+		System.out.println("Erreur : "+error);
+	}
 
 }

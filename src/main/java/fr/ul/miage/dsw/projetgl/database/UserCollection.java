@@ -1,6 +1,8 @@
 package fr.ul.miage.dsw.projetgl.database;
 
 
+import java.util.ArrayList;
+
 import org.bson.Document;
 
 import com.mongodb.client.MongoCollection;
@@ -36,6 +38,10 @@ public static MongoCollection<Document> collection;
 		return UserCollection.collection.countDocuments(new Document("Identifiant", user.identifiant)) > 0;
 	}
 	
+	public static boolean exist(String identifiant) {
+		return UserCollection.collection.countDocuments(new Document("Identifiant", identifiant)) > 0;
+	}
+	
 	public void getTables () {
 		
 	}
@@ -43,16 +49,29 @@ public static MongoCollection<Document> collection;
 	public static Utilisateur getUser(String identifiant) {
 		Document doc = UserCollection.collection.find(new Document("Identifiant", identifiant)).first();
 		if(doc != null) {
-			Utilisateur user;
-			if(doc.getString("Type").equalsIgnoreCase("serveur")) {
-				user = new Serveur(identifiant);
-			}else {
-				user = new Utilisateur(identifiant, doc.getString("Nom"), doc.getString("Type"));
-			}
-			return user;
+			return UserCollection.getUserFromDoc(doc);
 		}
 		return null;
 	}
+
+	public static ArrayList<Utilisateur> getAllUsers() {
+		ArrayList<Utilisateur> users = new ArrayList<Utilisateur>();
+		UserCollection.collection.find().forEach(
+				doc -> {
+					users.add(UserCollection.getUserFromDoc(doc));
+				}
+				);
+		return users;
+	}
 	
+	private static Utilisateur getUserFromDoc(Document doc) {
+		Utilisateur user;
+		if(doc.getString("Type").equalsIgnoreCase("serveur")) {
+			user = new Serveur(doc.getString("Identifiant"), doc.getString("Nom"));
+		}else {
+			user = new Utilisateur(doc.getString("Identifiant"), doc.getString("Nom"), doc.getString("Type"));
+		}
+		return user;
+	}
 
 }

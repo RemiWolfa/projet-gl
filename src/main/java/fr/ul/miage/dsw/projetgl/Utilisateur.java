@@ -6,11 +6,11 @@ public class Utilisateur {
 	
 	public static Utilisateur connectedUser;
 	
-	public Type typeUser;
+	public TypeUtilisateur typeUser;
 	public String identifiant;
 	public String nom;
 	
-	public Utilisateur(String identifiant, String nom, Type typeUser) {
+	public Utilisateur(String identifiant, String nom, TypeUtilisateur typeUser) {
 		this.typeUser = typeUser;
 		this.nom = nom;
 		this.identifiant = identifiant;
@@ -19,7 +19,7 @@ public class Utilisateur {
 	public Utilisateur(String identifiant, String nom, String typeString) {
 		this.identifiant = identifiant;
 		this.nom = nom;
-		this.typeUser = Type.valueOf(typeString);
+		this.typeUser = TypeUtilisateur.valueOf(typeString);
 	}
 	
 	//la fonction de connexion

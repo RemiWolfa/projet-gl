@@ -4,6 +4,7 @@ package fr.ul.miage.dsw.projetgl;
 import java.util.ArrayList;
 import java.util.Date;
 
+import fr.ul.miage.dsw.projetgl.dashboard.DirecteurDashBoard;
 import fr.ul.miage.dsw.projetgl.database.CarteCollection;
 import fr.ul.miage.dsw.projetgl.database.DataBase;
 
@@ -14,7 +15,7 @@ public class Main {
 		DataBase.connect();
 		
 		new Table(1).save();
-		Serveur serveur = new Serveur("0001");
+		Serveur serveur = new Serveur("0001", "Robert");
 		serveur.affecterTable(new Table(1));
 		System.out.println("création d'un utilisateur:"+serveur.save());
 		
@@ -65,7 +66,7 @@ public class Main {
 		if(Utilisateur.connectedUser != null)
 			System.out.println("Utilisateur de type:"+Utilisateur.connectedUser.typeUser);
 		
-		System.out.println(Tools.readPlat().nom);
+		DirecteurDashBoard.readCommand();
 	}
 
 	 //public static void main(String[] args) {
