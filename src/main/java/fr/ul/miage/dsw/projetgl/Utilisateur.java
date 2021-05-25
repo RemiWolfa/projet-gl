@@ -23,13 +23,6 @@ public class Utilisateur {
 		this.typeUser = TypeUtilisateur.valueOf(typeString);
 	}
 	
-	//la fonction de connexion
-	public static boolean connexion(String identifiant) {
-		Utilisateur.connectedUser  = UserCollection.getUser(identifiant);
-		return Utilisateur.connectedUser != null;
-			
-		
-	}
 	
 	public boolean save() {
 		return UserCollection.save(this);
