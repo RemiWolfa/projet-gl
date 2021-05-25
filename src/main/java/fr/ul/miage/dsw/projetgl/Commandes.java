@@ -145,29 +145,6 @@ public class Commandes{
 			 
 	  }
 	  
-	  public class IncorrectParam extends Exception { 
-		  
-		    public IncorrectParam(String errorMessage) { 
-		        super(errorMessage);
-		    }
-		}
-	  
-	  public class Connexion{
-	 
-	    
-	    public Boolean checkParamConnexion(String id) throws IncorrectParam {
-	    	try{
-	    		int num =Integer.parseInt(id);
-	    	}
-	    	catch(NumberFormatException e) {
-	    		throw new IncorrectParam("Identifiant erroné : " + id );
-	    	}
-	    	
-	    	return true;
-	    }
-	    
-	    
-	  }
 	  
 	  
 	  public class Deconnexion{
