@@ -23,7 +23,8 @@ public class Main {
 		serveur.affecterTable(new Table(1));
 		System.out.println("création d'un utilisateur:"+serveur.save());
 		
-		Utilisateur.connexion("0001"); 
+		Connexion connexion = new Connexion();
+		connexion.connexion("0001"); 
 		
 		Reservation reservation = new Reservation(new Date());
 		reservation.table = new Table(1);
@@ -66,10 +67,9 @@ public class Main {
 		categorie.add(new Categorie("viande blanche"));
 		categorie.save();
 		
-		System.out.println("connection:"+Utilisateur.connexion("0001"));
 		if(Utilisateur.connectedUser != null)
 			System.out.println("Utilisateur de type:"+Utilisateur.connectedUser.typeUser);
-		ServeurDashBoard.readCommand();
+		MaitreHotelDashBoard.readCommand();
 	}
 
 	 //public static void main(String[] args) {
