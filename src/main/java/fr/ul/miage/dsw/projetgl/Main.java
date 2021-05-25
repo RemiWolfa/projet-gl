@@ -4,6 +4,7 @@ package fr.ul.miage.dsw.projetgl;
 import java.util.ArrayList;
 import java.util.Date;
 
+import fr.ul.miage.dsw.projetgl.dashboard.CuisinierDashBoard;
 import fr.ul.miage.dsw.projetgl.dashboard.DirecteurDashBoard;
 import fr.ul.miage.dsw.projetgl.dashboard.MaitreHotelDashBoard;
 import fr.ul.miage.dsw.projetgl.dashboard.ServeurDashBoard;
@@ -28,13 +29,13 @@ public class Main {
 		
 		Reservation reservation = new Reservation(new Date());
 		reservation.table = new Table(1);
-		Commande entre = new Commande(reservation);
+		Commande entre = new Commande(reservation.numReservation);
 		entre.date = new Date();
 		entre.etatCommande = EtatCommande.conclue;
 		
 		System.out.println("ajouter pizza:"+ entre.ajouterPlat(new Plat("pizza")));
 		entre.ajouterPlat(new Plat("frites"));
-		entre.user = serveur;
+		entre.userId = serveur.identifiant;
 		
 		reservation.ajouterCommande(entre);
 		
@@ -69,7 +70,7 @@ public class Main {
 		
 		if(Utilisateur.connectedUser != null)
 			System.out.println("Utilisateur de type:"+Utilisateur.connectedUser.typeUser);
-		MaitreHotelDashBoard.readCommand();
+		CuisinierDashBoard.readCommand();
 	}
 
 	 //public static void main(String[] args) {

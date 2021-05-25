@@ -52,4 +52,19 @@ public class PlatCollection {
 		return plats;
 	}
 
+
+	public static List<Plat> getPlatsFromNames(List<String> platNames) {
+		ArrayList<Plat> plats = new ArrayList<Plat>();
+		if(platNames == null || platNames.size() == 0)
+			return plats;
+
+		PlatCollection.collection.find(new Document("Nom", new Document("$in", platNames))).forEach(
+				PlatDocument -> {
+					plats.add(new Plat(PlatDocument.getString("Nom")));
+					//TODO ajouter matieresPremiere
+				}
+				);
+		return plats;
+	}
+
 }
