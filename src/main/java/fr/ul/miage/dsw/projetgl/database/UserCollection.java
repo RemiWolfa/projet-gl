@@ -8,6 +8,7 @@ import org.bson.Document;
 import com.mongodb.client.MongoCollection;
 
 import fr.ul.miage.dsw.projetgl.Serveur;
+import fr.ul.miage.dsw.projetgl.TypeUtilisateur;
 import fr.ul.miage.dsw.projetgl.Utilisateur;
 
 public class UserCollection {
@@ -31,6 +32,17 @@ public static MongoCollection<Document> collection;
 		}
 		
 		UserCollection.collection.insertOne(userDocument);
+		return true;
+	}
+	
+	public static boolean updateTables(Serveur server) {
+		if(!UserCollection.exist(server.identifiant))
+			return false;
+		
+		Document requestDoc = new Document("Identifiant", server.identifiant);
+		Document update = new Document("$set", new Document("Tables", TableCollection.getTableNumbers(server.tables)));
+		
+		UserCollection.collection.updateOne(requestDoc, update);
 		return true;
 	}
 	
@@ -59,6 +71,16 @@ public static MongoCollection<Document> collection;
 		UserCollection.collection.find().forEach(
 				doc -> {
 					users.add(UserCollection.getUserFromDoc(doc));
+				}
+				);
+		return users;
+	}
+	
+	public static ArrayList<Serveur> getAllServeurs() {
+		ArrayList<Serveur> users = new ArrayList<Serveur>();
+		UserCollection.collection.find(new Document("Type", TypeUtilisateur.serveur.toString())).forEach(
+				doc -> {
+					users.add((Serveur)UserCollection.getUserFromDoc(doc));
 				}
 				);
 		return users;
