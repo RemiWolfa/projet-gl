@@ -6,8 +6,6 @@ import fr.ul.miage.dsw.projetgl.Tools;
 import fr.ul.miage.dsw.projetgl.Utilisateur;
 import fr.ul.miage.dsw.projetgl.database.UserCollection;
 import fr.ul.miage.dsw.projetgl.enumeration.TypeUtilisateur;
-import fr.ul.miage.dsw.projetgl.Utilisateur;
-import fr.ul.miage.dsw.projetgl.database.UserCollection;
 
 public class DirecteurDashBoard {
 

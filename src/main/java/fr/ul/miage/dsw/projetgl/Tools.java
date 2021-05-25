@@ -108,4 +108,9 @@ public class Tools {
 		System.out.println("Erreur : "+error);
 	}
 
+	public static String format(Date date) {
+		// TODO faire un vrai format
+		return date.toString();
+	}
+
 }
