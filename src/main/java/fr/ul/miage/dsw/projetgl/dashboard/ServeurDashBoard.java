@@ -6,12 +6,14 @@ import java.util.List;
 import fr.ul.miage.dsw.projetgl.Commande;
 import fr.ul.miage.dsw.projetgl.IncorrectParam;
 import fr.ul.miage.dsw.projetgl.Plat;
+import fr.ul.miage.dsw.projetgl.Reservation;
 import fr.ul.miage.dsw.projetgl.Serveur;
 import fr.ul.miage.dsw.projetgl.Table;
 import fr.ul.miage.dsw.projetgl.Tools;
 import fr.ul.miage.dsw.projetgl.Utilisateur;
 import fr.ul.miage.dsw.projetgl.database.CarteCollection;
 import fr.ul.miage.dsw.projetgl.database.PlatCollection;
+import fr.ul.miage.dsw.projetgl.database.ReservationCollection;
 
 public class ServeurDashBoard {
 
@@ -20,6 +22,8 @@ public class ServeurDashBoard {
 		System.out.println("1. Afficher les tables");
 		System.out.println("2. Afficher l'état des tables");
 		System.out.println("3. Créer une commande");
+		System.out.println("4. Afficher l'état des clients");
+		System.out.println("5. Quitter");
 
 		int i = Tools.getIntegerInput();
 		switch(i) {
@@ -31,9 +35,22 @@ public class ServeurDashBoard {
 			break;
 		case 3:
 			ServeurDashBoard.createOrder();
+			break;
+		case 4:
+			ServeurDashBoard.showCurrentReservations();
+			break;
+		case 5:
 			return;
 		}
 		readCommand();
+	}
+
+	private static void showCurrentReservations() {
+		Serveur serveur = (Serveur) Utilisateur.connectedUser;
+		List<Reservation> list = ReservationCollection.getCurrentReservations(serveur);
+		for(Reservation reservation : list) {
+			System.out.println("Table : "+reservation.table.num+" état : "+reservation.etatReservation);
+		}
 	}
 
 	public static void showTableStates() {

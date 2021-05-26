@@ -72,7 +72,7 @@ public class Main {
 		
 		if(Utilisateur.connectedUser != null)
 			System.out.println("Utilisateur de type:"+Utilisateur.connectedUser.typeUser);
-		CuisinierDashBoard.readCommand();
+		ServeurDashBoard.readCommand();
 	}
 
 	 //public static void main(String[] args) {
