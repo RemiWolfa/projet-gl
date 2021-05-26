@@ -2,7 +2,6 @@ package fr.ul.miage.dsw.projetgl.database;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import org.bson.Document;
@@ -11,15 +10,12 @@ import org.bson.conversions.Bson;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Accumulators;
 import com.mongodb.client.model.Aggregates;
-import com.mongodb.client.model.Filters;
 
 import fr.ul.miage.dsw.projetgl.Commande;
 import fr.ul.miage.dsw.projetgl.Plat;
 import fr.ul.miage.dsw.projetgl.Reservation;
 import fr.ul.miage.dsw.projetgl.Serveur;
 import fr.ul.miage.dsw.projetgl.Table;
-import fr.ul.miage.dsw.projetgl.Tools;
-import fr.ul.miage.dsw.projetgl.Utilisateur;
 import fr.ul.miage.dsw.projetgl.enumeration.EtatCommande;
 import fr.ul.miage.dsw.projetgl.enumeration.EtatReservation;
 
@@ -29,7 +25,7 @@ public class ReservationCollection {
 	
 	public static boolean save(Reservation reservation) {
 		if(ReservationCollection.exist(reservation)) //-1 si pas enregistre donc false
-			return ReservationCollection.update(reservation);
+			return false;
 		
 		Document reservationDocument = new Document();
 		reservationDocument.append("Numero", ReservationCollection.getNextNum());
@@ -62,15 +58,19 @@ public class ReservationCollection {
 		ArrayList<Document> commandeDocuments = new ArrayList<Document>();
 		
 		for(Commande commande : commandes) {
-			Document commandeDocument = new Document();
-			commandeDocument.append("Utilisateur", commande.userId);
-			commandeDocument.append("Date", commande.date);
-			commandeDocument.append("Etat", commande.etatCommande.toString());
-			commandeDocument.append("Plats", PlatCollection.getPlatNames(commande.getPlats()));
-		
-			commandeDocuments.add(commandeDocument);
+			commandeDocuments.add(ReservationCollection.getCommande(commande));
 		}
 		return commandeDocuments;
+	}
+	
+	private static Document getCommande(Commande commande) {
+		Document commandeDocument = new Document();
+		commandeDocument.append("Utilisateur", commande.userId);
+		commandeDocument.append("Date", commande.date);
+		commandeDocument.append("Etat", commande.etatCommande.toString());
+		commandeDocument.append("Plats", PlatCollection.getPlatNames(commande.getPlats()));
+	
+		return commandeDocument;
 	}
 	
 	public static ArrayList<Commande> getWaitingOrders(){
@@ -129,11 +129,6 @@ public class ReservationCollection {
 	public static boolean exist(int numReservation) {
 		return ReservationCollection.collection.countDocuments(new Document("Numero", numReservation)) > 0;
 	}
-	
-	public static boolean update(Reservation reservation) {
-		//TODO
-		return true;
-	}
 
 	public static boolean updateState(Commande commande) {
 		if(!exist(commande.reservationNum)) 
@@ -146,6 +141,27 @@ public class ReservationCollection {
 		
 		ReservationCollection.collection.updateOne(docRequest, update);
 		return true;
+	}
+
+	public static boolean saveOrder(Commande commande) {
+		
+		ReservationCollection.decrementStock(commande);
+		
+		Document doc = ReservationCollection.getCommande(commande);
+		Document requestDoc = new Document("Numero", commande.reservationNum);
+		
+		Document update = new Document("$push", new Document("Commandes", doc));
+		ReservationCollection.collection.updateOne(requestDoc, update);
+		return false;
+	}
+
+	private static void decrementStock(Commande commande) {
+		for(Plat plat : commande.getPlats()) {
+			ArrayList<String> mps = PlatCollection.getMatierePremieres(plat);
+			for(String nomMP : mps) {
+				MatierePremiereCollection.decrement(nomMP,1);
+			}
+		}
 	}
 	
 

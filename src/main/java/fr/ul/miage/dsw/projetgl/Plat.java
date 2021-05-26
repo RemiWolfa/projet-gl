@@ -1,12 +1,8 @@
 package fr.ul.miage.dsw.projetgl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
-import org.bson.Document;
-
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.MongoCollection;
 
 import fr.ul.miage.dsw.projetgl.database.MatierePremiereCollection;
 import fr.ul.miage.dsw.projetgl.database.PlatCollection;
@@ -62,6 +58,18 @@ public class Plat extends Item{
 	
 	public static Boolean exist(String nom)  {
 		return PlatCollection.exist(new Plat(nom));
+	}
+	
+	public boolean testStock(HashMap<MatierePremiere, Integer> fromCommande) {
+		for(MatierePremiere mp : this.matierePremieres) {
+			int min = 1;
+			if(fromCommande.containsKey(mp))
+				min+=fromCommande.get(mp);
+			System.out.println("mp:"+mp.nom);
+			if(MatierePremiereCollection.getStock(mp.nom) < min)
+				return false;
+		}
+		return true;
 	}
 
 }

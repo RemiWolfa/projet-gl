@@ -8,6 +8,7 @@ import org.bson.Document;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 
+import fr.ul.miage.dsw.projetgl.MatierePremiere;
 import fr.ul.miage.dsw.projetgl.Plat;
 
 public class PlatCollection {
@@ -46,10 +47,22 @@ public class PlatCollection {
 
 		PlatCollection.collection.find(new Document("Nom", new BasicDBObject("$regex", ".*"+name+".*"))).forEach(
 				PlatDocument -> {
-					plats.add(new Plat(PlatDocument.getString("Nom")));
+					Plat plat = PlatCollection.getPlatFromDocument(PlatDocument);
+					plats.add(plat);
 				}
 				);
 		return plats;
+	}
+
+
+	private static Plat getPlatFromDocument(Document document) {
+		Plat plat = new Plat(document.getString("Nom"));
+		
+		ArrayList<String> list = (ArrayList<String>) document.get("MatierePremieres");
+		for(String nom : list) {
+			plat.ajouterMatierePremiere(new MatierePremiere(nom));
+		}
+		return plat;
 	}
 
 
@@ -60,8 +73,8 @@ public class PlatCollection {
 
 		PlatCollection.collection.find(new Document("Nom", new Document("$in", platNames))).forEach(
 				PlatDocument -> {
-					plats.add(new Plat(PlatDocument.getString("Nom")));
-					//TODO ajouter matieresPremiere
+					Plat plat = PlatCollection.getPlatFromDocument(PlatDocument);
+					plats.add(plat);
 				}
 				);
 		return plats;
@@ -74,6 +87,12 @@ public class PlatCollection {
 			return null;
 		
 		return new Plat(doc.getString("Name"));
+	}
+
+
+	public static ArrayList<String> getMatierePremieres(Plat plat) {
+		Document doc = PlatCollection.collection.find(new Document("Nom", plat.nom)).first();
+		return (ArrayList<String>) doc.get("MatierePremieres");
 	}
 
 }

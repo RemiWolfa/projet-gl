@@ -23,6 +23,7 @@ public class Commande {
 		this.reservationNum = reservationNum;
 		this.plats = new ArrayList<Plat>();
 		this.date = new Date();
+		this.etatCommande = etatCommande.passee;
 	}
 	
 	public Commande(String userId, int reservationNum) {
@@ -59,6 +60,10 @@ public class Commande {
 			return false;
 		this.etatCommande = EtatCommande.prete;
 		return ReservationCollection.updateState(this);
+	}
+
+	public boolean save() {
+		return ReservationCollection.saveOrder(this);
 	}
 
 
