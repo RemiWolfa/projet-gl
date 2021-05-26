@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import fr.ul.miage.dsw.projetgl.Commande;
 import fr.ul.miage.dsw.projetgl.Plat;
 import fr.ul.miage.dsw.projetgl.Tools;
+import fr.ul.miage.dsw.projetgl.database.MatierePremiereCollection;
 import fr.ul.miage.dsw.projetgl.database.ReservationCollection;
 
 
@@ -69,8 +70,8 @@ public class CuisinierDashBoard {
 
 	public static void readCommand() {
 		System.out.println("----------------");
-		System.out.println("1. Regarder les commandes en attente");
-		System.out.println("2. Prévenir d'une commande");
+		System.out.println("1. Visualiser / envoyer commande");
+		System.out.println("2. ");
 		System.out.println("3. Consulter les stocks");
 
 		System.out.println("4. Quitter");
@@ -122,8 +123,7 @@ public class CuisinierDashBoard {
 	}
 
 	public static void checkStocks() {
-
-
+	System.out.println( MatierePremiereCollection.getStock());
 	}
 
 	public static void creatMeat() {
