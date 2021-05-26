@@ -22,7 +22,7 @@ public class MaitreHotelDashBoard {
 		System.out.println("----------------");
 		System.out.println("1. Prendre une reservation");
 		System.out.println("2. Affecter une table à un serveur");
-		System.out.println("3. Affecter une table à un serveur");
+		System.out.println("3. Mettre à jour les stocks");
 		System.out.println("4. Quitter");
 
 		int i=0;
@@ -40,7 +40,7 @@ public class MaitreHotelDashBoard {
 			MaitreHotelDashBoard.affectTableToServeur();
 			break;
 		case 3 :
-			
+			MaitreHotelDashBoard.updateStock();
 			break;
 		case 4:
 			return;
@@ -100,13 +100,11 @@ public class MaitreHotelDashBoard {
 	
 	public static void updateStock() {
 		ArrayList<MatierePremiere> mp =MatierePremiereCollection.getMatieresPremieres();
-		int i=0;
+		int i=1;
 		System.out.println("De quelle matière souhaitez-vous modifier le stock ?\n");
-		HashMap<Integer,String> map=new HashMap<Integer, String>();
 		
 		for(MatierePremiere matiere : mp) {
 			System.out.println(i+") "+matiere.nom+" \n ");
-			map.put(i, matiere.nom);
 			i++;
 		}
 		
@@ -114,7 +112,7 @@ public class MaitreHotelDashBoard {
 			int num = Tools.getIntegerInput();
 			System.out.println("Quelle valeur de stock souhaitez vous entrer ?");
 			int stock = Tools.getIntegerInput();
-			MatierePremiereCollection.setStock(map.get(num), stock);
+			MatierePremiereCollection.setStock(mp.get(num-1).nom, stock);
 		}
 		catch(IncorrectParam e) {
 			System.out.println(e.getMessage());

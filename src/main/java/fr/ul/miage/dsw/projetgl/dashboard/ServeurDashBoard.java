@@ -95,12 +95,8 @@ public class ServeurDashBoard {
 		System.out.println((plats.size()+1)+". Retour");
 
 		try {
-			int input=0;
-			try {
-				input = Tools.getIntegerInput();
-			} catch (IncorrectParam e) {
-				System.out.println(e.getMessage());
-			}
+			int input=Tools.getIntegerInput();
+			
 			if(input-1 == plats.size()) {
 				System.out.println("ici");
 				return null;
@@ -108,8 +104,11 @@ public class ServeurDashBoard {
 				System.out.println("là");
 				return plats.get(input-1);
 			}
-		}catch(ArrayIndexOutOfBoundsException e) {
+		}catch(ArrayIndexOutOfBoundsException | IncorrectParam e) {
 			System.out.println("Nombre non valide");
+			System.out.println(e.getMessage());
+			readPlat();
+			
 		}
 		return null;
 	}
