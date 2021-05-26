@@ -15,12 +15,17 @@ public class MatierePremiereCollection {
 	public static MongoCollection<Document> collection;
 
 	public static boolean save(MatierePremiere mp) {
+		return save(mp, 0);
+	}
+	
+	public static boolean save(MatierePremiere mp, int stock) {
 		if(MatierePremiereCollection.exist(mp))
 			return false;
 
 		Document mpDocument = new Document();
 		mpDocument.append("Nom", mp.nom);
-		mpDocument.append("EnPoid", mp.enPoids);
+		mpDocument.append("EnPoids", mp.enPoids);
+		mpDocument.append("Stock", stock);
 		if(mp.categorie != null)
 			mpDocument.append("Categorie", mp.categorie.nom);
 		
@@ -34,26 +39,37 @@ public class MatierePremiereCollection {
 		return MatierePremiereCollection.collection.countDocuments(new Document("Nom", mp.nom)) > 0;
 	}
 	
-	public static String getStock() {
-		FindIterable<Document> doc =MatierePremiereCollection.collection.find();
+	public static int getStock(String nom) {
+		Document doc =MatierePremiereCollection.collection.find(new Document("Nom", nom)).first();
+		return doc.getInteger("Stock");
 		
-		String res = "";
+		//String res = "";
 		
-		for(Document d : doc) {
+		/*for(Document d : doc) {
 			
 			res +="\n -----\n Nom "+d.get("Nom")+"\n";
 			res += d.get("EnPoids").equals(false)?"Unités : ":"Poids en kg : "  +d.get("Stock")+"\n";
 			
 		}
-		return res;
+		return res;*/
 	}
 	
 	public static void setStock(String nom, int quantite) {
-		Document doc =MatierePremiereCollection.collection.find(new Document ("Nom", nom)).first();
+		Document docRequest=new Document ("Nom", nom);
+		Document update = new Document("$set", new Document("Stock", quantite));
+		MatierePremiereCollection.collection.updateOne(docRequest, update);
 		
-		doc.append("Stock", Integer.parseInt(doc.get("Stock").toString())  +quantite);
 		
-		
+	}
+	
+	public static ArrayList<MatierePremiere> getMatieresPremieres(){
+		ArrayList<MatierePremiere> list =new ArrayList<MatierePremiere>();
+		MatierePremiereCollection.collection.find().forEach(MatDoc -> {
+			MatierePremiere mp= new MatierePremiere(MatDoc.getString("Nom"));
+			mp.enPoids=MatDoc.getBoolean("EnPoids");
+			list.add(mp);
+		});
+		return list;
 	}
 
 

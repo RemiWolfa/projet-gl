@@ -1,11 +1,13 @@
 package fr.ul.miage.dsw.projetgl.dashboard;
 
 import fr.ul.miage.dsw.projetgl.IncorrectParam;
+import fr.ul.miage.dsw.projetgl.MatierePremiere;
 import fr.ul.miage.dsw.projetgl.Tools;
 import java.util.ArrayList;
 
 import fr.ul.miage.dsw.projetgl.Commande;
 import fr.ul.miage.dsw.projetgl.Plat;
+import fr.ul.miage.dsw.projetgl.database.MatierePremiereCollection;
 import fr.ul.miage.dsw.projetgl.database.ReservationCollection;
 
 
@@ -48,12 +50,9 @@ public class CuisinierDashBoard {
 			}
 			break;
 		case 2:
-			checkStocks();
-			break;
-
-		case 3:
 			return;
 		}
+		
 	}
 
 	public static void readCommand() {
@@ -71,6 +70,7 @@ public class CuisinierDashBoard {
 			CuisinierDashBoard.showOrders();
 			break;
 		case 2:
+			CuisinierDashBoard.checkMatieresPremieres();
 			break;
 		case 3:
 			return;
@@ -91,8 +91,17 @@ public class CuisinierDashBoard {
 
 
 
-	public static void checkStocks() {
-		//System.out.println( MatierePremiereCollection.getStock());
+	public static void checkStocks(String nom) {
+		System.out.println( );
+		MatierePremiereCollection.getStock(nom);
+	}
+	
+	public static void checkMatieresPremieres() {
+		ArrayList<MatierePremiere> mp =MatierePremiereCollection.getMatieresPremieres();
+		for(MatierePremiere matiere : mp) {
+			System.out.println("Nom : "+matiere.nom+" \n "
+					+ "Stock : " + MatierePremiereCollection.getStock(matiere.nom));
+		}
 	}
 
 	public static void creatMeat() {
