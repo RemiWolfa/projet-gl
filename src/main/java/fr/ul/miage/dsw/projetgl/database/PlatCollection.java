@@ -30,9 +30,13 @@ public class PlatCollection {
 
 
 	public static boolean exist(Plat plat) {
-		return PlatCollection.collection.countDocuments(new Document("Nom", plat.nom)) > 0;
+		return PlatCollection.exist(plat.nom);
 	}
 
+	public static boolean exist(String nom) {
+		return PlatCollection.collection.countDocuments(new Document("Nom", nom)) > 0;
+	}
+	
 	public static List<String> getPlatNames(List<Plat> plats) {
 		ArrayList<String> names = new ArrayList<String>();
 		for(Plat plat : plats) {
