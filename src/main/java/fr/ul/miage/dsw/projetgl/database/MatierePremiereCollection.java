@@ -81,4 +81,10 @@ public class MatierePremiereCollection {
 		return names;
 	}
 
+	public static void decrement(String nomMP, int quantity) {
+		Document docRequest=new Document ("Nom", nomMP);
+		Document update = new Document("$inc", new Document("Stock", -quantity));
+		MatierePremiereCollection.collection.updateOne(docRequest, update);
+	}
+
 }

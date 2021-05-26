@@ -64,6 +64,12 @@ public class Main {
 		carte.save();
 		
 		new MatierePremiere("fromage").save();
+		MatierePremiere tomate = new MatierePremiere("tomates");
+		tomate.save();
+		
+		Plat salade = new Plat("Salade");
+		salade.ajouterMatierePremiere(tomate);
+		salade.save();
 		
 		Categorie categorie = new Categorie("viande");
 		categorie.add(new Plat("steak"));
@@ -72,7 +78,7 @@ public class Main {
 		
 		if(Utilisateur.connectedUser != null)
 			System.out.println("Utilisateur de type:"+Utilisateur.connectedUser.typeUser);
-		MaitreHotelDashBoard.readCommand();
+		ServeurDashBoard.readCommand();
 
 	}
 

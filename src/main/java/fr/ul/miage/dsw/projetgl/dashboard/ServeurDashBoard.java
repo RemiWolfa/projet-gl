@@ -1,10 +1,12 @@
 package fr.ul.miage.dsw.projetgl.dashboard;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import fr.ul.miage.dsw.projetgl.Commande;
 import fr.ul.miage.dsw.projetgl.IncorrectParam;
+import fr.ul.miage.dsw.projetgl.MatierePremiere;
 import fr.ul.miage.dsw.projetgl.Plat;
 import fr.ul.miage.dsw.projetgl.Reservation;
 import fr.ul.miage.dsw.projetgl.Serveur;
@@ -21,9 +23,8 @@ public class ServeurDashBoard {
 		System.out.println("----------------");
 		System.out.println("1. Afficher les tables");
 		System.out.println("2. Afficher l'état des tables");
-		System.out.println("3. Créer une commande");
-		System.out.println("4. Afficher l'état des clients");
-		System.out.println("5. Quitter");
+		System.out.println("3. Afficher les clients");
+		System.out.println("4. Quitter");
 
 		int i=0;
 		try {
@@ -40,12 +41,9 @@ public class ServeurDashBoard {
 			ServeurDashBoard.showTableStates();
 			break;
 		case 3:
-			ServeurDashBoard.createOrder();
-			break;
-		case 4:
 			ServeurDashBoard.showCurrentReservations();
 			break;
-		case 5:
+		case 4:
 			return;
 		}
 		readCommand();
@@ -54,19 +52,53 @@ public class ServeurDashBoard {
 	private static void showCurrentReservations() {
 		Serveur serveur = (Serveur) Utilisateur.connectedUser;
 		List<Reservation> list = ReservationCollection.getCurrentReservations(serveur);
+
+		int i = 1;
 		for(Reservation reservation : list) {
-			System.out.println("Table : "+reservation.table.num+" état : "+reservation.etatReservation);
+			System.out.println(i+". Table : "+reservation.table.num+" état : "+reservation.etatReservation);
+			i++;
+		}
+
+		try {
+			i = Tools.getIntegerInput();
+			Reservation reservation = list.get(i-1);
+			ServeurDashBoard.modifyReservation(reservation);
+
+		} catch (IncorrectParam | ArrayIndexOutOfBoundsException  e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static void modifyReservation(Reservation reservation) {
+		System.out.println("----------------");
+		System.out.println("1. Prendre une commande");
+		System.out.println("2. Retour");
+
+		int i=0;
+		try {
+			i = Tools.getIntegerInput();
+		} catch (IncorrectParam e) {
+			System.out.println(e.getMessage());
+			readCommand();
+		}
+		switch(i) {
+		case 1:
+			ServeurDashBoard.createOrder(reservation);
+			break;
+		case 2:
+			return;
 		}
 	}
 
 	public static void showTableStates() {
 		Serveur serveur = (Serveur) Utilisateur.connectedUser;
 		List<Table> tables = serveur.getTablesFromDB();
+
 		for(Table table : tables) {
 			System.out.println("Table numéro:"+table.num+" : "+table.etat);
 		}
 	}
-	
+
 	public static Plat readPlat() {
 		System.out.println("Rechercher plats dans : ");
 		System.out.println("1. Catégorie");
@@ -113,33 +145,53 @@ public class ServeurDashBoard {
 
 		try {
 			int input=Tools.getIntegerInput();
-			
+
 			if(input-1 == plats.size()) {
-				System.out.println("ici");
 				return null;
 			}else {
-				System.out.println("là");
 				return plats.get(input-1);
 			}
 		}catch(ArrayIndexOutOfBoundsException | IncorrectParam e) {
 			System.out.println("Nombre non valide");
 			System.out.println(e.getMessage());
 			readPlat();
-			
+
 		}
 		return null;
 	}
 
 
-	public static void createOrder() {
-		Commande commande = new Commande(1);//utiliser une reservation valide
-		Plat plat = ServeurDashBoard.readPlat();
+	public static void createOrder(Reservation reservation) {
+		Commande commande = new Commande(Utilisateur.connectedUser.identifiant, 
+				reservation.numReservation);
 
-		while(plat != null) {
+		Plat plat ;
+
+		HashMap<MatierePremiere, Integer> toUse = new HashMap<MatierePremiere, Integer>();
+
+		while((plat = ServeurDashBoard.readPlat()) != null) {
 			System.out.println(plat.nom);
-			plat = ServeurDashBoard.readPlat();
+			if(plat.testStock(toUse)) {
+				commande.ajouterPlat(plat);
+				ServeurDashBoard.putMp(plat, toUse);
+			}
+			else
+				System.out.println("Ce plat n'est plus disponible!");
+		}
+
+		reservation.ajouterCommande(commande);
+		commande.save();
+	}
+	private static void putMp(Plat plat, HashMap<MatierePremiere, Integer> toUse) {
+		for(MatierePremiere mp : plat.matierePremieres) {
+			if(toUse.containsKey(mp)) {
+				toUse.put(mp, 1+toUse.get(mp));
+			}else {
+				toUse.put(mp, 1);
+			}
 		}
 	}
+
 	public static void showTables() {
 
 	}
