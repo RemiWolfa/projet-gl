@@ -67,4 +67,13 @@ public class PlatCollection {
 		return plats;
 	}
 
+
+	public static Plat getPlatByName(String nom) {
+		Document doc = PlatCollection.collection.find(new Document("Nom", nom)).first();
+		if(doc == null)
+			return null;
+		
+		return new Plat(doc.getString("Name"));
+	}
+
 }
