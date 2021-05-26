@@ -25,7 +25,13 @@ public class ServeurDashBoard {
 		System.out.println("4. Afficher l'état des clients");
 		System.out.println("5. Quitter");
 
-		int i = Tools.getIntegerInput();
+		int i=0;
+		try {
+			i = Tools.getIntegerInput();
+		} catch (IncorrectParam e) {
+			System.out.println(e.getMessage());
+			readCommand();
+		}
 		switch(i) {
 		case 1:
 			ServeurDashBoard.showTables();
@@ -69,7 +75,12 @@ public class ServeurDashBoard {
 		System.out.println("4. Par nom exact");
 		System.out.println("5. Terminer");
 
-		int i = Tools.getIntegerInput();
+		int i=0;
+		try {
+			i = Tools.getIntegerInput();
+		} catch (IncorrectParam e) {
+			System.out.println(e.getMessage());
+		}
 
 		ArrayList<Plat> plats = new ArrayList<Plat>();
 
@@ -101,7 +112,8 @@ public class ServeurDashBoard {
 		System.out.println((plats.size()+1)+". Retour");
 
 		try {
-			int input = Tools.getIntegerInput();
+			int input=Tools.getIntegerInput();
+			
 			if(input-1 == plats.size()) {
 				System.out.println("ici");
 				return null;
@@ -109,8 +121,11 @@ public class ServeurDashBoard {
 				System.out.println("là");
 				return plats.get(input-1);
 			}
-		}catch(ArrayIndexOutOfBoundsException e) {
+		}catch(ArrayIndexOutOfBoundsException | IncorrectParam e) {
 			System.out.println("Nombre non valide");
+			System.out.println(e.getMessage());
+			readPlat();
+			
 		}
 		return null;
 	}

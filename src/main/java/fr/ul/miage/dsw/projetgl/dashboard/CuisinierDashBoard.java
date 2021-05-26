@@ -24,7 +24,13 @@ public class CuisinierDashBoard {
 		}
 		System.out.println((commandes.size()+1)+". Retour");
 
-		int input = Tools.getIntegerInput();
+		int input=0;
+		try {
+			input = Tools.getIntegerInput();
+		} catch (IncorrectParam e) {
+			System.out.println(e.getMessage());
+			showOrders();
+		}
 		if(input-1 < 0 && input > commandes.size())
 			return;
 
@@ -40,7 +46,13 @@ public class CuisinierDashBoard {
 		System.out.println("----------------");
 		System.out.println("1. Commande prête");
 		System.out.println("2. Quitter");
-		int i = Tools.getIntegerInput();
+		int i=0;
+		try {
+			i = Tools.getIntegerInput();
+		} catch (IncorrectParam e) {
+			System.out.println(e.getMessage());
+			modifyOrder(commande);
+		}
 		switch(i) {
 		case 1:
 			if(commande.ready()) {
@@ -62,7 +74,13 @@ public class CuisinierDashBoard {
 
 		System.out.println("3. Quitter");
 
-		int i = Tools.getIntegerInput();
+		int i=0;
+		try {
+			i = Tools.getIntegerInput();
+		} catch (IncorrectParam e) {
+			System.out.println(e.getMessage());
+			readCommand();
+		}
 
 		switch(i) {
 
@@ -90,11 +108,6 @@ public class CuisinierDashBoard {
 	}
 
 
-
-	public static void checkStocks(String nom) {
-		System.out.println( );
-		MatierePremiereCollection.getStock(nom);
-	}
 	
 	public static void checkMatieresPremieres() {
 		ArrayList<MatierePremiere> mp =MatierePremiereCollection.getMatieresPremieres();
