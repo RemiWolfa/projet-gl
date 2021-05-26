@@ -54,6 +54,7 @@ public class Plat extends Item{
 		return PlatCollection.getPlatByName(nom);
 	}
 	
+	
 	public static Plat trouverPlat(Categorie categorie) {
 		 return null;
 	}

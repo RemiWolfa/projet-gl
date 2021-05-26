@@ -11,14 +11,16 @@ public class ServeurTest {
 	@Test
 	@DisplayName("Vérifier si la table se trouve dans la base")
 	public void assertTableTrue() {
-		Table t1 = new Table(10);
-		
-		assertTrue(Serveur.affecterTable(t1));
+		Table t1 = new Table(1);
+		Serveur srv = new Serveur("0001","Alain");
+		assertTrue(srv.affecterTable(t1));
 	}
 	
+	@Test
 	public void assertTableFalse() {
-		Table t2 = new Table(-1);			
-		assertFalse(Serveur.affecterTable(t2));
+		Table t2 = new Table(-1);	
+		Serveur srv = new Serveur("0","Alain");
+		assertFalse(srv.affecterTable(t2));
 	}
 
 }
