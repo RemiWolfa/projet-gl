@@ -52,7 +52,15 @@ public class Plat extends Item{
 	}
 
 	public static Plat trouverPlat(String nom) {
-		return Plat.collection.find(new Document ("Nom", nom)).first();
+		 Plat plat = new Plat();
+		 Document doc =Plat.collection.find(new Document ("Nom", nom)).first();
+		 plat.nom = nom;
+		// plat.categorie = doc.get("Catégorie")
+		 return plat;
+	}
+	
+	public static Plat trouverPlat(Categorie categorie) {
+		 return null;
 	}
 
 

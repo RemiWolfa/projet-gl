@@ -43,6 +43,7 @@ public class ServeurDashBoard {
 	public static void createCommand() {
 		System.out.println("Voici les différents plats : \n" + Plat.listePlats());
 		String nom="";
+		Commande cmd = new Commande();
 
 		while(nom!="1") {
 			System.out.println("Quel est le nom du plat à ajouter à la commande ?\n Ecrivez 1 pour quitter.");
@@ -58,7 +59,7 @@ public class ServeurDashBoard {
 					nom = Tools.getStringInput();
 				}
 			}
-			Plat plat =
+			Plat plat = Plat.trouverPlat(nom);
 		}
 
 	}
