@@ -1,13 +1,17 @@
 package fr.ul.miage.dsw.projetgl.dashboard;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import fr.ul.miage.dsw.projetgl.Commande;
 import fr.ul.miage.dsw.projetgl.IncorrectParam;
 import fr.ul.miage.dsw.projetgl.Plat;
 import fr.ul.miage.dsw.projetgl.Serveur;
 import fr.ul.miage.dsw.projetgl.Table;
 import fr.ul.miage.dsw.projetgl.Tools;
 import fr.ul.miage.dsw.projetgl.Utilisateur;
+import fr.ul.miage.dsw.projetgl.database.CarteCollection;
+import fr.ul.miage.dsw.projetgl.database.PlatCollection;
 
 public class ServeurDashBoard {
 
@@ -26,6 +30,7 @@ public class ServeurDashBoard {
 			ServeurDashBoard.showTableStates();
 			break;
 		case 3:
+			ServeurDashBoard.createOrder();
 			return;
 		}
 		readCommand();
@@ -38,30 +43,70 @@ public class ServeurDashBoard {
 			System.out.println("Table numéro:"+table.num+" : "+table.etat);
 		}
 	}
+	
+	public static Plat readPlat() {
+		System.out.println("Rechercher plats dans : ");
+		System.out.println("1. Catégorie");
+		System.out.println("2. Carte du jour");
+		System.out.println("3. Par nom similaire");
+		System.out.println("4. Par nom exact");
+		System.out.println("5. Terminer");
 
+		int i = Tools.getIntegerInput();
 
-	public static void createCommand() {
-		System.out.println("Voici les différents plats : \n" + Plat.listePlats());
-		String nom="";
-		Commande cmd = new Commande();
+		ArrayList<Plat> plats = new ArrayList<Plat>();
 
-		while(nom!="1") {
-			System.out.println("Quel est le nom du plat à ajouter à la commande ?\n Ecrivez 1 pour quitter.");
-			nom = Tools.getStringInput();
-			Boolean verif = false;
-			while(!verif) {
-				
-				try {
-					verif = Plat.checkNomPlat(nom);
-				}
-				catch(IncorrectParam e) {
-					System.out.println(e.getMessage());
-					nom = Tools.getStringInput();
-				}
-			}
+		switch(i) {
+		case 1:
+			//TODO
+			break;
+		case 2:
+			plats = CarteCollection.getToDayPlats();
+			break;
+		case 3:
+			System.out.println("Entrez un nom à rechercher:");
+			String name = Tools.getStringInput();
+			plats = PlatCollection.getPlatsByName(name);
+			break;
+		case 4:
+			System.out.println("Entrez un nom exact à rechercher:");
+			String nom = Tools.getStringInput();
 			Plat plat = Plat.trouverPlat(nom);
+			return plat;
+		case 5:
+			return null;
 		}
 
+		for(int j = 0; j < plats.size(); j++) {//j+1 pour l'utilisateur
+			System.out.println((j+1)+". "+plats.get(j).nom);
+		}
+
+		System.out.println((plats.size()+1)+". Retour");
+
+		try {
+			int input = Tools.getIntegerInput();
+			if(input-1 == plats.size()) {
+				System.out.println("ici");
+				return null;
+			}else {
+				System.out.println("là");
+				return plats.get(input-1);
+			}
+		}catch(ArrayIndexOutOfBoundsException e) {
+			System.out.println("Nombre non valide");
+		}
+		return null;
+	}
+
+
+	public static void createOrder() {
+		Commande commande = new Commande(1);//utiliser une reservation valide
+		Plat plat = ServeurDashBoard.readPlat();
+
+		while(plat != null) {
+			System.out.println(plat.nom);
+			plat = ServeurDashBoard.readPlat();
+		}
 	}
 	public static void showTables() {
 

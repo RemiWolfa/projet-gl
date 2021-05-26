@@ -6,28 +6,12 @@ import java.util.ArrayList;
 
 import fr.ul.miage.dsw.projetgl.Commande;
 import fr.ul.miage.dsw.projetgl.Plat;
-import fr.ul.miage.dsw.projetgl.Tools;
-import fr.ul.miage.dsw.projetgl.database.MatierePremiereCollection;
 import fr.ul.miage.dsw.projetgl.database.ReservationCollection;
 
 
 public class CuisinierDashBoard {
 
-	/* public static void readCommand() {
-		System.out.println("----------------");
-		System.out.println("1. Visualiser/envoyer commandes");
-		System.out.println("2. Quitter");
-
-		int i = Tools.getIntegerInput();
-		switch(i) {
-		case 1:
-			CuisinierDashBoard.showOrders();
-			break;
-		case 2:
-			return;
-		}
-		readCommand();
-	} */
+	
 
 	public static void showOrders() {
 		ArrayList<Commande> commandes = ReservationCollection.getWaitingOrders();
@@ -80,29 +64,13 @@ public class CuisinierDashBoard {
 		System.out.println("3. Quitter");
 
 		int i = Tools.getIntegerInput();
-		Boolean verif = false;
-		String numero = "";
 
 		switch(i) {
 
 		case 1:
-			System.out.println("Numéro :");	
-
-			while(!verif) {
-				try {
-					numero = Tools.getStringInput();
-					verif=checkParamCommand(numero);
-				}
-				catch(IncorrectParam e) {
-					System.out.println(e.getMessage());
-				}
-
-			}
-
 			CuisinierDashBoard.showOrders();
 			break;
 		case 2:
-			//CuisinierDashBoard.modifyOrder(commande);
 			break;
 		case 3:
 			return;
@@ -124,7 +92,7 @@ public class CuisinierDashBoard {
 
 
 	public static void checkStocks() {
-		System.out.println( MatierePremiereCollection.getStock());
+		//System.out.println( MatierePremiereCollection.getStock());
 	}
 
 	public static void creatMeat() {

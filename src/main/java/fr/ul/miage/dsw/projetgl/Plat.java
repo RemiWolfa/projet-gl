@@ -14,7 +14,6 @@ import fr.ul.miage.dsw.projetgl.database.PlatCollection;
 public class Plat extends Item{
 
 
-	public static MongoCollection<Document> collection;
 	public String nom;
 	public Categorie categorie;
 	public List<MatierePremiere> matierePremieres;
@@ -52,35 +51,16 @@ public class Plat extends Item{
 	}
 
 	public static Plat trouverPlat(String nom) {
-		 Plat plat = new Plat();
-		 Document doc =Plat.collection.find(new Document ("Nom", nom)).first();
-		 plat.nom = nom;
-		// plat.categorie = doc.get("Catégorie")
-		 return plat;
+		return PlatCollection.getPlatByName(nom);
 	}
 	
 	public static Plat trouverPlat(Categorie categorie) {
 		 return null;
 	}
 
-
-	public static String listePlats(){
-		String str = "";
-		FindIterable<Document> doc =Plat.collection.find();
-		for (Document d : doc) {
-			str += d.get("Nom")+"\n";
-		}
-		return str;
-	}
 	
-	public static Boolean checkNomPlat(String nom) throws IncorrectParam {
-		
-			if(!Plat.collection.find(new Document ("Nom", nom)).first().equals(null)) {
-				return true;
-			}
-	
-			throw new IncorrectParam("Le nom de plat n'existe pas : " + nom +" \n Veuillez retaper le nom.");
-		
+	public static Boolean exist(String nom)  {
+		return PlatCollection.exist(new Plat(nom));
 	}
 
 }

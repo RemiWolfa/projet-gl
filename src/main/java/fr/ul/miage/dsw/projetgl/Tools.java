@@ -29,52 +29,6 @@ public class Tools {
         return date;
 	}
 
-	public static Plat readPlat() {
-		System.out.println("Rechercher plats dans : ");
-		System.out.println("1. Catégorie");
-		System.out.println("2. Carte du jour");
-		System.out.println("3. Par nom");
-		System.out.println("4. Terminer");
-
-		int i = Tools.getIntegerInput();
-
-		ArrayList<Plat> plats = new ArrayList<Plat>();
-
-		switch(i) {
-		case 1:
-			//TODO
-			break;
-		case 2:
-			plats = CarteCollection.getToDayPlats();
-			break;
-		case 3:
-			System.out.println("Entrez un nom à rechercher:");
-			String name = Tools.getStringInput();
-			plats = PlatCollection.getPlatsByName(name);
-			break;
-		case 4:
-			return null;
-		}
-
-		for(int j = 0; j < plats.size(); j++) {//j+1 pour l'utilisateur
-			System.out.println((j+1)+". "+plats.get(j).nom);
-		}
-
-		System.out.println((plats.size()+1)+". Retour");
-
-		try {
-			int input = getIntegerInput();
-			if(input-1 == plats.size()) {
-				return Tools.readPlat();
-			}else {
-				return plats.get(input-1);
-			}
-		}catch(ArrayIndexOutOfBoundsException e) {
-			System.out.println("Nombre non valide");
-		}
-		return null;
-	}
-
 	public static int getIntegerInput() {
 		Scanner scan = new Scanner(System.in);
 		return scan.nextInt();//TODO
