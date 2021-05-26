@@ -73,6 +73,7 @@ public class Main {
 		if(Utilisateur.connectedUser != null)
 			System.out.println("Utilisateur de type:"+Utilisateur.connectedUser.typeUser);
 		MaitreHotelDashBoard.readCommand();
+
 	}
 
 	 //public static void main(String[] args) {

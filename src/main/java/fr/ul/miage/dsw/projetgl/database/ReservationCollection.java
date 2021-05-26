@@ -16,9 +16,12 @@ import com.mongodb.client.model.Filters;
 import fr.ul.miage.dsw.projetgl.Commande;
 import fr.ul.miage.dsw.projetgl.Plat;
 import fr.ul.miage.dsw.projetgl.Reservation;
+import fr.ul.miage.dsw.projetgl.Serveur;
+import fr.ul.miage.dsw.projetgl.Table;
 import fr.ul.miage.dsw.projetgl.Tools;
 import fr.ul.miage.dsw.projetgl.Utilisateur;
 import fr.ul.miage.dsw.projetgl.enumeration.EtatCommande;
+import fr.ul.miage.dsw.projetgl.enumeration.EtatReservation;
 
 public class ReservationCollection {
 	
@@ -95,6 +98,28 @@ public class ReservationCollection {
 				}
 				);
 		return commandes;
+	}
+	
+	public static List<Reservation> getCurrentReservations(Serveur serveur){
+		List<Reservation> reservations = new ArrayList<Reservation>();
+		
+		Document docRequest = new Document("Table", new Document("$in", TableCollection.getTableNumbers(serveur.tables)));
+		ArrayList<String> notPresentStates = new ArrayList<String>();
+		notPresentStates.add(EtatReservation.enAttente.toString());
+		notPresentStates.add(EtatReservation.terminee.toString());
+		docRequest.append("Etat", new Document("$nin", notPresentStates));
+		
+		
+		ReservationCollection.collection.find(docRequest).forEach(
+				ReservationDoc -> {
+					Reservation reservation = new Reservation(ReservationDoc.getDate("DateArrivee"));
+					reservation.numReservation = ReservationDoc.getInteger("Numero");
+					reservation.etatReservation = EtatReservation.valueOf(ReservationDoc.getString("Etat"));
+					reservation.table = new Table(ReservationDoc.getInteger("Table"));
+					reservations.add(reservation);
+				});
+		
+		return reservations;
 	}
 
 	public static boolean exist(Reservation reservation) {
