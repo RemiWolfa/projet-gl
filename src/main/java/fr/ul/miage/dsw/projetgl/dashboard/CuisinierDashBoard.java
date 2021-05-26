@@ -121,9 +121,7 @@ public class CuisinierDashBoard {
 		return true;
 	}
 
-	public static void seeCommand(String numero) {
 
-	}
 
 	public static void checkStocks() {
 		System.out.println( MatierePremiereCollection.getStock());
