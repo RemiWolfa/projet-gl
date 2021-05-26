@@ -21,7 +21,13 @@ public class ServeurDashBoard {
 		System.out.println("2. Afficher l'état des tables");
 		System.out.println("3. Créer une commande");
 
-		int i = Tools.getIntegerInput();
+		int i=0;
+		try {
+			i = Tools.getIntegerInput();
+		} catch (IncorrectParam e) {
+			System.out.println(e.getMessage());
+			readCommand();
+		}
 		switch(i) {
 		case 1:
 			ServeurDashBoard.showTables();
@@ -52,7 +58,12 @@ public class ServeurDashBoard {
 		System.out.println("4. Par nom exact");
 		System.out.println("5. Terminer");
 
-		int i = Tools.getIntegerInput();
+		int i=0;
+		try {
+			i = Tools.getIntegerInput();
+		} catch (IncorrectParam e) {
+			System.out.println(e.getMessage());
+		}
 
 		ArrayList<Plat> plats = new ArrayList<Plat>();
 
@@ -84,7 +95,12 @@ public class ServeurDashBoard {
 		System.out.println((plats.size()+1)+". Retour");
 
 		try {
-			int input = Tools.getIntegerInput();
+			int input=0;
+			try {
+				input = Tools.getIntegerInput();
+			} catch (IncorrectParam e) {
+				System.out.println(e.getMessage());
+			}
 			if(input-1 == plats.size()) {
 				System.out.println("ici");
 				return null;

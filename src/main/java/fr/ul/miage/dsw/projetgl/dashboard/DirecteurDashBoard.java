@@ -2,7 +2,7 @@ package fr.ul.miage.dsw.projetgl.dashboard;
 
 import java.util.ArrayList;
 
-
+import fr.ul.miage.dsw.projetgl.IncorrectParam;
 import fr.ul.miage.dsw.projetgl.Tools;
 import fr.ul.miage.dsw.projetgl.Utilisateur;
 import fr.ul.miage.dsw.projetgl.database.UserCollection;
@@ -16,7 +16,13 @@ public class DirecteurDashBoard {
 		System.out.println("2. Modifier un utilisateur");
 		System.out.println("3. Quitter");
 
-		int i = Tools.getIntegerInput();
+		int i=0;
+		try {
+			i = Tools.getIntegerInput();
+		} catch (IncorrectParam e) {
+			System.out.println(e.getMessage());
+			readCommand();
+		}
 		switch(i) {
 		case 1:
 			DirecteurDashBoard.createUser();
@@ -38,7 +44,13 @@ public class DirecteurDashBoard {
 		}
 		System.out.println((users.size()+1)+". Retour");
 		
-		int input = Tools.getIntegerInput();
+		int input=0;
+		try {
+			input = Tools.getIntegerInput();
+		} catch (IncorrectParam e) {
+			System.out.println(e.getMessage());
+			modifyUser();
+		}
 		if(input-1 < 0 && input > users.size())
 			return;
 		
@@ -71,7 +83,13 @@ public class DirecteurDashBoard {
 		System.out.println("3. Assistant de service");
 		System.out.println("4. Cuisinier");
 		System.out.println("5. Serveur");
-		int i = Tools.getIntegerInput();
+		int i=0;
+		try {
+			i = Tools.getIntegerInput();
+		} catch (IncorrectParam e) {
+			System.out.println(e.getMessage());
+			getSelectUserType();
+		}
 
 		switch(i) {
 		case 1:

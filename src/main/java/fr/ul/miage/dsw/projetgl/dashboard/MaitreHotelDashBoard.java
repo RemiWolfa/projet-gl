@@ -2,12 +2,16 @@ package fr.ul.miage.dsw.projetgl.dashboard;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
+import fr.ul.miage.dsw.projetgl.IncorrectParam;
+import fr.ul.miage.dsw.projetgl.MatierePremiere;
 import fr.ul.miage.dsw.projetgl.Reservation;
 import fr.ul.miage.dsw.projetgl.Serveur;
 import fr.ul.miage.dsw.projetgl.Table;
 import fr.ul.miage.dsw.projetgl.Tools;
 import fr.ul.miage.dsw.projetgl.Utilisateur;
+import fr.ul.miage.dsw.projetgl.database.MatierePremiereCollection;
 import fr.ul.miage.dsw.projetgl.database.TableCollection;
 import fr.ul.miage.dsw.projetgl.database.UserCollection;
 
@@ -18,9 +22,16 @@ public class MaitreHotelDashBoard {
 		System.out.println("----------------");
 		System.out.println("1. Prendre une reservation");
 		System.out.println("2. Affecter une table à un serveur");
-		System.out.println("3. Quitter");
+		System.out.println("3. Affecter une table à un serveur");
+		System.out.println("4. Quitter");
 
-		int i = Tools.getIntegerInput();
+		int i=0;
+		try {
+			i = Tools.getIntegerInput();
+		} catch (IncorrectParam e) {
+			System.out.println(e.getMessage());
+			readCommand();
+		}
 		switch(i) {
 		case 1:
 			MaitreHotelDashBoard.createReservation();
@@ -28,7 +39,10 @@ public class MaitreHotelDashBoard {
 		case 2:
 			MaitreHotelDashBoard.affectTableToServeur();
 			break;
-		case 3:
+		case 3 :
+			
+			break;
+		case 4:
 			return;
 		}
 		readCommand();
@@ -42,7 +56,13 @@ public class MaitreHotelDashBoard {
 		}
 		System.out.println((serveurs.size()+1)+". Retour");
 
-		int input = Tools.getIntegerInput();
+		int input =0 ;
+		try {
+			input = Tools.getIntegerInput();
+		} catch (IncorrectParam e) {
+			System.out.println(e.getMessage());
+			affectTableToServeur();
+		}
 		if(input-1 < 0 && input > serveurs.size())
 			return;
 
@@ -52,7 +72,13 @@ public class MaitreHotelDashBoard {
 
 	private static void affectTable(Serveur serveur) {
 		System.out.println("Numéro de table:");
-		int num = Tools.getIntegerInput();
+		int num=0;
+		try {
+			num = Tools.getIntegerInput();
+		} catch (IncorrectParam e) {
+			System.out.println(e.getMessage());
+			affectTable(serveur);
+		}
 		if(serveur.hasTable(num)) {
 			System.out.println("La table est déjà affectée au serveur!");
 			//on peut reboucler ici
@@ -70,14 +96,45 @@ public class MaitreHotelDashBoard {
 			System.out.println("La table a été affectée à "+serveur.nom);
 		}
 			
-
 	}
-
+	
+	public static void updateStock() {
+		ArrayList<MatierePremiere> mp =MatierePremiereCollection.getMatieresPremieres();
+		int i=0;
+		System.out.println("De quelle matière souhaitez-vous modifier le stock ?\n");
+		HashMap<Integer,String> map=new HashMap<Integer, String>();
+		
+		for(MatierePremiere matiere : mp) {
+			System.out.println(i+") "+matiere.nom+" \n ");
+			map.put(i, matiere.nom);
+			i++;
+		}
+		
+		try {
+			int num = Tools.getIntegerInput();
+			System.out.println("Quelle valeur de stock souhaitez vous entrer ?");
+			int stock = Tools.getIntegerInput();
+			MatierePremiereCollection.setStock(map.get(num), stock);
+		}
+		catch(IncorrectParam e) {
+			System.out.println(e.getMessage());
+			updateStock();
+		}
+		
+		
+	}
+	
 	public static void createReservation() {
 		System.out.println("Date:");
 		Date date = Tools.getDateInput();
 		System.out.println("Numéro de table:");
-		int numTable = Tools.getIntegerInput();
+		int numTable=0;;
+		try {
+			numTable = Tools.getIntegerInput();
+		} catch (IncorrectParam e) {
+			System.out.println(e.getMessage());
+			createReservation();
+		}
 		Reservation reservation = new Reservation(date);
 		reservation.table = new Table(numTable);//pas propre
 		if(reservation.save()) {

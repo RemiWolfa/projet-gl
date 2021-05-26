@@ -29,9 +29,18 @@ public class Tools {
         return date;
 	}
 
-	public static int getIntegerInput() {
-		Scanner scan = new Scanner(System.in);
-		return scan.nextInt();//TODO
+	public static int getIntegerInput() throws IncorrectParam{
+		
+		try {
+			Scanner scan = new Scanner(System.in);
+			if(scan.nextInt()<0) {
+				throw new IncorrectParam("La valeur ne peut pas être négative.");
+			}
+			return scan.nextInt();//TODO
+		}
+		catch(NumberFormatException e) {
+			throw new IncorrectParam("Veuillez entrer une chaîne de caractère.");
+		}
 	}
 
 	public static String getStringInput() {
