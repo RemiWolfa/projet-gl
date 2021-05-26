@@ -4,6 +4,7 @@ package fr.ul.miage.dsw.projetgl;
 import java.util.ArrayList;
 import java.util.Date;
 
+import fr.ul.miage.dsw.projetgl.dashboard.CuisinierDashBoard;
 import fr.ul.miage.dsw.projetgl.dashboard.DirecteurDashBoard;
 import fr.ul.miage.dsw.projetgl.dashboard.MaitreHotelDashBoard;
 import fr.ul.miage.dsw.projetgl.dashboard.ServeurDashBoard;
@@ -23,17 +24,18 @@ public class Main {
 		serveur.affecterTable(new Table(1));
 		System.out.println("création d'un utilisateur:"+serveur.save());
 		
-		Utilisateur.connexion("0001"); 
+		Connexion connexion = new Connexion();
+		connexion.connexion("0001"); 
 		
 		Reservation reservation = new Reservation(new Date());
 		reservation.table = new Table(1);
-		Commande entre = new Commande(reservation);
+		Commande entre = new Commande(reservation.numReservation);
 		entre.date = new Date();
 		entre.etatCommande = EtatCommande.conclue;
 		
 		System.out.println("ajouter pizza:"+ entre.ajouterPlat(new Plat("pizza")));
 		entre.ajouterPlat(new Plat("frites"));
-		entre.user = serveur;
+		entre.userId = serveur.identifiant;
 		
 		reservation.ajouterCommande(entre);
 		
@@ -66,10 +68,9 @@ public class Main {
 		categorie.add(new Categorie("viande blanche"));
 		categorie.save();
 		
-		System.out.println("connection:"+Utilisateur.connexion("0001"));
 		if(Utilisateur.connectedUser != null)
 			System.out.println("Utilisateur de type:"+Utilisateur.connectedUser.typeUser);
-		ServeurDashBoard.readCommand();
+		CuisinierDashBoard.readCommand();
 	}
 
 	 //public static void main(String[] args) {

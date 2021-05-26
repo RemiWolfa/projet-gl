@@ -2,16 +2,23 @@ package fr.ul.miage.dsw.projetgl.database;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.bson.Document;
+import org.bson.conversions.Bson;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Accumulators;
 import com.mongodb.client.model.Aggregates;
+import com.mongodb.client.model.Filters;
 
 import fr.ul.miage.dsw.projetgl.Commande;
+import fr.ul.miage.dsw.projetgl.Plat;
 import fr.ul.miage.dsw.projetgl.Reservation;
+import fr.ul.miage.dsw.projetgl.Tools;
+import fr.ul.miage.dsw.projetgl.Utilisateur;
+import fr.ul.miage.dsw.projetgl.enumeration.EtatCommande;
 
 public class ReservationCollection {
 	
@@ -53,7 +60,7 @@ public class ReservationCollection {
 		
 		for(Commande commande : commandes) {
 			Document commandeDocument = new Document();
-			commandeDocument.append("Utilisateur", commande.user.identifiant);
+			commandeDocument.append("Utilisateur", commande.userId);
 			commandeDocument.append("Date", commande.date);
 			commandeDocument.append("Etat", commande.etatCommande.toString());
 			commandeDocument.append("Plats", PlatCollection.getPlatNames(commande.getPlats()));
@@ -62,14 +69,59 @@ public class ReservationCollection {
 		}
 		return commandeDocuments;
 	}
+	
+	public static ArrayList<Commande> getWaitingOrders(){
+		List<Bson> aggregates = Arrays.asList(//TODO
+				Aggregates.unwind("$Commandes"),
+				Aggregates.match(new Document("Commandes.Etat", EtatCommande.passee.toString())),
+				Aggregates.sort(new Document("Commandes.date", 1))
+				);
+
+		ArrayList<Commande> commandes = new ArrayList<Commande>();
+
+		ReservationCollection.collection.aggregate(aggregates).forEach(
+				ReservationDoc -> {
+					Commande commande = new Commande(ReservationDoc.getInteger("Numero"));
+					
+					Document CommandeDoc = (Document) ReservationDoc.get("Commandes");
+					
+					commande.date = CommandeDoc.getDate("Date");
+					commande.userId = CommandeDoc.getString("Utilisateur");
+					
+					List<String> platNames = (List<String>) CommandeDoc.get("Plats");
+					commande.setPlats(PlatCollection.getPlatsFromNames(platNames));
+					
+					commandes.add(commande);
+				}
+				);
+		return commandes;
+	}
 
 	public static boolean exist(Reservation reservation) {
-		return ReservationCollection.collection.countDocuments(new Document("Numero", reservation.numReservation)) > 0;
+		return ReservationCollection.exist(reservation.numReservation);
+	}
+	
+	public static boolean exist(int numReservation) {
+		return ReservationCollection.collection.countDocuments(new Document("Numero", numReservation)) > 0;
 	}
 	
 	public static boolean update(Reservation reservation) {
 		//TODO
 		return true;
 	}
+
+	public static boolean updateState(Commande commande) {
+		if(!exist(commande.reservationNum)) 
+			return false;
+		
+		Document docRequest = new Document("Numero", commande.reservationNum);
+		docRequest.append("Commandes.Date", commande.date);
+		
+		Document update = new Document("$set", new Document("Commandes.$.Etat", commande.etatCommande.toString()));
+		
+		ReservationCollection.collection.updateOne(docRequest, update);
+		return true;
+	}
+	
 
 }

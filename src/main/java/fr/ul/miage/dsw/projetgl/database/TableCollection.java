@@ -48,6 +48,8 @@ public class TableCollection {
 
 	public static List<Table> getTablesFromNumbers(ArrayList<Integer> tableNums) {		
 		ArrayList<Table> tables = new ArrayList<Table>();
+		if(tableNums == null || tableNums.size() == 0)
+			return tables;
 		
 		Document in = new Document("$in", tableNums);
 		Document requestDoc = new Document("Numero", in);

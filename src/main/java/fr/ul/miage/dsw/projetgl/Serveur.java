@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.ul.miage.dsw.projetgl.database.TableCollection;
+import fr.ul.miage.dsw.projetgl.database.UserCollection;
 import fr.ul.miage.dsw.projetgl.enumeration.EtatReservation;
 import fr.ul.miage.dsw.projetgl.enumeration.TypeUtilisateur;
 
@@ -44,6 +45,18 @@ public class Serveur extends Utilisateur{
 	public Boolean affecterTable(Table table) {
 		this.tables.add(table);
 		return true;
+	}
+
+	public boolean updateTables() {
+		return UserCollection.updateTables(this);
+	}
+
+	public boolean hasTable(int num) {
+		for(Table table : tables) {
+			if(table.num == num)
+				return true;
+		}
+		return false;
 	}
 	
 }
