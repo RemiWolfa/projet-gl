@@ -44,7 +44,7 @@ public class Serveur extends Utilisateur{
 	
 	public Boolean affecterTable(Table table) {
 		this.tables.add(table);
-		return true;
+		return false;//TODO returner false si la table n'existe pas
 	}
 
 	public boolean updateTables() {

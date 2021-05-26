@@ -33,10 +33,11 @@ public class Tools {
 		
 		try {
 			Scanner scan = new Scanner(System.in);
-			if(scan.nextInt()<0) {
+			int i = scan.nextInt();
+			if(i<0) {
 				throw new IncorrectParam("La valeur ne peut pas être négative.");
 			}
-			return scan.nextInt();//TODO
+			return i;
 		}
 		catch(NumberFormatException e) {
 			throw new IncorrectParam("Veuillez entrer une chaîne de caractère.");

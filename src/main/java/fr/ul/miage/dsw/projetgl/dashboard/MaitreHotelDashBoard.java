@@ -104,12 +104,12 @@ public class MaitreHotelDashBoard {
 		System.out.println("De quelle matière souhaitez-vous modifier le stock ?\n");
 		
 		for(MatierePremiere matiere : mp) {
-			System.out.println(i+") "+matiere.nom+" \n ");
+			System.out.println(i+". "+matiere.nom+" \n ");
 			i++;
 		}
 		
 		try {
-			int num = Tools.getIntegerInput();
+			int num = Tools.getIntegerInput();//TODO verifier si 0 (car 0-1 < -1)
 			System.out.println("Quelle valeur de stock souhaitez vous entrer ?");
 			int stock = Tools.getIntegerInput();
 			MatierePremiereCollection.setStock(mp.get(num-1).nom, stock);
