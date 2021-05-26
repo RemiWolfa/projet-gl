@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.bson.Document;
 
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 
 import fr.ul.miage.dsw.projetgl.MatierePremiere;
@@ -31,6 +32,28 @@ public class MatierePremiereCollection {
 
 	public static boolean exist(MatierePremiere mp) {
 		return MatierePremiereCollection.collection.countDocuments(new Document("Nom", mp.nom)) > 0;
+	}
+	
+	public static String getStock() {
+		FindIterable<Document> doc =MatierePremiereCollection.collection.find();
+		
+		String res = "";
+		
+		for(Document d : doc) {
+			
+			res +="\n -----\n Nom "+d.get("Nom")+"\n";
+			res += d.get("EnPoids").equals(false)?"Unités : ":"Poids en kg : "  +d.get("Stock")+"\n";
+			
+		}
+		return res;
+	}
+	
+	public static void setStock(String nom, int quantite) {
+		Document doc =MatierePremiereCollection.collection.find(new Document ("Nom", nom)).first();
+		
+		doc.append("Stock", Integer.parseInt(doc.get("Stock").toString())  +quantite);
+		
+		
 	}
 
 
