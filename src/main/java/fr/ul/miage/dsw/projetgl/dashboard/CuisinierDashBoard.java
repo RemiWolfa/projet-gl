@@ -12,7 +12,7 @@ import fr.ul.miage.dsw.projetgl.database.ReservationCollection;
 
 
 public class CuisinierDashBoard {
-	
+
 	/* public static void readCommand() {
 		System.out.println("----------------");
 		System.out.println("1. Visualiser/envoyer commandes");
@@ -31,26 +31,26 @@ public class CuisinierDashBoard {
 
 	public static void showOrders() {
 		ArrayList<Commande> commandes = ReservationCollection.getWaitingOrders();
-		
+
 		for(int i = 0; i < commandes.size(); i++) {
 			Commande commande = commandes.get(i);
 			System.out.println((i+1)+". "+Tools.format(commande.date) + " : " + commande.getPlats().size()+" plats");
 		}
 		System.out.println((commandes.size()+1)+". Retour");
-		
+
 		int input = Tools.getIntegerInput();
 		if(input-1 < 0 && input > commandes.size())
 			return;
-		
+
 		CuisinierDashBoard.modifyOrder(commandes.get(input-1));
-		
+
 	}
-	
+
 	public static void modifyOrder(Commande commande) {
 		for(Plat plat : commande.getPlats()) {
 			System.out.println(plat.nom);
 		}
-		
+
 		System.out.println("----------------");
 		System.out.println("1. Commande prête");
 		System.out.println("2. Quitter");
@@ -64,6 +64,10 @@ public class CuisinierDashBoard {
 			}
 			break;
 		case 2:
+			checkStocks();
+			break;
+
+		case 3:
 			return;
 		}
 	}
@@ -71,10 +75,9 @@ public class CuisinierDashBoard {
 	public static void readCommand() {
 		System.out.println("----------------");
 		System.out.println("1. Visualiser / envoyer commande");
-		System.out.println("2. ");
-		System.out.println("3. Consulter les stocks");
+		System.out.println("2. Consulter les stocks");
 
-		System.out.println("4. Quitter");
+		System.out.println("3. Quitter");
 
 		int i = Tools.getIntegerInput();
 		Boolean verif = false;
@@ -123,7 +126,7 @@ public class CuisinierDashBoard {
 	}
 
 	public static void checkStocks() {
-	System.out.println( MatierePremiereCollection.getStock());
+		System.out.println( MatierePremiereCollection.getStock());
 	}
 
 	public static void creatMeat() {
@@ -132,6 +135,6 @@ public class CuisinierDashBoard {
 	}
 
 
-	
-	
+
+
 }
