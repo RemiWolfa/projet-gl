@@ -71,5 +71,14 @@ public class Plat extends Item{
 		}
 		return true;
 	}
+	
+	public boolean equals(Object o) {
+		if(!(o instanceof Plat))
+			return false;
+		
+		Plat plat = (Plat)o;
+		return plat.nom.equalsIgnoreCase(this.nom);
+		
+	}
 
 }
