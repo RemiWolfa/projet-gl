@@ -1,13 +1,17 @@
 package fr.ul.miage.dsw.projetgl.database;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.OptionalDouble;
+import java.util.concurrent.TimeUnit;
 
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Accumulators;
 import com.mongodb.client.model.Aggregates;
@@ -108,6 +112,27 @@ public class ReservationCollection {
 	public static boolean update(Reservation reservation) {
 		//TODO
 		return true;
+	}
+	
+	public static Date meanReservation() {
+		FindIterable<Document> res = ReservationCollection.collection.find();
+		
+		Date dateArrivee = new Date();
+		Date dateDepart = new Date();
+		ArrayList<Long> listDate = new ArrayList<Long>();
+		long diff;
+		TimeUnit timeUnit = TimeUnit.MINUTES;
+		
+		
+		for(Document doc : res) {
+			dateArrivee = doc.getDate("dateArrivee");
+			dateDepart = doc.getDate("dateDepart");
+			diff = dateArrivee.getTime() - dateDepart.getTime();
+		    listDate.add(timeUnit.convert(diff,TimeUnit.MILLISECONDS));
+		}
+		Double average = listDate.stream().mapToDouble(num -> Double.parseDouble(num.toString())).average().getAsDouble();
+		int hours = (average % 60);
+		
 	}
 
 	public static boolean updateState(Commande commande) {
