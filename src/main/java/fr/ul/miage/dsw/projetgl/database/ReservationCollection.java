@@ -169,33 +169,35 @@ public class ReservationCollection {
 	}
 
 
-	public static void bestProfitability(){
+	public static HashMap<String, Double> bestProfitability(){
 
-		List list = Arrays.asList(
+		List<Bson> list = Arrays.asList(
 				Aggregates.unwind("$Commandes"),
 				Aggregates.match(new Document("Commandes.Etat", "conclue")),
 				Aggregates.unwind("$Commandes.Plats"),
 				Aggregates.group("$Commandes.Plats", Accumulators.sum("nbPlats",1)),
-				Aggregates.lookup("Plats", "Plats.Nom", "Nom" , "Plat")
+				Aggregates.lookup("Plats", "_id", "Nom" , "Plat")
 				);
 
 
 		HashMap<String,Double> map = new HashMap<String,Double>();
-		
-		
 		ReservationCollection.collection.aggregate(list).forEach(
-				doc-> {
-					Document d =new Document("Plat", doc);
-					Double nb = d.getDouble("nbPlats");
-					Double prix = d.getDouble("Prix");
-					map.put(d.getString("Nom"), nb*prix);
-					
-				});
-		
+				result-> {
+					Document document = (Document) result;
+					ArrayList<Document> listPlats = (ArrayList<Document>) document.get("Plat");
+					if(listPlats != null && listPlats.size() > 0) {
+						Document platDocument = listPlats.get(0);
+						int nb = document.getInteger("nbPlats");
+						Double prix = platDocument.getDouble("Prix");
+						map.put(platDocument.getString("Nom"), nb*prix);
+					}
 
+				});
+
+		return map;
 
 	}
-	
+
 	public static Double averageReservationTime() {
 		FindIterable<Document> res = ReservationCollection.collection.find();
 
@@ -212,7 +214,7 @@ public class ReservationCollection {
 			diff = dateDepart.getTime() - dateArrivee.getTime();
 			listDate.add(timeUnit.convert(diff,TimeUnit.MILLISECONDS));
 		}
-		
+
 		Double average = listDate.stream().mapToDouble(num -> Double.parseDouble(num.toString())).average().getAsDouble();
 		return average;
 
