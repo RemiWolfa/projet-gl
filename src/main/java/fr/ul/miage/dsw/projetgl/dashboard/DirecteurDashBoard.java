@@ -9,6 +9,7 @@ import fr.ul.miage.dsw.projetgl.Tools;
 import fr.ul.miage.dsw.projetgl.Utilisateur;
 import fr.ul.miage.dsw.projetgl.database.CarteCollection;
 import fr.ul.miage.dsw.projetgl.database.PlatCollection;
+import fr.ul.miage.dsw.projetgl.database.ReservationCollection;
 import fr.ul.miage.dsw.projetgl.database.UserCollection;
 import fr.ul.miage.dsw.projetgl.enumeration.TypeUtilisateur;
 
@@ -19,7 +20,8 @@ public class DirecteurDashBoard {
 		System.out.println("1. Créer un utilisateur");
 		System.out.println("2. Modifier un utilisateur");
 		System.out.println("3. Modifier la carte du jour");
-		System.out.println("4. Quitter");
+		System.out.println("4. Connaitre le temps moyen que restent les clients");
+		System.out.println("5. Quitter");
 
 		int i=0;
 		try {
@@ -39,6 +41,9 @@ public class DirecteurDashBoard {
 			DirecteurDashBoard.modifyCarte();
 			break;
 		case 4:
+			DirecteurDashBoard.averageTime();
+			break;
+		case 5:
 			return;
 		}
 		readCommand();
@@ -83,6 +88,13 @@ public class DirecteurDashBoard {
 			return;
 		
 		System.out.println("modifier :"+users.get(input-1).nom);
+	}
+	
+	public static void averageTime() {
+		double time = ReservationCollection.averageReservationTime();
+		double hours = time % 60;
+		double minutes = time-(hours*60);
+		System.out.println("Un client reste en moyenne "+hours+" heures et "+minutes+" minutes");
 	}
 	
 	public static void createUser() {

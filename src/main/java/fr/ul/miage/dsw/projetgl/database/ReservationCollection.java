@@ -3,6 +3,7 @@ package fr.ul.miage.dsw.projetgl.database;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -174,13 +175,23 @@ public class ReservationCollection {
 				Aggregates.unwind("$Commandes"),
 				Aggregates.match(new Document("Commandes.Etat", "conclue")),
 				Aggregates.unwind("$Commandes.Plats"),
-				Aggregates.group("$Commandes.Plats", Accumulators.sum("nbPlats",1))
+				Aggregates.group("$Commandes.Plats", Accumulators.sum("nbPlats",1)),
+				Aggregates.lookup("Plats", "Plats.Nom", "Nom" , "Plat")
 				);
 
+
+		HashMap<String,Double> map = new HashMap<String,Double>();
+		
+		
 		ReservationCollection.collection.aggregate(list).forEach(
-				e-> {
-					System.out.println(e.toString());
+				doc-> {
+					Document d =new Document("Plat", doc);
+					Double nb = d.getDouble("nbPlats");
+					Double prix = d.getDouble("Prix");
+					map.put(d.getString("Nom"), nb*prix);
+					
 				});
+		
 
 
 	}
@@ -204,9 +215,6 @@ public class ReservationCollection {
 		
 		Double average = listDate.stream().mapToDouble(num -> Double.parseDouble(num.toString())).average().getAsDouble();
 		return average;
-		/*Double hours = (average % 60);
-		Double minutes = average-(hours*60);
-		return "Les réservations durent en moyenne "+hours+" heures et "+minutes+" minutes";*/
 
 	}
 

@@ -111,7 +111,9 @@ public class CuisinierDashBoard {
 		}
 
 		return true;
-	}
+	}/*Double hours = (average % 60);
+	Double minutes = average-(hours*60);
+	return "Les réservations durent en moyenne "+hours+" heures et "+minutes+" minutes";*/
 
 
 	
@@ -134,7 +136,7 @@ public class CuisinierDashBoard {
 		Plat plat = new Plat(name);
 		
 		String input; 
-		System.out.println("Entrez un de matiere première (exit pour arrêter):");
+		System.out.println("Entrez un nom de matiere première (exit pour arrêter):");
 		while(!(input = Tools.getStringInput()).equalsIgnoreCase("exit")) {
 			if(!"".equalsIgnoreCase(input)) {
 				
@@ -143,7 +145,7 @@ public class CuisinierDashBoard {
 				CuisinierDashBoard.createMatierePremiere(mp);
 			}
 			plat.ajouterMatierePremiere(mp);
-			System.out.println("Entrez un de matiere première (exit pour arrêter):");
+			System.out.println("Entrez un nom de matiere première (exit pour arrêter):");
 			}
 		}
 		
