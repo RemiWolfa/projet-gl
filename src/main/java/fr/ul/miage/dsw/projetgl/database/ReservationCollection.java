@@ -27,6 +27,7 @@ import fr.ul.miage.dsw.projetgl.Plat;
 import fr.ul.miage.dsw.projetgl.Reservation;
 import fr.ul.miage.dsw.projetgl.Serveur;
 import fr.ul.miage.dsw.projetgl.Table;
+import fr.ul.miage.dsw.projetgl.Tools;
 import fr.ul.miage.dsw.projetgl.enumeration.EtatCommande;
 import fr.ul.miage.dsw.projetgl.enumeration.EtatReservation;
 
@@ -201,26 +202,10 @@ public class ReservationCollection {
 
 				});
 
-		
-		return (HashMap<String,Double>)sort(map);
+		return Tools.sortHashByValue(map);
 	}
 
-	public static <K,V extends Comparable<? super V>> 
-	List<Entry<K, V>> sort(Map<K,V> map) {
 
-		List<Entry<K,V>> sortedEntries = new ArrayList<Entry<K,V>>(map.entrySet());
-
-		Collections.sort(sortedEntries, 
-				new Comparator<Entry<K,V>>() {
-			@Override
-			public int compare(Entry<K,V> e1, Entry<K,V> e2) {
-				return e2.getValue().compareTo(e1.getValue());
-			}
-		}
-				);
-
-		return sortedEntries;
-	}
 
 	public static Double averageReservationTime() {
 		FindIterable<Document> res = ReservationCollection.collection.find();
@@ -233,12 +218,17 @@ public class ReservationCollection {
 
 
 		for(Document doc : res) {
-			dateArrivee = doc.getDate("dateArrivee");
-			dateDepart = doc.getDate("dateDepart");
-			diff = dateDepart.getTime() - dateArrivee.getTime();
-			listDate.add(timeUnit.convert(diff,TimeUnit.MILLISECONDS));
+			dateArrivee = doc.getDate("DateArrivee");
+			dateDepart = doc.getDate("DateDepart");
+			if(dateArrivee != null && dateDepart != null) {
+				diff = dateDepart.getTime() - dateArrivee.getTime();
+				listDate.add(timeUnit.convert(diff,TimeUnit.MILLISECONDS));
+			}
 		}
 
+		if(listDate.size() == 0)
+			return 0.0;
+		
 		Double average = listDate.stream().mapToDouble(num -> Double.parseDouble(num.toString())).average().getAsDouble();
 		return average;
 

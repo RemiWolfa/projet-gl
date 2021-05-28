@@ -46,6 +46,7 @@ public class DirecteurDashBoard {
 			DirecteurDashBoard.averageTime();
 			break;
 		case 5:
+			DirecteurDashBoard.bestMeats();
 			break;
 		case 6:
 			return;
@@ -97,19 +98,22 @@ public class DirecteurDashBoard {
 	public static void bestMeats() {
 		HashMap<String,Double> map = new HashMap<String, Double>();
 		map= ReservationCollection.bestProfitability();
-		int i=0;
+		int i=1;
 		
-		map.forEach((name, money)-> {
-			int k=i+1;
-			System.out.println(k+")Le plat "+name+" a rapporté : "+money+" euros.\n");
-		});
+		System.out.println("Liste des plats les plus rentables : ");
+		
+		for(String name : map.keySet()) {
+			double money = map.get(name);
+			System.out.println(i+". "+name+" : "+money+" euros.\n");
+			i++;
+		}
 
 	}
 	
 	public static void averageTime() {
 		double time = ReservationCollection.averageReservationTime();
-		double hours = time % 60;
-		double minutes = time-(hours*60);
+		double minutes = time % 60;
+        int hours = (int) ((time-minutes)/60);
 		System.out.println("Un client reste en moyenne "+hours+" heures et "+minutes+" minutes");
 	}
 	
