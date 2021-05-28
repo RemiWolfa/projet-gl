@@ -13,6 +13,7 @@ public class Plat extends Item{
 	public String nom;
 	public Categorie categorie;
 	public List<MatierePremiere> matierePremieres;
+	public Double prix;
 
 
 	public Plat(String nom){

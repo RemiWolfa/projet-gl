@@ -1,6 +1,7 @@
 package fr.ul.miage.dsw.projetgl.dashboard;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import fr.ul.miage.dsw.projetgl.Carte;
 import fr.ul.miage.dsw.projetgl.IncorrectParam;
@@ -9,6 +10,7 @@ import fr.ul.miage.dsw.projetgl.Tools;
 import fr.ul.miage.dsw.projetgl.Utilisateur;
 import fr.ul.miage.dsw.projetgl.database.CarteCollection;
 import fr.ul.miage.dsw.projetgl.database.PlatCollection;
+import fr.ul.miage.dsw.projetgl.database.ReservationCollection;
 import fr.ul.miage.dsw.projetgl.database.UserCollection;
 import fr.ul.miage.dsw.projetgl.enumeration.TypeUtilisateur;
 
@@ -19,7 +21,9 @@ public class DirecteurDashBoard {
 		System.out.println("1. Créer un utilisateur");
 		System.out.println("2. Modifier un utilisateur");
 		System.out.println("3. Modifier la carte du jour");
-		System.out.println("4. Quitter");
+		System.out.println("4. Connaitre le temps moyen que restent les clients");
+		System.out.println("5. Avoir la liste des plats les plsu rentables");
+		System.out.println("6. Quitter");
 
 		int i=0;
 		try {
@@ -39,6 +43,12 @@ public class DirecteurDashBoard {
 			DirecteurDashBoard.modifyCarte();
 			break;
 		case 4:
+			DirecteurDashBoard.averageTime();
+			break;
+		case 5:
+			DirecteurDashBoard.bestMeats();
+			break;
+		case 6:
 			return;
 		}
 		readCommand();
@@ -83,6 +93,28 @@ public class DirecteurDashBoard {
 			return;
 		
 		System.out.println("modifier :"+users.get(input-1).nom);
+	}
+	
+	public static void bestMeats() {
+		HashMap<String,Double> map = new HashMap<String, Double>();
+		map= ReservationCollection.bestProfitability();
+		int i=1;
+		
+		System.out.println("Liste des plats les plus rentables : ");
+		
+		for(String name : map.keySet()) {
+			double money = map.get(name);
+			System.out.println(i+". "+name+" : "+money+" euros.\n");
+			i++;
+		}
+
+	}
+	
+	public static void averageTime() {
+		double time = ReservationCollection.averageReservationTime();
+		double minutes = time % 60;
+        int hours = (int) ((time-minutes)/60);
+		System.out.println("Un client reste en moyenne "+hours+" heures et "+minutes+" minutes");
 	}
 	
 	public static void createUser() {
