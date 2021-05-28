@@ -114,7 +114,7 @@ public class ReservationCollection {
 		return true;
 	}
 	
-	public static Date meanReservation() {
+	public static String meanReservation() {
 		FindIterable<Document> res = ReservationCollection.collection.find();
 		
 		Date dateArrivee = new Date();
@@ -127,11 +127,13 @@ public class ReservationCollection {
 		for(Document doc : res) {
 			dateArrivee = doc.getDate("dateArrivee");
 			dateDepart = doc.getDate("dateDepart");
-			diff = dateArrivee.getTime() - dateDepart.getTime();
+			diff = dateDepart.getTime() - dateArrivee.getTime();
 		    listDate.add(timeUnit.convert(diff,TimeUnit.MILLISECONDS));
 		}
 		Double average = listDate.stream().mapToDouble(num -> Double.parseDouble(num.toString())).average().getAsDouble();
-		int hours = (average % 60);
+		Double hours = (average % 60);
+		Double minutes = average-(hours*60);
+		return "Les réservations durent en moyenne "+hours+" heures et "+minutes+" minutes";
 		
 	}
 
