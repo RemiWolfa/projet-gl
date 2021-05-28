@@ -9,7 +9,7 @@ import fr.ul.miage.dsw.projetgl.enumeration.EtatReservation;
 
 public class Reservation {
 	
-	public int numReservation;//genere lors de la sauvegarde
+	public int numReservation;//genere lors de la sauvegarde en bd
 	public Date dateArrivee;
 	public Date dateDepart;
 	private List<Commande> commandes;
@@ -20,8 +20,11 @@ public class Reservation {
 		this.setEtat(EtatReservation.enAttente);
 		this.dateArrivee = dateArrivee;
 		this.numReservation = -1;
-		
 		this.commandes = new ArrayList<Commande>();
+	}
+	
+	public List<Commande> getCommandes() {
+		return this.commandes;
 	}
 	
 	public void setEtat(EtatReservation etatReservation) {
@@ -36,18 +39,6 @@ public class Reservation {
 		return ReservationCollection.save(this);
 	}
 	
-	
-	@Override
-	public String toString() {
-		return "Reservation [numReservation=" + numReservation + ", dateArrivee=" + dateArrivee + ", dateDepart="
-				+ dateDepart + ", commandes=" + commandes + ", table=" + table + ", etatReservation=" + etatReservation
-				+ "]";
-	}
-	
-	
-	public List<Commande> getCommandes() {
-		return this.commandes;
-	}
 	
 	
 

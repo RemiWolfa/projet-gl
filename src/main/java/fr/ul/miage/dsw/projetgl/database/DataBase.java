@@ -13,7 +13,7 @@ public class DataBase {
 	public static final String DATABASE_NAME = "restaurant";
 	public static final String CONNECTION_STRING = "mongodb+srv://dev:psw@cluster0.agvc1.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 
-	public static final String[] collections = {"Utilisateurs", "Etages", "Tables", "Cartes", "Reservations", "MatierePremieres", "Plats", "Categories"};
+	public static final String[] collections = {"Utilisateurs", "Tables", "Cartes", "Reservations", "MatierePremieres", "Plats", "Categories"};
 
 	public static MongoClient mongoClient;
 
@@ -28,7 +28,6 @@ public class DataBase {
 		TableCollection.collection = database.getCollection("Tables");
 		UserCollection.collection= database.getCollection("Utilisateurs"); 
 		ReservationCollection.collection = database.getCollection("Reservations");
-		EtageCollection.collection = database.getCollection("Etages");
 		CarteCollection.collection = database.getCollection("Cartes");
 		PlatCollection.collection = database.getCollection("Plats");
 		MatierePremiereCollection.collection = database.getCollection("MatierePremieres");

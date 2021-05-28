@@ -54,12 +54,11 @@ public class MatierePremiereCollection {
 		return res;*/
 	}
 	
-	public static void setStock(String nom, int quantite) {
+	public static boolean setStock(String nom, int quantite) {
 		Document docRequest=new Document ("Nom", nom);
 		Document update = new Document("$set", new Document("Stock", quantite));
 		MatierePremiereCollection.collection.updateOne(docRequest, update);
-		
-		
+		return true;
 	}
 	
 	public static ArrayList<MatierePremiere> getMatieresPremieres(){

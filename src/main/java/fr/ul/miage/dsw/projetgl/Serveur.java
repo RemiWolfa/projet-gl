@@ -9,13 +9,12 @@ import fr.ul.miage.dsw.projetgl.enumeration.EtatReservation;
 import fr.ul.miage.dsw.projetgl.enumeration.TypeUtilisateur;
 
 public class Serveur extends Utilisateur{
-	
+
 	public List<Table> tables;
 
-	
+
 	public Serveur(String identifiant, String nom) {
 		super(identifiant, nom, TypeUtilisateur.serveur);
-		// TODO Auto-generated constructor stub
 		this.tables = new ArrayList<Table>();
 	}
 
@@ -24,27 +23,16 @@ public class Serveur extends Utilisateur{
 		this.tables = table;
 	}
 
-	
-	
-	public List<Table> getTable(int numEtage) {
-		
-		return tables;
-	}
-	
-	public List<Table> getTables(EtatReservation etatReservation){
-		
-		return tables;
-		
-	}
-	
 	public List<Table> getTablesFromDB(){ //recupère les tables à jours
 		this.tables = TableCollection.updateTables(this.tables);
 		return this.tables;
 	}
-	
+
 	public Boolean affecterTable(Table table) {
+		if(!TableCollection.exist(table))
+			return false;
 		this.tables.add(table);
-		return false;//TODO returner false si la table n'existe pas
+		return true;
 	}
 
 	public boolean updateTables() {
@@ -58,5 +46,5 @@ public class Serveur extends Utilisateur{
 		}
 		return false;
 	}
-	
+
 }

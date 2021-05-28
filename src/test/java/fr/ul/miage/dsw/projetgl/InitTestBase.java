@@ -8,7 +8,6 @@ import com.mongodb.client.MongoDatabase;
 
 	import fr.ul.miage.dsw.projetgl.database.CarteCollection;
 	import fr.ul.miage.dsw.projetgl.database.CategorieCollection;
-	import fr.ul.miage.dsw.projetgl.database.EtageCollection;
 	import fr.ul.miage.dsw.projetgl.database.MatierePremiereCollection;
 	import fr.ul.miage.dsw.projetgl.database.PlatCollection;
 	import fr.ul.miage.dsw.projetgl.database.ReservationCollection;
@@ -21,7 +20,7 @@ import com.mongodb.client.MongoDatabase;
 		public static final String CONNECTION_STRING = "mongodb+srv://dev:psw@cluster0.agvc1.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 		public static MongoClient mongoClient;
 		public static MongoDatabase database;
-		public static final String[] collections = {"UtilisateursTest", "EtagesTest", "TablesTest", "CartesTest", "ReservationsTest", "MatierePremieresTest", "PlatsTest", "CategoriesTest"};
+		public static final String[] collections = {"UtilisateursTest", "TablesTest", "CartesTest", "ReservationsTest", "MatierePremieresTest", "PlatsTest", "CategoriesTest"};
 
 
 		private static void createCollectionsIfNotExist(MongoDatabase database) {
@@ -51,7 +50,6 @@ import com.mongodb.client.MongoDatabase;
 	        TableCollection.collection = database.getCollection("TablesTest");
 	        UserCollection.collection= database.getCollection("UtilisateursTest"); 
 	        ReservationCollection.collection = database.getCollection("ReservationsTest");
-	        EtageCollection.collection = database.getCollection("EtagesTest");
 	        CarteCollection.collection = database.getCollection("CartesTest");
 	        PlatCollection.collection = database.getCollection("PlatsTest");
 	        MatierePremiereCollection.collection = database.getCollection("MatierePremieresTest");

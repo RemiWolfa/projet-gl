@@ -8,8 +8,8 @@ import org.bson.Document;
 import com.mongodb.client.MongoCollection;
 
 import fr.ul.miage.dsw.projetgl.Serveur;
-import fr.ul.miage.dsw.projetgl.TypeUtilisateur;
 import fr.ul.miage.dsw.projetgl.Utilisateur;
+import fr.ul.miage.dsw.projetgl.enumeration.TypeUtilisateur;
 
 public class UserCollection {
 	
@@ -22,7 +22,7 @@ public static MongoCollection<Document> collection;
 		Document userDocument = new Document();
 		userDocument.append("Type", user.typeUser.toString());
 		userDocument.append("Nom", user.nom);
-		userDocument.append("Identifiant", user.identifiant);
+		userDocument.append("Identifiant", user.getId());
 		
 		if(user instanceof Serveur) {
 			Serveur server = (Serveur)user;
@@ -36,10 +36,10 @@ public static MongoCollection<Document> collection;
 	}
 	
 	public static boolean updateTables(Serveur server) {
-		if(!UserCollection.exist(server.identifiant))
+		if(!UserCollection.exist(server.getId()))
 			return false;
 		
-		Document requestDoc = new Document("Identifiant", server.identifiant);
+		Document requestDoc = new Document("Identifiant", server.getId());
 		Document update = new Document("$set", new Document("Tables", TableCollection.getTableNumbers(server.tables)));
 		
 		UserCollection.collection.updateOne(requestDoc, update);
@@ -47,7 +47,7 @@ public static MongoCollection<Document> collection;
 	}
 	
 	public static boolean exist(Utilisateur user) {
-		return UserCollection.collection.countDocuments(new Document("Identifiant", user.identifiant)) > 0;
+		return UserCollection.collection.countDocuments(new Document("Identifiant", user.getId())) > 0;
 	}
 	
 	public static boolean exist(String identifiant) {

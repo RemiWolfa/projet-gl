@@ -1,8 +1,8 @@
 package fr.ul.miage.dsw.projetgl;
 
 
-import fr.ul.miage.dsw.projetgl.dashboard.CuisinierDashBoard;
 import fr.ul.miage.dsw.projetgl.dashboard.DirecteurDashBoard;
+import fr.ul.miage.dsw.projetgl.dashboard.ServeurDashBoard;
 import fr.ul.miage.dsw.projetgl.database.DataBase;
 import fr.ul.miage.dsw.projetgl.database.ReservationCollection;
 
@@ -23,7 +23,7 @@ public class Main {
 		
 		if(Utilisateur.connectedUser != null)
 			System.out.println("Utilisateur de type:"+Utilisateur.connectedUser.typeUser);
-		DirecteurDashBoard.readCommand();
+		ServeurDashBoard.readCommand();
 		
 
 	}

@@ -6,7 +6,6 @@ public class Facture {
 	public Reservation reservation;
 	
 	public Facture(int numFacture, Reservation reservation) {
-		super();
 		this.numFacture = numFacture;
 		this.reservation = reservation;
 	}
