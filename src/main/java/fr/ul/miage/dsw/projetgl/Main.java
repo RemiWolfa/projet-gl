@@ -12,6 +12,7 @@ import fr.ul.miage.dsw.projetgl.dashboard.MaitreHotelDashBoard;
 import fr.ul.miage.dsw.projetgl.dashboard.ServeurDashBoard;
 import fr.ul.miage.dsw.projetgl.database.CarteCollection;
 import fr.ul.miage.dsw.projetgl.database.DataBase;
+import fr.ul.miage.dsw.projetgl.database.PlatCollection;
 import fr.ul.miage.dsw.projetgl.enumeration.EtatCommande;
 import fr.ul.miage.dsw.projetgl.enumeration.EtatReservation;
 
@@ -69,6 +70,8 @@ public class Main {
 		categorie.add(new Plat("steak"));
 		categorie.add(new Categorie("viande blanche"));
 		categorie.save();
+		
+		PlatCollection.bestProfitability();
 		
 		if(Utilisateur.connectedUser != null)
 			System.out.println("Utilisateur de type:"+Utilisateur.connectedUser.typeUser);

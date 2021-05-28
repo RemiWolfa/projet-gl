@@ -49,11 +49,16 @@ public class PlatCollection {
 
 				List list = Arrays.asList(
 						Aggregates.unwind("$Commandes"),
-						Aggregates.match(new Document("$Commandes.etatCommande", "conclue")),
-						Aggregates.unwind("$Commandes.plats"),
-						Aggregates.group("$Plats", Accumulators.sum("nbPlats",1))
+						Aggregates.match(new Document("Commandes.Etat", "conclue")),
+						Aggregates.unwind("$Commandes.Plats"),
+						Aggregates.group("$Commandes.Plats", Accumulators.sum("nbPlats",1))
 						);
-				list.forEach(e->System.out.println(e.toString()));
+				
+				ReservationCollection.collection.aggregate(list).forEach(
+						e-> {
+							System.out.println(e.toString());
+						});
+						
 				
 }
 
