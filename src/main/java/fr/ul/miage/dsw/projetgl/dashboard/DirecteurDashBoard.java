@@ -1,6 +1,7 @@
 package fr.ul.miage.dsw.projetgl.dashboard;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import fr.ul.miage.dsw.projetgl.Carte;
 import fr.ul.miage.dsw.projetgl.IncorrectParam;
@@ -21,7 +22,8 @@ public class DirecteurDashBoard {
 		System.out.println("2. Modifier un utilisateur");
 		System.out.println("3. Modifier la carte du jour");
 		System.out.println("4. Connaitre le temps moyen que restent les clients");
-		System.out.println("5. Quitter");
+		System.out.println("5. Avoir la liste des plats les plsu rentables");
+		System.out.println("6. Quitter");
 
 		int i=0;
 		try {
@@ -44,6 +46,8 @@ public class DirecteurDashBoard {
 			DirecteurDashBoard.averageTime();
 			break;
 		case 5:
+			break;
+		case 6:
 			return;
 		}
 		readCommand();
@@ -88,6 +92,18 @@ public class DirecteurDashBoard {
 			return;
 		
 		System.out.println("modifier :"+users.get(input-1).nom);
+	}
+	
+	public static void bestMeats() {
+		HashMap<String,Double> map = new HashMap<String, Double>();
+		map= ReservationCollection.bestProfitability();
+		int i=0;
+		
+		map.forEach((name, money)-> {
+			int k=i+1;
+			System.out.println(k+")Le plat "+name+" a rapporté : "+money+" euros.\n");
+		});
+
 	}
 	
 	public static void averageTime() {

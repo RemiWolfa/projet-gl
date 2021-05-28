@@ -2,10 +2,17 @@ package fr.ul.miage.dsw.projetgl.database;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -169,7 +176,7 @@ public class ReservationCollection {
 	}
 
 
-	public static HashMap<String, Double> bestProfitability(){
+	public static HashMap<String,Double> bestProfitability(){
 
 		List<Bson> list = Arrays.asList(
 				Aggregates.unwind("$Commandes"),
@@ -194,8 +201,25 @@ public class ReservationCollection {
 
 				});
 
-		return map;
+		
+		return (HashMap<String,Double>)sort(map);
+	}
 
+	public static <K,V extends Comparable<? super V>> 
+	List<Entry<K, V>> sort(Map<K,V> map) {
+
+		List<Entry<K,V>> sortedEntries = new ArrayList<Entry<K,V>>(map.entrySet());
+
+		Collections.sort(sortedEntries, 
+				new Comparator<Entry<K,V>>() {
+			@Override
+			public int compare(Entry<K,V> e1, Entry<K,V> e2) {
+				return e2.getValue().compareTo(e1.getValue());
+			}
+		}
+				);
+
+		return sortedEntries;
 	}
 
 	public static Double averageReservationTime() {
