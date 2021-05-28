@@ -2,9 +2,13 @@ package fr.ul.miage.dsw.projetgl.dashboard;
 
 import java.util.ArrayList;
 
+import fr.ul.miage.dsw.projetgl.Carte;
 import fr.ul.miage.dsw.projetgl.IncorrectParam;
+import fr.ul.miage.dsw.projetgl.Plat;
 import fr.ul.miage.dsw.projetgl.Tools;
 import fr.ul.miage.dsw.projetgl.Utilisateur;
+import fr.ul.miage.dsw.projetgl.database.CarteCollection;
+import fr.ul.miage.dsw.projetgl.database.PlatCollection;
 import fr.ul.miage.dsw.projetgl.database.UserCollection;
 import fr.ul.miage.dsw.projetgl.enumeration.TypeUtilisateur;
 
@@ -14,7 +18,8 @@ public class DirecteurDashBoard {
 		System.out.println("----------------");
 		System.out.println("1. Créer un utilisateur");
 		System.out.println("2. Modifier un utilisateur");
-		System.out.println("3. Quitter");
+		System.out.println("3. Modifier la carte du jour");
+		System.out.println("4. Quitter");
 
 		int i=0;
 		try {
@@ -31,9 +36,32 @@ public class DirecteurDashBoard {
 			DirecteurDashBoard.modifyUser();
 			break;
 		case 3:
+			DirecteurDashBoard.modifyCarte();
+			break;
+		case 4:
 			return;
 		}
 		readCommand();
+	}
+
+	public static void modifyCarte() {
+		Carte carte = Carte.getTodayCarte();
+		System.out.println("Plats de la carte:");
+		for(Plat plat : carte.getPlats()) {
+			System.out.println(plat.nom);
+		}
+		DirecteurDashBoard.fillCarte(carte);
+		carte.save();
+	}
+	
+	public static void fillCarte(Carte carte) {
+		Plat plat;
+		while((plat = DirecteurDashBoard.readPlat()) != null) {
+			if(carte.hasPlat(plat))
+				System.out.println("Le plat est déjà à la carte!");
+			else
+				carte.addPlat(plat);
+		}
 	}
 
 	public static void modifyUser() {
@@ -108,4 +136,57 @@ public class DirecteurDashBoard {
 		}
 	}
 
+	
+	public static Plat readPlat() {
+		System.out.println("Rechercher plats dans : ");
+		System.out.println("1. Catégorie");
+		System.out.println("2. Par nom similaire");
+		System.out.println("3. Terminer");
+
+		int i=0;
+		try {
+			i = Tools.getIntegerInput();
+		} catch (IncorrectParam e) {
+			System.out.println(e.getMessage());
+		}
+
+		ArrayList<Plat> plats = new ArrayList<Plat>();
+
+		switch(i) {
+		case 1:
+			//TODO
+			break;
+		case 2:
+			System.out.println("Entrez un nom à rechercher:");
+			String name = Tools.getStringInput();
+			plats = PlatCollection.getPlatsByName(name);
+			break;
+		
+		case 3:
+			return null;
+		}
+
+		for(int j = 0; j < plats.size(); j++) {//j+1 pour l'utilisateur
+			System.out.println((j+1)+". "+plats.get(j).nom);
+		}
+
+		System.out.println((plats.size()+1)+". Retour");
+
+		try {
+			int input=Tools.getIntegerInput();
+
+			if(input-1 == plats.size()) {
+				return null;
+			}else {
+				return plats.get(input-1);
+			}
+		}catch(ArrayIndexOutOfBoundsException | IncorrectParam e) {
+			System.out.println("Nombre non valide");
+			System.out.println(e.getMessage());
+			readPlat();
+
+		}
+		return null;
+	}
+	
 }

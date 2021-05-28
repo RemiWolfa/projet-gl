@@ -23,14 +23,21 @@ public class CarteCollection {
 
 	public static boolean save(Carte carte) {
 		if(CarteCollection.exist(carte))
-			return false;
+			return CarteCollection.update(carte);
 
 		Document carteDocument = new Document();
 		carteDocument.append("Date", carte.getDate());
-		if(carte.plats != null)
-			carteDocument.append("Plats", PlatCollection.getPlatNames(carte.plats));
+		if(carte.getPlats() != null)
+			carteDocument.append("Plats", PlatCollection.getPlatNames(carte.getPlats()));
 
 		CarteCollection.collection.insertOne(carteDocument);
+		return true;
+	}
+	
+	public static boolean update(Carte carte) {
+		Document update = new Document("$set", new Document("Plats", PlatCollection.getPlatNames(carte.getPlats())));
+		Document docRequest = new Document("Date", carte.getDate());
+		CarteCollection.collection.updateOne(docRequest, update);
 		return true;
 	}
 

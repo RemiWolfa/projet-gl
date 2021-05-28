@@ -1,18 +1,14 @@
 package fr.ul.miage.dsw.projetgl.database;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.bson.Document;
 
 import com.mongodb.BasicDBObject;
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.model.Accumulators;
-import com.mongodb.client.model.Aggregates;
 
-import fr.ul.miage.dsw.projetgl.Commande;
+import fr.ul.miage.dsw.projetgl.MatierePremiere;
 import fr.ul.miage.dsw.projetgl.Plat;
 
 public class PlatCollection {
@@ -34,9 +30,13 @@ public class PlatCollection {
 
 
 	public static boolean exist(Plat plat) {
-		return PlatCollection.collection.countDocuments(new Document("Nom", plat.nom)) > 0;
+		return PlatCollection.exist(plat.nom);
 	}
 
+	public static boolean exist(String nom) {
+		return PlatCollection.collection.countDocuments(new Document("Nom", nom)) > 0;
+	}
+	
 	public static List<String> getPlatNames(List<Plat> plats) {
 		ArrayList<String> names = new ArrayList<String>();
 		for(Plat plat : plats) {
@@ -45,59 +45,58 @@ public class PlatCollection {
 		return names;
 	}
 
-	public static void bestProfitability(){
 
-				List list = Arrays.asList(
-						Aggregates.unwind("$Commandes"),
-						Aggregates.match(new Document("Commandes.Etat", "conclue")),
-						Aggregates.unwind("$Commandes.Plats"),
-						Aggregates.group("$Commandes.Plats", Accumulators.sum("nbPlats",1))
-						);
-				
-				ReservationCollection.collection.aggregate(list).forEach(
-						e-> {
-							System.out.println(e.toString());
-						});
-						
-				
+	public static ArrayList<Plat> getPlatsByName(String name) {
+		ArrayList<Plat> plats = new ArrayList<Plat>();
+
+		PlatCollection.collection.find(new Document("Nom", new BasicDBObject("$regex", ".*"+name+".*"))).forEach(
+				PlatDocument -> {
+					Plat plat = PlatCollection.getPlatFromDocument(PlatDocument);
+					plats.add(plat);
+				}
+				);
+		return plats;
+	}
+
+
+	private static Plat getPlatFromDocument(Document document) {
+		Plat plat = new Plat(document.getString("Nom"));
+		
+		ArrayList<String> list = (ArrayList<String>) document.get("MatierePremieres");
+		for(String nom : list) {
+			plat.ajouterMatierePremiere(new MatierePremiere(nom));
+		}
+		return plat;
+	}
+
+
+	public static List<Plat> getPlatsFromNames(List<String> platNames) {
+		ArrayList<Plat> plats = new ArrayList<Plat>();
+		if(platNames == null || platNames.size() == 0)
+			return plats;
+
+		PlatCollection.collection.find(new Document("Nom", new Document("$in", platNames))).forEach(
+				PlatDocument -> {
+					Plat plat = PlatCollection.getPlatFromDocument(PlatDocument);
+					plats.add(plat);
+				}
+				);
+		return plats;
+	}
+
+
+	public static Plat getPlatByName(String nom) {
+		Document doc = PlatCollection.collection.find(new Document("Nom", nom)).first();
+		if(doc == null)
+			return null;
+		
+		return new Plat(doc.getString("Name"));
+	}
+
+
+	public static ArrayList<String> getMatierePremieres(Plat plat) {
+		Document doc = PlatCollection.collection.find(new Document("Nom", plat.nom)).first();
+		return (ArrayList<String>) doc.get("MatierePremieres");
+	}
+
 }
-
-
-			
-
-				public static ArrayList<Plat> getPlatsByName(String name) {
-					ArrayList<Plat> plats = new ArrayList<Plat>();
-
-					PlatCollection.collection.find(new Document("Nom", new BasicDBObject("$regex", ".*"+name+".*"))).forEach(
-							PlatDocument -> {
-								plats.add(new Plat(PlatDocument.getString("Nom")));
-							}
-							);
-					return plats;
-				}
-
-
-				public static List<Plat> getPlatsFromNames(List<String> platNames) {
-					ArrayList<Plat> plats = new ArrayList<Plat>();
-					if(platNames == null || platNames.size() == 0)
-						return plats;
-
-					PlatCollection.collection.find(new Document("Nom", new Document("$in", platNames))).forEach(
-							PlatDocument -> {
-								plats.add(new Plat(PlatDocument.getString("Nom")));
-								//TODO ajouter matieresPremiere
-							}
-							);
-					return plats;
-				}
-
-
-				public static Plat getPlatByName(String nom) {
-					Document doc = PlatCollection.collection.find(new Document("Nom", nom)).first();
-					if(doc == null)
-						return null;
-
-					return new Plat(doc.getString("Name"));
-				}
-
-				 }
