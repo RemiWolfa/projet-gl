@@ -8,7 +8,7 @@ public class Utilisateur {
 	public static Utilisateur connectedUser;
 	
 	public TypeUtilisateur typeUser;
-	public String identifiant;
+	private String identifiant;
 	public String nom;
 	
 	public Utilisateur(String identifiant, String nom, TypeUtilisateur typeUser) {
@@ -23,9 +23,14 @@ public class Utilisateur {
 		this.typeUser = TypeUtilisateur.valueOf(typeString);
 	}
 	
+
+	public String getId() {
+		return this.identifiant;
+	}
 	
 	public boolean save() {
 		return UserCollection.save(this);
 	}
+
 
 }

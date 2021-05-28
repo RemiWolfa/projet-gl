@@ -27,7 +27,7 @@ public class Plat extends Item{
 	//retourne faux si la matiere n'existait pas (a été créée)
 	public boolean ajouterMatierePremiere(MatierePremiere matierePremiere) {
 		boolean b = !MatierePremiereCollection.exist(matierePremiere);
-		MatierePremiereCollection.save(matierePremiere);//si elle n'est pas en bd
+		MatierePremiereCollection.save(matierePremiere);
 		this.matierePremieres.add(matierePremiere);
 		return b;
 	}
@@ -36,31 +36,7 @@ public class Plat extends Item{
 		this.categorie = categorie;
 	}
 
-	public static Plat definirPlat(List<MatierePremiere> mp, String nom, Categorie categorie) {
-		Plat plat = new Plat(nom);
-		plat.categorie = categorie;
-		plat.matierePremieres = mp;
-		return plat;
-	}
 
-	public boolean save() {
-		return PlatCollection.save(this);
-	}
-
-	public static Plat trouverPlat(String nom) {
-		return PlatCollection.getPlatByName(nom);
-	}
-	
-	
-	public static Plat trouverPlat(Categorie categorie) {
-		 return null;
-	}
-
-	
-	public static Boolean exist(String nom)  {
-		return PlatCollection.exist(new Plat(nom));
-	}
-	
 	public boolean testStock(HashMap<MatierePremiere, Integer> fromCommande) {
 		for(MatierePremiere mp : this.matierePremieres) {
 			int min = 1;
@@ -72,14 +48,31 @@ public class Plat extends Item{
 		}
 		return true;
 	}
-	
+
 	public boolean equals(Object o) {
 		if(!(o instanceof Plat))
 			return false;
-		
+
 		Plat plat = (Plat)o;
 		return plat.nom.equalsIgnoreCase(this.nom);
-		
+
+	}
+
+	public boolean save() {
+		return PlatCollection.save(this);
+	}
+
+	public static Plat trouverPlat(String nom) {
+		return PlatCollection.getPlatByName(nom);
+	}
+
+
+	public static Plat trouverPlat(Categorie categorie) {
+		return null;//TODO
+	}
+
+	public static Boolean exist(String nom)  {
+		return PlatCollection.exist(new Plat(nom));
 	}
 
 }

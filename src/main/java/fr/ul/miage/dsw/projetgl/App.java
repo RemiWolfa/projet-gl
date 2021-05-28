@@ -1,63 +1,58 @@
 package fr.ul.miage.dsw.projetgl;
 
-import java.util.Scanner;
-
 import fr.ul.miage.dsw.projetgl.dashboard.AssistantServiceDashBoard;
 import fr.ul.miage.dsw.projetgl.dashboard.CuisinierDashBoard;
 import fr.ul.miage.dsw.projetgl.dashboard.DirecteurDashBoard;
 import fr.ul.miage.dsw.projetgl.dashboard.MaitreHotelDashBoard;
 import fr.ul.miage.dsw.projetgl.dashboard.ServeurDashBoard;
+import fr.ul.miage.dsw.projetgl.database.DataBase;
 
 public class App {
 
 	public static void main(String[] args) {
+		DataBase.connect();
+	}
 
-		Scanner scanner = new Scanner( System.in);
+	private static void connect() throws IncorrectParam {
 		System.out.print( "Bonjour ! Connectez vous avec votre identifiant pour commencer \n" );
-	
-		String  id = scanner.nextLine();
-		Connexion co = new Connexion();
-		
-		Boolean verif = false;
-		
-		while(!verif || !co.connexion(id)) {
-			try {
-				verif=co.checkParamConnexion(id);
-				
-			}
-			catch(IncorrectParam e) {
-				System.out.println(e.getMessage());
-			}
-		}
-		
-		Utilisateur user = Utilisateur.connectedUser;
 
-		
-		switch(user.typeUser) {
-		
-		case maitre_hotel :
-			
-			MaitreHotelDashBoard maitre_hotel = new MaitreHotelDashBoard();
-			
-		case directeur :
-			
-			DirecteurDashBoard directeur = new DirecteurDashBoard();
-			
-		case serveur :
-			ServeurDashBoard serveur = new ServeurDashBoard();
-			
-		case cuisinier :
-			CuisinierDashBoard cuisinier = new CuisinierDashBoard();
-			
-		case assistant_Service :
-			
-			AssistantServiceDashBoard assistant = new AssistantServiceDashBoard();
-			
+		String  id = Tools.getStringInput();
+		Connexion co = new Connexion();
+		if(!co.checkParamConnexion(id) || co.connexion(id)) {
+			Tools.error("Erreur lors de la connexion, veuillez vérifier votre identifiant");
+			App.connect();
+			return;
 		}
-				
-		
+
+		Utilisateur user = Utilisateur.connectedUser;
+		App.launchDashBoard(user);
+
 
 	}
+
+	private static void launchDashBoard(Utilisateur user) {
+		switch(user.typeUser) {
+
+		case maitre_hotel :
+			MaitreHotelDashBoard.readCommand(); 
+			break;
+		case directeur :
+			DirecteurDashBoard.readCommand(); 
+			break;
+		case serveur :
+			ServeurDashBoard.readCommand(); 
+			break;
+		case cuisinier :
+			CuisinierDashBoard.readCommand(); 
+			break;
+		case assistant_Service :
+			AssistantServiceDashBoard.readCommand(); 
+			break;
+		}
+	}
+
+
+
 
 
 }

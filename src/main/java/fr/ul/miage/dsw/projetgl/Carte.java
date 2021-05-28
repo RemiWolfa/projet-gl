@@ -24,20 +24,14 @@ public class Carte {
 		return this.dateCarte;
 	}
 
-	@Override
-	public String toString() {
-		return "Carte [dateCarte=" + dateCarte + ", plats=" + plats + "]";
-	}
-
-	public static Carte getTodayCarte() {
-		Carte carte = new Carte();
-		carte.setPlats(CarteCollection.getToDayPlats());
-		return carte;
+	public List<Plat> getPlats() {
+		return this.plats;
 	}
 	
 	public void setPlats(ArrayList<Plat> plats) {
 		this.plats = plats;
 	}
+	
 	
 	public boolean addPlat(Plat plat) {
 		if(!PlatCollection.exist(plat))
@@ -46,17 +40,20 @@ public class Carte {
 		return true;
 	}
 
-
-	public List<Plat> getPlats() {
-		return this.plats;
+	public boolean hasPlat(Plat plat) {
+		return this.plats.contains(plat);
 	}
+	
 	
 	public boolean save() {
 		return CarteCollection.save(this);
 	}
 
-	public boolean hasPlat(Plat plat) {
-		return this.plats.contains(plat);
+	
+	public static Carte getTodayCarte() {
+		Carte carte = new Carte();
+		carte.setPlats(CarteCollection.getToDayPlats());
+		return carte;
 	}
 
 

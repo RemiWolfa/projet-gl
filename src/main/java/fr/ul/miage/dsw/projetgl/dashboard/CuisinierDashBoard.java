@@ -58,7 +58,7 @@ public class CuisinierDashBoard {
 		}
 		switch(i) {
 		case 1:
-			if(commande.ready()) {
+			if(commande.setToReady()) {
 				System.out.println("La commande va être servie!");
 			}else {
 				Tools.error("Erreur lors de la modification de l'état");

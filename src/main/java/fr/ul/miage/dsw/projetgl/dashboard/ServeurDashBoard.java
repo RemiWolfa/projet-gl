@@ -162,7 +162,7 @@ public class ServeurDashBoard {
 
 
 	public static void createOrder(Reservation reservation) {
-		Commande commande = new Commande(Utilisateur.connectedUser.identifiant, 
+		Commande commande = new Commande(Utilisateur.connectedUser.getId(), 
 				reservation.numReservation);
 
 		Plat plat ;

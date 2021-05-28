@@ -8,6 +8,7 @@ import org.bson.Document;
 import com.mongodb.client.MongoCollection;
 
 import fr.ul.miage.dsw.projetgl.Table;
+import fr.ul.miage.dsw.projetgl.enumeration.EtatTable;
 
 public class TableCollection {
 	
@@ -56,12 +57,17 @@ public class TableCollection {
 		TableCollection.collection.find(requestDoc).forEach(
 				tableDoc -> {
 					Table table = new Table(tableDoc.getInteger("Numero"));
-					table.etat = tableDoc.getString("Etat");
+					table.etat = EtatTable.valueOf(tableDoc.getString("Etat"));
 					table.etage = tableDoc.getInteger("Etage");
 					tables.add(table);
 				}
 				);
 		return tables;
+	}
+
+	public static boolean updateState(Table table) {
+		// TODO méthode à remplir
+		return false;
 	}
 
 }

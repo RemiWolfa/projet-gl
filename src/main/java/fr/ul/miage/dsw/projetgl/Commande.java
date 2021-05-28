@@ -23,14 +23,23 @@ public class Commande {
 		this.reservationNum = reservationNum;
 		this.plats = new ArrayList<Plat>();
 		this.date = new Date();
-		this.etatCommande = etatCommande.passee;
+		this.etatCommande = EtatCommande.passee;
 	}
 	
 	public Commande(String userId, int reservationNum) {
 		this(reservationNum);
 		this.userId = userId;
 	}
+	
+	
+	public List<Plat> getPlats(){
+		return this.plats;
+	}
 
+	public void setPlats(List<Plat> plats) {
+		this.plats = plats;
+	}
+	
 	public boolean ajouterPlat(Plat plat) {
 		if(PlatCollection.exist(plat)) {
 			this.plats.add(plat);
@@ -39,23 +48,12 @@ public class Commande {
 		return false;
 	}
 	
-	public List<Plat> getPlats(){
-		return this.plats;
-	}
-
-	public void finaliserCommande(Commande cmd) {
+	public boolean setToFinish(Commande cmd) {
 		cmd.etatCommande = EtatCommande.conclue;
+		return ReservationCollection.updateState(this);
 	}
 
-	public static List<Commande> AfficherCommandesPretes() {
-		return null;
-	}
-
-	public void setPlats(List<Plat> plats) {
-		this.plats = plats;
-	}
-
-	public boolean ready() {
+	public boolean setToReady() {
 		if(etatCommande == EtatCommande.prete)
 			return false;
 		this.etatCommande = EtatCommande.prete;

@@ -1,5 +1,5 @@
 package fr.ul.miage.dsw.projetgl;
 
-public class Item {
+public abstract class Item { //ce qui peut être placer dans une catégorie
 
 }
