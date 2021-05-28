@@ -80,8 +80,10 @@ public class Tools {
 	}
 
 	public static String format(Date date) {
-		// TODO faire un vrai format
-		return date.toString();
+		String pattern = "MM/dd/yyyy HH:mm:ss";
+		DateFormat df = new SimpleDateFormat(pattern);
+		String string = df.format(date);
+		return string;
 	}
 
 	public static HashMap<String, Double> sortHashByValue(HashMap<String, Double> hm)
