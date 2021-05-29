@@ -1,11 +1,12 @@
 package fr.ul.miage.dsw.projetgl.action;
 
+import fr.ul.miage.dsw.projetgl.Categorie;
 import fr.ul.miage.dsw.projetgl.IncorrectParam;
 import fr.ul.miage.dsw.projetgl.MatierePremiere;
 import fr.ul.miage.dsw.projetgl.Plat;
 import fr.ul.miage.dsw.projetgl.Text;
 import fr.ul.miage.dsw.projetgl.Tools;
-import fr.ul.miage.dsw.projetgl.dashboard.CuisinierDashBoard;
+import fr.ul.miage.dsw.projetgl.database.CategorieCollection;
 import fr.ul.miage.dsw.projetgl.database.MatierePremiereCollection;
 import fr.ul.miage.dsw.projetgl.database.PlatCollection;
 
@@ -36,8 +37,24 @@ public class CreateMeat implements UserAction{
 			}
 		}
 
-		plat.save();
-		return true;
+		System.out.println(Text.ENTER_CATEGORIE);
+		String categorie = Tools.getStringInput();
+		
+		return saveMeat(plat, categorie);
+	}
+	
+	private static boolean saveMeat(Plat plat, String categorieName) {
+		Categorie categorie = new Categorie(categorieName);
+		if(!CategorieCollection.exist(categorie)) {
+			categorie.save();
+			System.out.println(Text.CREATE_CATEGORIE);
+		}else {
+			categorie = CategorieCollection.getCategorie(categorieName);
+		}
+		categorie.addMeat(plat);
+		categorie.save();
+		
+		return plat.save();
 	}
 
 	public static void createMatierePremiere(MatierePremiere mp) {

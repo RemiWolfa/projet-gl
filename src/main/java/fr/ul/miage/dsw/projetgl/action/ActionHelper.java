@@ -1,13 +1,16 @@
 package fr.ul.miage.dsw.projetgl.action;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import fr.ul.miage.dsw.projetgl.Categorie;
 import fr.ul.miage.dsw.projetgl.IncorrectParam;
 import fr.ul.miage.dsw.projetgl.Plat;
 import fr.ul.miage.dsw.projetgl.Text;
 import fr.ul.miage.dsw.projetgl.Tools;
 import fr.ul.miage.dsw.projetgl.dashboard.DirecteurDashBoard;
 import fr.ul.miage.dsw.projetgl.database.CarteCollection;
+import fr.ul.miage.dsw.projetgl.database.CategorieCollection;
 import fr.ul.miage.dsw.projetgl.database.PlatCollection;
 import fr.ul.miage.dsw.projetgl.enumeration.TypeUtilisateur;
 
@@ -79,11 +82,11 @@ public class ActionHelper {
 			System.out.println(e.getMessage());
 		}
 
-		ArrayList<Plat> plats = new ArrayList<Plat>();
+		List<Plat> plats = new ArrayList<Plat>();
 
 		switch(i) {
 		case 1:
-			//TODO
+			plats = ActionHelper.getMeatsFromCategories();
 			break;
 		case 2:
 			plats = CarteCollection.getToDayPlats();
@@ -125,6 +128,31 @@ public class ActionHelper {
 	}
 	
 	
+	private static List<Plat> getMeatsFromCategories() {
+		int i = 1;
+		ArrayList<Categorie> categories = CategorieCollection.getAllCategories();
+		for(Categorie categorie : categories) {
+			System.out.println((i)+". "+categorie.nom);
+			i++;
+		}
+		
+		try {
+			int input=Tools.getIntegerInput();
+
+			if(input-1 == categories.size()) {
+				return null;
+			}else {
+				return categories.get(input-1).plats;
+			}
+		}catch(ArrayIndexOutOfBoundsException | IncorrectParam e) {
+			System.out.println(e.getMessage());
+			readPlat();
+
+		}
+		
+		return new ArrayList<Plat>();
+	}
+
 	public static TypeUtilisateur getSelectUserType() {
 		System.out.println("Sélectionnez le type d'utilisateur:");
 		System.out.println("1. Directeur");

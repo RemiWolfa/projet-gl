@@ -7,7 +7,7 @@ import java.util.List;
 import fr.ul.miage.dsw.projetgl.database.MatierePremiereCollection;
 import fr.ul.miage.dsw.projetgl.database.PlatCollection;
 
-public class Plat extends Item{
+public class Plat{
 
 
 	public String nom;
