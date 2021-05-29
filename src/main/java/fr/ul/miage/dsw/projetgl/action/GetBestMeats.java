@@ -2,6 +2,7 @@ package fr.ul.miage.dsw.projetgl.action;
 
 import java.util.HashMap;
 
+import fr.ul.miage.dsw.projetgl.Text;
 import fr.ul.miage.dsw.projetgl.database.ReservationCollection;
 
 public class GetBestMeats implements UserAction{
@@ -12,7 +13,7 @@ public class GetBestMeats implements UserAction{
 		map= ReservationCollection.bestProfitability();
 		int i=1;
 
-		System.out.println("Liste des plats les plus rentables : ");
+		System.out.println(Text.LIST_BEST_MEATS);
 
 		for(String name : map.keySet()) {
 			double money = map.get(name);

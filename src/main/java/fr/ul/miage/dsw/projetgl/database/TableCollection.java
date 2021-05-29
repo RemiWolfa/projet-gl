@@ -12,22 +12,26 @@ import fr.ul.miage.dsw.projetgl.enumeration.EtatTable;
 
 public class TableCollection {
 	
+	public static final String NUMERO_ATTRIBUT = "Numero";
+	public static final String ETAGE_ATTRIBUT = "Etage";
+	public static final String ETAT_ATTRIBUT = "Etat";
+	
 	public static MongoCollection<Document> collection;
 	
 	public static boolean save(Table table) {
 		if(TableCollection.exist(table))
 			return false;
 		Document tableDocument = new Document();
-		tableDocument.append("Numero", table.num);
-		tableDocument.append("Etat", table.etat);
-		tableDocument.append("Etage", table.etage);
+		tableDocument.append(NUMERO_ATTRIBUT, table.num);
+		tableDocument.append(ETAT_ATTRIBUT, table.etat);
+		tableDocument.append(ETAGE_ATTRIBUT, table.etage);
 		
 		TableCollection.collection.insertOne(tableDocument);
 		return true;
 	}
 	
 	public static boolean exist(Table table) {
-		return TableCollection.collection.countDocuments(new Document("Numero", table.num)) > 0;
+		return TableCollection.collection.countDocuments(new Document(NUMERO_ATTRIBUT, table.num)) > 0;
 	}
 	
 	public void getTables () {
@@ -56,9 +60,9 @@ public class TableCollection {
 		Document requestDoc = new Document("Numero", in);
 		TableCollection.collection.find(requestDoc).forEach(
 				tableDoc -> {
-					Table table = new Table(tableDoc.getInteger("Numero"));
-					table.etat = EtatTable.valueOf(tableDoc.getString("Etat"));
-					table.etage = tableDoc.getInteger("Etage");
+					Table table = new Table(tableDoc.getInteger(NUMERO_ATTRIBUT));
+					table.etat = EtatTable.valueOf(tableDoc.getString(ETAT_ATTRIBUT));
+					table.etage = tableDoc.getInteger(ETAGE_ATTRIBUT);
 					tables.add(table);
 				}
 				);

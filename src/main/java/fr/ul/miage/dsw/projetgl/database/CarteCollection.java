@@ -18,6 +18,9 @@ import fr.ul.miage.dsw.projetgl.Tools;
 
 public class CarteCollection {
 
+	public static final String DATE_ATTRIBUT = "Date";
+	public static final String PLATS_ATTRIBUT = "Plats";
+
 	public static MongoCollection<Document> collection;
 
 	public static boolean save(Carte carte) {
@@ -25,32 +28,32 @@ public class CarteCollection {
 			return CarteCollection.update(carte);
 
 		Document carteDocument = new Document();
-		carteDocument.append("Date", carte.getDate());
+		carteDocument.append(DATE_ATTRIBUT, carte.getDate());
 		if(carte.getPlats() != null)
-			carteDocument.append("Plats", PlatCollection.getPlatNames(carte.getPlats()));
+			carteDocument.append(PLATS_ATTRIBUT, PlatCollection.getPlatNames(carte.getPlats()));
 
 		CarteCollection.collection.insertOne(carteDocument);
 		return true;
 	}
-	
+
 	public static boolean update(Carte carte) {
-		Document update = new Document("$set", new Document("Plats", PlatCollection.getPlatNames(carte.getPlats())));
-		Document docRequest = new Document("Date", carte.getDate());
+		Document update = new Document("$set", new Document(PLATS_ATTRIBUT, PlatCollection.getPlatNames(carte.getPlats())));
+		Document docRequest = new Document(DATE_ATTRIBUT, carte.getDate());
 		CarteCollection.collection.updateOne(docRequest, update);
 		return true;
 	}
 
 
 	public static boolean exist(Carte carte) {
-		return CarteCollection.collection.countDocuments(new Document("Date", carte.getDate())) > 0;
+		return CarteCollection.collection.countDocuments(new Document(DATE_ATTRIBUT, carte.getDate())) > 0;
 	}
 
 
 	public static ArrayList<Plat> getToDayPlats() {
 		List<Bson> aggregates = Arrays.asList(//TODO
-				Aggregates.match(Filters.eq("Date", Tools.skipTime(new Date()))),
-				Aggregates.unwind("$Plats"),
-				Aggregates.lookup("Plats", "Plats", "Nom", "Plat")
+				Aggregates.match(Filters.eq(DATE_ATTRIBUT, Tools.skipTime(new Date()))),
+				Aggregates.unwind("$"+PLATS_ATTRIBUT),
+				Aggregates.lookup("Plats", PLATS_ATTRIBUT, "Nom", "Plat")
 				);
 
 		ArrayList<Plat> plats = new ArrayList<Plat>();
@@ -60,7 +63,7 @@ public class CarteCollection {
 					if(AggDocument.containsKey("Plat")) {
 						List<Document> documents = (List<Document>) AggDocument.get("Plat");
 						if(documents.size() > 0) {
-							Plat plat = new Plat(documents.get(0).getString("Nom"));
+							Plat plat = new Plat(documents.get(0).getString(PlatCollection.NOM_ATTRIBUT));
 							plats.add(plat);
 						}
 					}

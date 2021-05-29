@@ -11,6 +11,10 @@ import com.mongodb.client.MongoCollection;
 import fr.ul.miage.dsw.projetgl.MatierePremiere;
 
 public class MatierePremiereCollection {
+	
+	public static final String NOM_ATTRIBUT = "Nom";
+	public static final String ENPOIDS_ATTRIBUT = "EnPoids";
+	public static final String STOCK_ATTRIBUT = "Stock";
 
 	public static MongoCollection<Document> collection;
 
@@ -23,11 +27,9 @@ public class MatierePremiereCollection {
 			return false;
 
 		Document mpDocument = new Document();
-		mpDocument.append("Nom", mp.nom);
-		mpDocument.append("EnPoids", mp.enPoids);
-		mpDocument.append("Stock", stock);
-		if(mp.categorie != null)
-			mpDocument.append("Categorie", mp.categorie.nom);
+		mpDocument.append(NOM_ATTRIBUT, mp.nom);
+		mpDocument.append(ENPOIDS_ATTRIBUT, mp.enPoids);
+		mpDocument.append(STOCK_ATTRIBUT, stock);
 		
 
 		MatierePremiereCollection.collection.insertOne(mpDocument);
@@ -36,27 +38,17 @@ public class MatierePremiereCollection {
 
 
 	public static boolean exist(MatierePremiere mp) {
-		return MatierePremiereCollection.collection.countDocuments(new Document("Nom", mp.nom)) > 0;
+		return MatierePremiereCollection.collection.countDocuments(new Document(NOM_ATTRIBUT, mp.nom)) > 0;
 	}
 	
 	public static int getStock(String nom) {
-		Document doc =MatierePremiereCollection.collection.find(new Document("Nom", nom)).first();
-		return doc.getInteger("Stock");
-		
-		//String res = "";
-		
-		/*for(Document d : doc) {
-			
-			res +="\n -----\n Nom "+d.get("Nom")+"\n";
-			res += d.get("EnPoids").equals(false)?"Unités : ":"Poids en kg : "  +d.get("Stock")+"\n";
-			
-		}
-		return res;*/
+		Document doc =MatierePremiereCollection.collection.find(new Document(NOM_ATTRIBUT, nom)).first();
+		return doc.getInteger(STOCK_ATTRIBUT);
 	}
 	
 	public static boolean setStock(String nom, int quantite) {
-		Document docRequest=new Document ("Nom", nom);
-		Document update = new Document("$set", new Document("Stock", quantite));
+		Document docRequest=new Document (NOM_ATTRIBUT, nom);
+		Document update = new Document("$set", new Document(STOCK_ATTRIBUT, quantite));
 		MatierePremiereCollection.collection.updateOne(docRequest, update);
 		return true;
 	}
@@ -64,8 +56,8 @@ public class MatierePremiereCollection {
 	public static ArrayList<MatierePremiere> getMatieresPremieres(){
 		ArrayList<MatierePremiere> list =new ArrayList<MatierePremiere>();
 		MatierePremiereCollection.collection.find().forEach(MatDoc -> {
-			MatierePremiere mp= new MatierePremiere(MatDoc.getString("Nom"));
-			mp.enPoids=MatDoc.getBoolean("EnPoids");
+			MatierePremiere mp= new MatierePremiere(MatDoc.getString(NOM_ATTRIBUT));
+			mp.enPoids=MatDoc.getBoolean(ENPOIDS_ATTRIBUT);
 			list.add(mp);
 		});
 		return list;
@@ -81,8 +73,8 @@ public class MatierePremiereCollection {
 	}
 
 	public static void decrement(String nomMP, int quantity) {
-		Document docRequest=new Document ("Nom", nomMP);
-		Document update = new Document("$inc", new Document("Stock", -quantity));
+		Document docRequest=new Document (NOM_ATTRIBUT, nomMP);
+		Document update = new Document("$inc", new Document(STOCK_ATTRIBUT, -quantity));
 		MatierePremiereCollection.collection.updateOne(docRequest, update);
 	}
 

@@ -13,6 +13,11 @@ import fr.ul.miage.dsw.projetgl.enumeration.TypeUtilisateur;
 
 public class UserCollection {
 	
+	public static final String TYPE_ATTRIBUT = "Type";
+	public static final String NOM_ATTRIBUT = "Nom";
+	public static final String IDENTIFIANT_ATTRIBUT = "Identifiant";
+	public static final String TABLES_ATTRIBUT = "Tables";
+	
 public static MongoCollection<Document> collection;
 	
 	public static boolean save(Utilisateur user) {
@@ -20,14 +25,14 @@ public static MongoCollection<Document> collection;
 			return false;
 		
 		Document userDocument = new Document();
-		userDocument.append("Type", user.typeUser.toString());
-		userDocument.append("Nom", user.nom);
-		userDocument.append("Identifiant", user.getId());
+		userDocument.append(TYPE_ATTRIBUT, user.typeUser.toString());
+		userDocument.append(NOM_ATTRIBUT, user.nom);
+		userDocument.append(IDENTIFIANT_ATTRIBUT, user.getId());
 		
 		if(user instanceof Serveur) {
 			Serveur server = (Serveur)user;
 			if(server.tables != null) {
-				userDocument.append("Tables", TableCollection.getTableNumbers(server.tables));
+				userDocument.append(TABLES_ATTRIBUT, TableCollection.getTableNumbers(server.tables));
 			}
 		}
 		
@@ -39,27 +44,23 @@ public static MongoCollection<Document> collection;
 		if(!UserCollection.exist(server.getId()))
 			return false;
 		
-		Document requestDoc = new Document("Identifiant", server.getId());
-		Document update = new Document("$set", new Document("Tables", TableCollection.getTableNumbers(server.tables)));
+		Document requestDoc = new Document(IDENTIFIANT_ATTRIBUT, server.getId());
+		Document update = new Document("$set", new Document(TABLES_ATTRIBUT, TableCollection.getTableNumbers(server.tables)));
 		
 		UserCollection.collection.updateOne(requestDoc, update);
 		return true;
 	}
 	
 	public static boolean exist(Utilisateur user) {
-		return UserCollection.collection.countDocuments(new Document("Identifiant", user.getId())) > 0;
+		return UserCollection.exist(user.getId());
 	}
 	
 	public static boolean exist(String identifiant) {
-		return UserCollection.collection.countDocuments(new Document("Identifiant", identifiant)) > 0;
-	}
-	
-	public void getTables () {
-		
+		return UserCollection.collection.countDocuments(new Document(IDENTIFIANT_ATTRIBUT, identifiant)) > 0;
 	}
 	
 	public static Utilisateur getUser(String identifiant) {
-		Document doc = UserCollection.collection.find(new Document("Identifiant", identifiant)).first();
+		Document doc = UserCollection.collection.find(new Document(IDENTIFIANT_ATTRIBUT, identifiant)).first();
 		if(doc != null) {
 			return UserCollection.getUserFromDoc(doc);
 		}
@@ -78,7 +79,7 @@ public static MongoCollection<Document> collection;
 	
 	public static ArrayList<Serveur> getAllServeurs() {
 		ArrayList<Serveur> users = new ArrayList<Serveur>();
-		UserCollection.collection.find(new Document("Type", TypeUtilisateur.serveur.toString())).forEach(
+		UserCollection.collection.find(new Document(TYPE_ATTRIBUT, TypeUtilisateur.serveur.toString())).forEach(
 				doc -> {
 					users.add((Serveur)UserCollection.getUserFromDoc(doc));
 				}
@@ -88,11 +89,13 @@ public static MongoCollection<Document> collection;
 	
 	private static Utilisateur getUserFromDoc(Document doc) {
 		Utilisateur user;
-		if(doc.getString("Type").equalsIgnoreCase("serveur")) {
-			user = new Serveur(doc.getString("Identifiant"), doc.getString("Nom"));
-			((Serveur)user).tables = TableCollection.getTablesFromNumbers((ArrayList<Integer>) doc.get("Tables"));
+		if(doc.getString(TYPE_ATTRIBUT).equalsIgnoreCase("serveur")) {
+			Serveur serveur =new Serveur(doc.getString(IDENTIFIANT_ATTRIBUT), doc.getString(NOM_ATTRIBUT));
+			serveur.tables = TableCollection.getTablesFromNumbers((ArrayList<Integer>) doc.get(TABLES_ATTRIBUT));
+			user = serveur;
 		}else {
-			user = new Utilisateur(doc.getString("Identifiant"), doc.getString("Nom"), doc.getString("Type"));
+			user = new Utilisateur(doc.getString(IDENTIFIANT_ATTRIBUT), 
+					doc.getString(NOM_ATTRIBUT), doc.getString(TYPE_ATTRIBUT));
 		}
 		return user;
 	}

@@ -12,6 +12,9 @@ import fr.ul.miage.dsw.projetgl.MatierePremiere;
 import fr.ul.miage.dsw.projetgl.Plat;
 
 public class PlatCollection {
+	
+	public static final String NOM_ATTRIBUT = "Nom";
+	public static final String MP_ATTRIBUT = "MatierePremieres";
 
 	public static MongoCollection<Document> collection;
 
@@ -20,9 +23,9 @@ public class PlatCollection {
 			return false;
 
 		Document platDocument = new Document();
-		platDocument.append("Nom", plat.nom);
+		platDocument.append(NOM_ATTRIBUT, plat.nom);
 		if(plat.matierePremieres != null)
-			platDocument.append("MatierePremieres", MatierePremiereCollection.getMatierePremiereNames(plat.matierePremieres));
+			platDocument.append(MP_ATTRIBUT, MatierePremiereCollection.getMatierePremiereNames(plat.matierePremieres));
 
 		PlatCollection.collection.insertOne(platDocument);
 		return true;
@@ -34,7 +37,7 @@ public class PlatCollection {
 	}
 
 	public static boolean exist(String nom) {
-		return PlatCollection.collection.countDocuments(new Document("Nom", nom)) > 0;
+		return PlatCollection.collection.countDocuments(new Document(NOM_ATTRIBUT, nom)) > 0;
 	}
 	
 	public static List<String> getPlatNames(List<Plat> plats) {
@@ -49,7 +52,7 @@ public class PlatCollection {
 	public static ArrayList<Plat> getPlatsByName(String name) {
 		ArrayList<Plat> plats = new ArrayList<Plat>();
 
-		PlatCollection.collection.find(new Document("Nom", new BasicDBObject("$regex", ".*"+name+".*"))).forEach(
+		PlatCollection.collection.find(new Document(NOM_ATTRIBUT, new BasicDBObject("$regex", ".*"+name+".*"))).forEach(
 				PlatDocument -> {
 					Plat plat = PlatCollection.getPlatFromDocument(PlatDocument);
 					plats.add(plat);
@@ -60,9 +63,9 @@ public class PlatCollection {
 
 
 	private static Plat getPlatFromDocument(Document document) {
-		Plat plat = new Plat(document.getString("Nom"));
+		Plat plat = new Plat(document.getString(NOM_ATTRIBUT));
 		
-		ArrayList<String> list = (ArrayList<String>) document.get("MatierePremieres");
+		ArrayList<String> list = (ArrayList<String>) document.get(MP_ATTRIBUT);
 		for(String nom : list) {
 			plat.ajouterMatierePremiere(new MatierePremiere(nom));
 		}
@@ -75,7 +78,7 @@ public class PlatCollection {
 		if(platNames == null || platNames.size() == 0)
 			return plats;
 
-		PlatCollection.collection.find(new Document("Nom", new Document("$in", platNames))).forEach(
+		PlatCollection.collection.find(new Document(NOM_ATTRIBUT, new Document("$in", platNames))).forEach(
 				PlatDocument -> {
 					Plat plat = PlatCollection.getPlatFromDocument(PlatDocument);
 					plats.add(plat);
@@ -86,7 +89,7 @@ public class PlatCollection {
 
 
 	public static Plat getPlatByName(String nom) {
-		Document doc = PlatCollection.collection.find(new Document("Nom", nom)).first();
+		Document doc = PlatCollection.collection.find(new Document(NOM_ATTRIBUT, nom)).first();
 		if(doc == null)
 			return null;
 		
@@ -95,8 +98,8 @@ public class PlatCollection {
 
 
 	public static ArrayList<String> getMatierePremieres(Plat plat) {
-		Document doc = PlatCollection.collection.find(new Document("Nom", plat.nom)).first();
-		return (ArrayList<String>) doc.get("MatierePremieres");
+		Document doc = PlatCollection.collection.find(new Document(NOM_ATTRIBUT, plat.nom)).first();
+		return (ArrayList<String>) doc.get(MP_ATTRIBUT);
 	}
 
 }

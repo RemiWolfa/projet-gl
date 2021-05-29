@@ -37,6 +37,7 @@ public class Carte {
 		if(!PlatCollection.exist(plat))
 			return false;
 		this.plats.add(plat);
+		System.out.println(plats.size());
 		return true;
 	}
 

@@ -42,12 +42,12 @@ public class Tools {
 			Scanner scan = new Scanner(System.in);
 			int i = scan.nextInt();
 			if(i<0) {
-				throw new IncorrectParam("La valeur ne peut pas être négative.");
+				throw new IncorrectParam(Text.ERROR_NEGATIF_VALUE);
 			}
 			return i;
 		}
 		catch(NumberFormatException e) {
-			throw new IncorrectParam("Veuillez entrer une chaîne de caractère.");
+			throw new IncorrectParam(Text.ENTER_STRING);
 		}
 	}
 

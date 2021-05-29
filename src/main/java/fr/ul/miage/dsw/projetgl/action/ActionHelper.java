@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import fr.ul.miage.dsw.projetgl.IncorrectParam;
 import fr.ul.miage.dsw.projetgl.Plat;
+import fr.ul.miage.dsw.projetgl.Text;
 import fr.ul.miage.dsw.projetgl.Tools;
 import fr.ul.miage.dsw.projetgl.dashboard.DirecteurDashBoard;
 import fr.ul.miage.dsw.projetgl.database.CarteCollection;
@@ -32,7 +33,7 @@ public class ActionHelper {
 			//TODO
 			break;
 		case 2:
-			System.out.println("Entrez un nom à rechercher:");
+			System.out.println(Text.ENTER_NAME_PLAT);
 			String name = Tools.getStringInput();
 			plats = PlatCollection.getPlatsByName(name);
 			break;
@@ -56,7 +57,6 @@ public class ActionHelper {
 				return plats.get(input-1);
 			}
 		}catch(ArrayIndexOutOfBoundsException | IncorrectParam e) {
-			System.out.println("Nombre non valide");
 			System.out.println(e.getMessage());
 			readPlat();
 
@@ -89,12 +89,12 @@ public class ActionHelper {
 			plats = CarteCollection.getToDayPlats();
 			break;
 		case 3:
-			System.out.println("Entrez un nom à rechercher:");
+			System.out.println(Text.ENTER_NAME_PLAT);
 			String name = Tools.getStringInput();
 			plats = PlatCollection.getPlatsByName(name);
 			break;
 		case 4:
-			System.out.println("Entrez un nom exact à rechercher:");
+			System.out.println(Text.ENTER_SEARCH_PLAT);
 			String nom = Tools.getStringInput();
 			Plat plat = Plat.trouverPlat(nom);
 			return plat;
@@ -117,7 +117,6 @@ public class ActionHelper {
 				return plats.get(input-1);
 			}
 		}catch(ArrayIndexOutOfBoundsException | IncorrectParam e) {
-			System.out.println("Nombre non valide");
 			System.out.println(e.getMessage());
 			readPlat();
 

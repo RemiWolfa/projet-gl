@@ -1,23 +1,12 @@
 package fr.ul.miage.dsw.projetgl.dashboard;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import fr.ul.miage.dsw.projetgl.Carte;
 import fr.ul.miage.dsw.projetgl.IncorrectParam;
-import fr.ul.miage.dsw.projetgl.Plat;
 import fr.ul.miage.dsw.projetgl.Tools;
-import fr.ul.miage.dsw.projetgl.Utilisateur;
 import fr.ul.miage.dsw.projetgl.action.CreateUser;
 import fr.ul.miage.dsw.projetgl.action.GetBestMeats;
 import fr.ul.miage.dsw.projetgl.action.GetCustomerAverageTime;
 import fr.ul.miage.dsw.projetgl.action.ModifyMenu;
 import fr.ul.miage.dsw.projetgl.action.ModifyUser;
-import fr.ul.miage.dsw.projetgl.database.CarteCollection;
-import fr.ul.miage.dsw.projetgl.database.PlatCollection;
-import fr.ul.miage.dsw.projetgl.database.ReservationCollection;
-import fr.ul.miage.dsw.projetgl.database.UserCollection;
-import fr.ul.miage.dsw.projetgl.enumeration.TypeUtilisateur;
 
 public class DirecteurDashBoard {
 

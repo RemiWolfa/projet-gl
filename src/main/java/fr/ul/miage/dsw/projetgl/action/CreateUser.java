@@ -1,5 +1,6 @@
 package fr.ul.miage.dsw.projetgl.action;
 
+import fr.ul.miage.dsw.projetgl.Text;
 import fr.ul.miage.dsw.projetgl.Tools;
 import fr.ul.miage.dsw.projetgl.Utilisateur;
 import fr.ul.miage.dsw.projetgl.database.UserCollection;
@@ -12,7 +13,7 @@ public class CreateUser implements UserAction{
 		System.out.println("Identifiant:");
 		String identifiant = Tools.getStringInput();
 		if(UserCollection.exist(identifiant)) {
-			Tools.error("L'identifiant existe déjà");
+			Tools.error(Text.USER_EXIST);
 			return false;
 		}
 		System.out.println("Nom:");
@@ -21,10 +22,10 @@ public class CreateUser implements UserAction{
 		TypeUtilisateur type = ActionHelper.getSelectUserType();
 		Utilisateur utilisateur = new Utilisateur(identifiant, nom, type);
 		if(utilisateur.save()) {
-			System.out.println("Utilisateur bien enregistré!");
+			System.out.println(Text.USER_SAVED);
 			return true;
 		}else {
-			Tools.error("Problème lors de l'enregistrement");
+			Tools.error(Text.ERROR_SAVE);
 		}
 		return false;
 	}
