@@ -22,12 +22,12 @@ public class UpdateStock implements UserAction{
 			}
 			
 			try {
-				int num = Tools.getIntegerInput();//TODO verifier si 0 (car 0-1 < -1)
+				int num = Tools.getIntegerInput(1,i-1,mp.size()+1);//TODO verifier si 0 (car 0-1 < -1)
 				if(num > mp.size())
 					return false;
 				
 				System.out.println("Quelle valeur de stock souhaitez vous entrer ?");
-				int stock = Tools.getIntegerInput();
+				int stock = Tools.getIntegerInput(0,Integer.MAX_VALUE,Integer.MAX_VALUE);
 				return MatierePremiereCollection.setStock(mp.get(num-1).nom, stock);
 			}
 			catch(IncorrectParam e) {

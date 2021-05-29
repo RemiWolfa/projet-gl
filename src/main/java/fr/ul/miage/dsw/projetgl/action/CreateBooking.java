@@ -17,7 +17,7 @@ public class CreateBooking implements UserAction{
 		System.out.println(Text.ENTER_TABLE_NUMBER);
 		int numTable=0;;
 		try {
-			numTable = Tools.getIntegerInput();
+			numTable = Tools.getIntegerInput(1, Integer.MAX_VALUE,Integer.MAX_VALUE);
 		} catch (IncorrectParam e) {
 			System.out.println(e.getMessage());
 			execute();

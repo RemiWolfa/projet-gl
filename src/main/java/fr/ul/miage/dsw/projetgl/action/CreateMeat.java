@@ -59,18 +59,18 @@ public class CreateMeat implements UserAction{
 
 	public static void createMatierePremiere(MatierePremiere mp) {
 		System.out.println(Text.STUFF_CREATION);
-		System.out.println("1. quantité en poid");
+		System.out.println("1. quantité en poids");
 		System.out.println("2. quantité en unité");
 
 		try {
-			int i = Tools.getIntegerInput();
+			int i = Tools.getIntegerInput(1,2,3);
 			if(i == 1)
 				mp.enPoids = true;
 
 			mp.save();
 		} catch (IncorrectParam e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 	}
 

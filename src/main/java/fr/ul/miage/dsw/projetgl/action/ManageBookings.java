@@ -28,7 +28,7 @@ public class ManageBookings implements UserAction{
 			}
 
 			try {
-				i = Tools.getIntegerInput();
+				i = Tools.getIntegerInput(1,i-1,i);
 				Reservation reservation = list.get(i-1);
 				return modifyReservation(reservation);
 
@@ -45,7 +45,7 @@ public class ManageBookings implements UserAction{
 
 		int i=0;
 		try {
-			i = Tools.getIntegerInput();
+			i = Tools.getIntegerInput(1,2,2);
 		} catch (IncorrectParam e) {
 			System.out.println(e.getMessage());
 			return false;

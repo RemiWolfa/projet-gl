@@ -20,7 +20,7 @@ public class ModifyUser implements UserAction{
 		
 		int input=0;
 		try {
-			input = Tools.getIntegerInput();
+			input = Tools.getIntegerInput(1,users.size()+1,users.size()+1);
 		} catch (IncorrectParam e) {
 			System.out.println(e.getMessage());
 			execute();

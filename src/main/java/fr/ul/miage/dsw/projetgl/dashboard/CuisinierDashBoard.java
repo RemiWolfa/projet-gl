@@ -30,7 +30,7 @@ public class CuisinierDashBoard {
 
 		int i=0;
 		try {
-			i = Tools.getIntegerInput();
+			i = Tools.getIntegerInput(1,4,4);
 		} catch (IncorrectParam e) {
 			System.out.println(e.getMessage());
 			readCommand();

@@ -36,13 +36,28 @@ public class Tools {
 		return date;
 	}
 
-	public static int getIntegerInput() throws IncorrectParam{
+	public static int getIntegerInput(int min, int max, int defaut) throws IncorrectParam{
 
 		try {
 			Scanner scan = new Scanner(System.in);
 			int i = scan.nextInt();
-			if(i<0) {
-				throw new IncorrectParam(Text.ERROR_NEGATIF_VALUE);
+			if(i<min || i>max) {
+				return defaut;
+			}
+			return i;
+		}
+		catch(NumberFormatException e) {
+			throw new IncorrectParam(Text.ENTER_STRING);
+		}
+	}
+	
+	public static double getDoubleInput(double min, double max, double defaut) throws IncorrectParam{
+
+		try {
+			Scanner scan = new Scanner(System.in);
+			double i = scan.nextDouble();
+			if(i<min || i>max) {
+				return defaut;
 			}
 			return i;
 		}

@@ -24,7 +24,7 @@ public class ActionHelper {
 
 		int i=0;
 		try {
-			i = Tools.getIntegerInput();
+			i = Tools.getIntegerInput(1,3,3);
 		} catch (IncorrectParam e) {
 			System.out.println(e.getMessage());
 		}
@@ -52,7 +52,7 @@ public class ActionHelper {
 		System.out.println((plats.size()+1)+". Retour");
 
 		try {
-			int input=Tools.getIntegerInput();
+			int input=Tools.getIntegerInput(1, plats.size()+1,plats.size()+1);
 
 			if(input-1 == plats.size()) {
 				return null;
@@ -77,7 +77,7 @@ public class ActionHelper {
 
 		int i=0;
 		try {
-			i = Tools.getIntegerInput();
+			i = Tools.getIntegerInput(1,5,5);
 		} catch (IncorrectParam e) {
 			System.out.println(e.getMessage());
 		}
@@ -112,7 +112,7 @@ public class ActionHelper {
 		System.out.println((plats.size()+1)+". Retour");
 
 		try {
-			int input=Tools.getIntegerInput();
+			int input=Tools.getIntegerInput(1,plats.size()+1,plats.size()+1);
 
 			if(input-1 == plats.size()) {
 				return null;
@@ -137,7 +137,7 @@ public class ActionHelper {
 		}
 		
 		try {
-			int input=Tools.getIntegerInput();
+			int input=Tools.getIntegerInput(1, i-1,categories.size());
 
 			if(input-1 == categories.size()) {
 				return null;
@@ -162,7 +162,7 @@ public class ActionHelper {
 		System.out.println("5. Serveur");
 		int i=0;
 		try {
-			i = Tools.getIntegerInput();
+			i = Tools.getIntegerInput(1,5,6);
 		} catch (IncorrectParam e) {
 			System.out.println(e.getMessage());
 			getSelectUserType();

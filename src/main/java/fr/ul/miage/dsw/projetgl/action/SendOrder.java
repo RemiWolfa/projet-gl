@@ -24,7 +24,7 @@ public class SendOrder implements UserAction{
 
 		int input=0;
 		try {
-			input = Tools.getIntegerInput();
+			input = Tools.getIntegerInput(1,commandes.size()+1,commandes.size()+1);
 		} catch (IncorrectParam e) {
 			System.out.println(e.getMessage());
 			execute();
@@ -46,7 +46,7 @@ public class SendOrder implements UserAction{
 		System.out.println("2. Quitter");
 		int i=0;
 		try {
-			i = Tools.getIntegerInput();
+			i = Tools.getIntegerInput(1,2,2);
 		} catch (IncorrectParam e) {
 			System.out.println(e.getMessage());
 			modifyOrder(commande);

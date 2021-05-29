@@ -25,7 +25,7 @@ public class AffectTable implements UserAction{
 
 		int input =0 ;
 		try {
-			input = Tools.getIntegerInput();
+			input = Tools.getIntegerInput(1, serveurs.size()+1,serveurs.size()+1);
 		} catch (IncorrectParam e) {
 			System.out.println(e.getMessage());
 			execute();
@@ -41,7 +41,7 @@ public class AffectTable implements UserAction{
 		System.out.println(Text.ENTER_TABLE_NUMBER);
 		int num=0;
 		try {
-			num = Tools.getIntegerInput();
+			num = Tools.getIntegerInput(0, Integer.MAX_VALUE,Integer.MAX_VALUE);
 		} catch (IncorrectParam e) {
 			System.out.println(e.getMessage());
 			affectTable(serveur);

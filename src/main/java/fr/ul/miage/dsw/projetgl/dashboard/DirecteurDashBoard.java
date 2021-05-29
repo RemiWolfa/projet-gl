@@ -16,12 +16,12 @@ public class DirecteurDashBoard {
 		System.out.println("2. Modifier un utilisateur");
 		System.out.println("3. Modifier la carte du jour");
 		System.out.println("4. Connaitre le temps moyen que restent les clients");
-		System.out.println("5. Avoir la liste des plats les plsu rentables");
+		System.out.println("5. Avoir la liste des plats les plus rentables");
 		System.out.println("6. Quitter");
 
 		int i=0;
 		try {
-			i = Tools.getIntegerInput();
+			i = Tools.getIntegerInput(1,6,6);
 		} catch (IncorrectParam e) {
 			System.out.println(e.getMessage());
 			readCommand();
