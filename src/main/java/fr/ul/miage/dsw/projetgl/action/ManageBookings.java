@@ -9,6 +9,7 @@ import fr.ul.miage.dsw.projetgl.MatierePremiere;
 import fr.ul.miage.dsw.projetgl.Plat;
 import fr.ul.miage.dsw.projetgl.Reservation;
 import fr.ul.miage.dsw.projetgl.Serveur;
+import fr.ul.miage.dsw.projetgl.Text;
 import fr.ul.miage.dsw.projetgl.Tools;
 import fr.ul.miage.dsw.projetgl.Utilisateur;
 import fr.ul.miage.dsw.projetgl.database.ReservationCollection;
@@ -72,7 +73,7 @@ public class ManageBookings implements UserAction{
 				putMp(plat, toUse);
 			}
 			else
-				System.out.println("Ce plat n'est plus disponible!");
+				System.out.println(Text.MEAT_OUTOF_STOCK);
 		}
 
 		reservation.ajouterCommande(commande);

@@ -5,6 +5,7 @@ import java.util.Date;
 import fr.ul.miage.dsw.projetgl.IncorrectParam;
 import fr.ul.miage.dsw.projetgl.Reservation;
 import fr.ul.miage.dsw.projetgl.Table;
+import fr.ul.miage.dsw.projetgl.Text;
 import fr.ul.miage.dsw.projetgl.Tools;
 
 public class CreateBooking implements UserAction{
@@ -13,7 +14,7 @@ public class CreateBooking implements UserAction{
 	public boolean execute() {
 		System.out.println("Date:");
 		Date date = Tools.getDateInput();
-		System.out.println("Numéro de table:");
+		System.out.println(Text.ENTER_TABLE_NUMBER);
 		int numTable=0;;
 		try {
 			numTable = Tools.getIntegerInput();
@@ -24,10 +25,10 @@ public class CreateBooking implements UserAction{
 		Reservation reservation = new Reservation(date);
 		reservation.table = new Table(numTable);//pas propre
 		if(reservation.save()) {
-			System.out.println("La reservation a été faite");
+			System.out.println(Text.BOOKING_COMPLETE);
 			return true;
 		}else {
-			Tools.error("Problème lors de l'enregistrement");
+			Tools.error(Text.ERROR_SAVE);
 		}
 		return false;
 	}

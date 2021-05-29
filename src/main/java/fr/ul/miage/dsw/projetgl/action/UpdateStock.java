@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import fr.ul.miage.dsw.projetgl.IncorrectParam;
 import fr.ul.miage.dsw.projetgl.MatierePremiere;
+import fr.ul.miage.dsw.projetgl.Text;
 import fr.ul.miage.dsw.projetgl.Tools;
 import fr.ul.miage.dsw.projetgl.database.MatierePremiereCollection;
 
@@ -13,7 +14,7 @@ public class UpdateStock implements UserAction{
 	public boolean execute() {
 			ArrayList<MatierePremiere> mp =MatierePremiereCollection.getMatieresPremieres();
 			int i=1;
-			System.out.println("De quelle matière souhaitez-vous modifier le stock ?\n");
+			System.out.println(Text.SELECT_STOCK);
 			
 			for(MatierePremiere matiere : mp) {
 				System.out.println(i+". "+matiere.nom+" \n ");

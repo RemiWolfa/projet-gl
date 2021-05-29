@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import fr.ul.miage.dsw.projetgl.IncorrectParam;
 import fr.ul.miage.dsw.projetgl.Serveur;
 import fr.ul.miage.dsw.projetgl.Table;
+import fr.ul.miage.dsw.projetgl.Text;
 import fr.ul.miage.dsw.projetgl.Tools;
 import fr.ul.miage.dsw.projetgl.Utilisateur;
 import fr.ul.miage.dsw.projetgl.dashboard.MaitreHotelDashBoard;
@@ -37,7 +38,7 @@ public class AffectTable implements UserAction{
 	}
 
 	private boolean affectTable(Serveur serveur) {
-		System.out.println("Numéro de table:");
+		System.out.println(Text.ENTER_TABLE_NUMBER);
 		int num=0;
 		try {
 			num = Tools.getIntegerInput();
@@ -47,14 +48,12 @@ public class AffectTable implements UserAction{
 		}
 
 		if(!TableCollection.exist(new Table(num))) {
-			System.out.println("La table n'existe pas!");
-			//on peut reboucler ici
+			System.out.println(Text.TABLE_NOT_EXIST);
 			return false;
 		}
 
 		if(serveur.hasTable(num)) {
-			System.out.println("La table est déjà affectée au serveur!");
-			//on peut reboucler ici
+			System.out.println(Text.TABLE_ALREADY_AFFECT);
 			return false;
 		}
 

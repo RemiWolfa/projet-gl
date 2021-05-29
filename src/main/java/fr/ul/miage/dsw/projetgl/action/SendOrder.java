@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import fr.ul.miage.dsw.projetgl.Commande;
 import fr.ul.miage.dsw.projetgl.IncorrectParam;
 import fr.ul.miage.dsw.projetgl.Plat;
+import fr.ul.miage.dsw.projetgl.Text;
 import fr.ul.miage.dsw.projetgl.Tools;
 import fr.ul.miage.dsw.projetgl.dashboard.CuisinierDashBoard;
 import fr.ul.miage.dsw.projetgl.database.ReservationCollection;
@@ -53,9 +54,9 @@ public class SendOrder implements UserAction{
 		switch(i) {
 		case 1:
 			if(commande.setToReady()) {
-				System.out.println("La commande va être servie!");
+				System.out.println(Text.ORDER_WILL_SENDED);
 			}else {
-				Tools.error("Erreur lors de la modification de l'état");
+				Tools.error(Text.ERROR_SAVE);
 			}
 			break;
 		case 2:
