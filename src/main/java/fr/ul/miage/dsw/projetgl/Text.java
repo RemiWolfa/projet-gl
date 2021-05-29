@@ -25,6 +25,7 @@ public class Text {
 	public static final String MEAT_ALREADY_MENU = "Le plat est déjà à la carte!";
 	public static final String ORDER_WILL_SENDED = "La commande va être servie!";
 	public static final String SELECT_STOCK = "De quelle matière souhaitez-vous modifier le stock ?";
-	
+	public static final String ENTER_CATEGORIE = "Entrez une catégorie, si elle n'existe pas elle sera créée";
+	public static final String CREATE_CATEGORIE = "La catégorie a été créée";
 	
 }
