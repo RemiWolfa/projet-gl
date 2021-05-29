@@ -1,7 +1,5 @@
 package fr.ul.miage.dsw.projetgl;
 
-
-import fr.ul.miage.dsw.projetgl.dashboard.DirecteurDashBoard;
 import fr.ul.miage.dsw.projetgl.dashboard.ServeurDashBoard;
 import fr.ul.miage.dsw.projetgl.database.DataBase;
 import fr.ul.miage.dsw.projetgl.database.ReservationCollection;

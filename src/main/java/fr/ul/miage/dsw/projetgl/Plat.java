@@ -11,7 +11,6 @@ public class Plat extends Item{
 
 
 	public String nom;
-	public Categorie categorie;
 	public List<MatierePremiere> matierePremieres;
 	public Double prix;
 
@@ -30,10 +29,6 @@ public class Plat extends Item{
 		MatierePremiereCollection.save(matierePremiere);
 		this.matierePremieres.add(matierePremiere);
 		return b;
-	}
-
-	public void setCategorie(Categorie categorie) {
-		this.categorie = categorie;
 	}
 
 

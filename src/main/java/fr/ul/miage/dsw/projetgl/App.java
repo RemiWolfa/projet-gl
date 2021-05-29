@@ -11,6 +11,11 @@ public class App {
 
 	public static void main(String[] args) {
 		DataBase.connect();
+		try {
+			App.connect();
+		} catch (IncorrectParam e) {
+			System.out.println("Votre identifiant n'est pas conforme.");
+		}
 	}
 
 	private static void connect() throws IncorrectParam {
@@ -18,7 +23,7 @@ public class App {
 
 		String  id = Tools.getStringInput();
 		Connexion co = new Connexion();
-		if(!co.checkParamConnexion(id) || co.connexion(id)) {
+		if(!co.checkParamConnexion(id) || !co.connexion(id)) {
 			Tools.error("Erreur lors de la connexion, veuillez vérifier votre identifiant");
 			App.connect();
 			return;

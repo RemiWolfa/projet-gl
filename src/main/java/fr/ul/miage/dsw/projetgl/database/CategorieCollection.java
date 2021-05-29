@@ -13,6 +13,10 @@ import fr.ul.miage.dsw.projetgl.Plat;
 
 public class CategorieCollection {
 	
+	public static final String NOM_ATTRIBUT = "Nom";
+	public static final String PLATS_ATTRIBUT = "Plats";
+	public static final String CATEGORIES_ATTRIBUT = "Categories";
+	
 	public static MongoCollection<Document> collection;
 	
 	public static boolean save(Categorie categorie) {
@@ -20,7 +24,7 @@ public class CategorieCollection {
 			return false;
 
 		Document categorieDocument = new Document();
-		categorieDocument.append("Nom", categorie.nom);
+		categorieDocument.append(NOM_ATTRIBUT, categorie.nom);
 		CategorieCollection.putChildrens(categorieDocument, categorie);
 		
 
@@ -41,15 +45,15 @@ public class CategorieCollection {
 		}
 		
 		if(categorieNames.size() > 0)
-			categorieDocument.append("Categories", categorieNames);
+			categorieDocument.append(CATEGORIES_ATTRIBUT, categorieNames);
 		
 		if(platNames.size() > 0)
-			categorieDocument.append("Plats", platNames);
+			categorieDocument.append(PLATS_ATTRIBUT, platNames);
 	}
 
 
 	public static boolean exist(Categorie categorie) {
-		return CategorieCollection.collection.countDocuments(new Document("Nom", categorie.nom)) > 0;
+		return CategorieCollection.collection.countDocuments(new Document(NOM_ATTRIBUT, categorie.nom)) > 0;
 	}
 
 }

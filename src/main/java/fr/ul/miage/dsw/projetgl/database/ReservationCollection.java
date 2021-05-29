@@ -33,6 +33,19 @@ import fr.ul.miage.dsw.projetgl.enumeration.EtatReservation;
 
 public class ReservationCollection {
 
+	public static final String NUMERO_ATTRIBUT = "Numero";
+	public static final String DATE_ARRIVEE_ATTRIBUT = "DateArrivee";
+	public static final String DATE_DEPART_ATTRIBUT = "DateDepart";
+	public static final String ETAT_ATTRIBUT = "Etat";
+	public static final String TABLE_ATTRIBUT = "Table";
+	public static final String COMMANDES_ATTRIBUT = "Commandes";
+
+	public static final String COMMANDES_USERID_ATTRIBUT = "Utilisateur";
+	public static final String COMMANDES_DATE_ATTRIBUT = "Date";
+	public static final String COMMANDES_ETAT_ATTRIBUT = "Etat";
+	public static final String COMMANDES_PLATS_ATTRIBUT = "Plats";
+
+
 	public static MongoCollection<Document> collection;
 
 	public static boolean save(Reservation reservation) {
@@ -40,25 +53,25 @@ public class ReservationCollection {
 			return false;
 
 		Document reservationDocument = new Document();
-		reservationDocument.append("Numero", ReservationCollection.getNextNum());
-		reservationDocument.append("DateArrivee", reservation.dateArrivee);
-		reservationDocument.append("DateDepart", reservation.dateDepart);
-		reservationDocument.append("Etat", reservation.etatReservation.toString());
+		reservationDocument.append(NUMERO_ATTRIBUT, ReservationCollection.getNextNum());
+		reservationDocument.append(DATE_ARRIVEE_ATTRIBUT, reservation.dateArrivee);
+		reservationDocument.append(DATE_DEPART_ATTRIBUT, reservation.dateDepart);
+		reservationDocument.append(ETAT_ATTRIBUT, reservation.etatReservation.toString());
 		if(reservation.table != null)
-			reservationDocument.append("Table", reservation.table.num);
+			reservationDocument.append(TABLE_ATTRIBUT, reservation.table.num);
 		if(reservation.getCommandes() != null && reservation.getCommandes().size() > 0)
-			reservationDocument.append("Commandes", ReservationCollection.getCommandesArray(reservation.getCommandes()));
+			reservationDocument.append(COMMANDES_ATTRIBUT, ReservationCollection.getCommandesArray(reservation.getCommandes()));
 
 		ReservationCollection.collection.insertOne(reservationDocument);
 
-		reservation.numReservation = reservationDocument.getInteger("Numero");
+		reservation.numReservation = reservationDocument.getInteger(NUMERO_ATTRIBUT);
 		return true;
 	}
 
 	private static int getNextNum() {
 		Document d = collection.aggregate(
 				Arrays.asList(Aggregates.group(null, 
-						Accumulators.max("Max", "$Numero"))
+						Accumulators.max("Max", "$"+NUMERO_ATTRIBUT))
 						)).first();
 		if(d == null)
 			return 0;
@@ -77,33 +90,33 @@ public class ReservationCollection {
 
 	private static Document getCommande(Commande commande) {
 		Document commandeDocument = new Document();
-		commandeDocument.append("Utilisateur", commande.userId);
-		commandeDocument.append("Date", commande.date);
-		commandeDocument.append("Etat", commande.etatCommande.toString());
-		commandeDocument.append("Plats", PlatCollection.getPlatNames(commande.getPlats()));
+		commandeDocument.append(COMMANDES_USERID_ATTRIBUT, commande.userId);
+		commandeDocument.append(COMMANDES_DATE_ATTRIBUT, commande.date);
+		commandeDocument.append(COMMANDES_ETAT_ATTRIBUT, commande.etatCommande.toString());
+		commandeDocument.append(COMMANDES_PLATS_ATTRIBUT, PlatCollection.getPlatNames(commande.getPlats()));
 
 		return commandeDocument;
 	}
 
 	public static ArrayList<Commande> getWaitingOrders(){
 		List<Bson> aggregates = Arrays.asList(//TODO
-				Aggregates.unwind("$Commandes"),
-				Aggregates.match(new Document("Commandes.Etat", EtatCommande.passee.toString())),
-				Aggregates.sort(new Document("Commandes.date", 1))
+				Aggregates.unwind("$"+COMMANDES_ATTRIBUT),
+				Aggregates.match(new Document(COMMANDES_ATTRIBUT+"."+COMMANDES_ETAT_ATTRIBUT, EtatCommande.passee.toString())),
+				Aggregates.sort(new Document(COMMANDES_ATTRIBUT+"."+COMMANDES_DATE_ATTRIBUT, 1))
 				);
 
 		ArrayList<Commande> commandes = new ArrayList<Commande>();
 
 		ReservationCollection.collection.aggregate(aggregates).forEach(
 				ReservationDoc -> {
-					Commande commande = new Commande(ReservationDoc.getInteger("Numero"));
+					Commande commande = new Commande(ReservationDoc.getInteger(NUMERO_ATTRIBUT));
 
-					Document CommandeDoc = (Document) ReservationDoc.get("Commandes");
+					Document CommandeDoc = (Document) ReservationDoc.get(COMMANDES_ATTRIBUT);
 
-					commande.date = CommandeDoc.getDate("Date");
-					commande.userId = CommandeDoc.getString("Utilisateur");
+					commande.date = CommandeDoc.getDate(COMMANDES_DATE_ATTRIBUT);
+					commande.userId = CommandeDoc.getString(COMMANDES_USERID_ATTRIBUT);
 
-					List<String> platNames = (List<String>) CommandeDoc.get("Plats");
+					List<String> platNames = (List<String>) CommandeDoc.get(COMMANDES_PLATS_ATTRIBUT);
 					commande.setPlats(PlatCollection.getPlatsFromNames(platNames));
 
 					commandes.add(commande);
@@ -115,19 +128,21 @@ public class ReservationCollection {
 	public static List<Reservation> getCurrentReservations(Serveur serveur){
 		List<Reservation> reservations = new ArrayList<Reservation>();
 
-		Document docRequest = new Document("Table", new Document("$in", TableCollection.getTableNumbers(serveur.tables)));
+		Document docRequest = new Document(TABLE_ATTRIBUT, 
+				new Document("$in", TableCollection.getTableNumbers(serveur.tables)));
+
 		ArrayList<String> notPresentStates = new ArrayList<String>();
 		notPresentStates.add(EtatReservation.enAttente.toString());
 		notPresentStates.add(EtatReservation.terminee.toString());
-		docRequest.append("Etat", new Document("$nin", notPresentStates));
+		docRequest.append(ETAT_ATTRIBUT, new Document("$nin", notPresentStates));
 
 
 		ReservationCollection.collection.find(docRequest).forEach(
 				ReservationDoc -> {
-					Reservation reservation = new Reservation(ReservationDoc.getDate("DateArrivee"));
-					reservation.numReservation = ReservationDoc.getInteger("Numero");
-					reservation.etatReservation = EtatReservation.valueOf(ReservationDoc.getString("Etat"));
-					reservation.table = new Table(ReservationDoc.getInteger("Table"));
+					Reservation reservation = new Reservation(ReservationDoc.getDate(DATE_ARRIVEE_ATTRIBUT));
+					reservation.numReservation = ReservationDoc.getInteger(NUMERO_ATTRIBUT);
+					reservation.etatReservation = EtatReservation.valueOf(ReservationDoc.getString(ETAT_ATTRIBUT));
+					reservation.table = new Table(ReservationDoc.getInteger(TABLE_ATTRIBUT));
 					reservations.add(reservation);
 				});
 
@@ -139,17 +154,17 @@ public class ReservationCollection {
 	}
 
 	public static boolean exist(int numReservation) {
-		return ReservationCollection.collection.countDocuments(new Document("Numero", numReservation)) > 0;
+		return ReservationCollection.collection.countDocuments(new Document(NUMERO_ATTRIBUT, numReservation)) > 0;
 	}
 
 	public static boolean updateState(Commande commande) {
 		if(!exist(commande.reservationNum)) 
 			return false;
 
-		Document docRequest = new Document("Numero", commande.reservationNum);
-		docRequest.append("Commandes.Date", commande.date);
+		Document docRequest = new Document(NUMERO_ATTRIBUT, commande.reservationNum);
+		docRequest.append(COMMANDES_ATTRIBUT+"."+COMMANDES_DATE_ATTRIBUT, commande.date);
 
-		Document update = new Document("$set", new Document("Commandes.$.Etat", commande.etatCommande.toString()));
+		Document update = new Document("$set", new Document(COMMANDES_ATTRIBUT+".$."+COMMANDES_ETAT_ATTRIBUT, commande.etatCommande.toString()));
 
 		ReservationCollection.collection.updateOne(docRequest, update);
 		return true;
@@ -160,9 +175,9 @@ public class ReservationCollection {
 		ReservationCollection.decrementStock(commande);
 
 		Document doc = ReservationCollection.getCommande(commande);
-		Document requestDoc = new Document("Numero", commande.reservationNum);
+		Document requestDoc = new Document(NUMERO_ATTRIBUT, commande.reservationNum);
 
-		Document update = new Document("$push", new Document("Commandes", doc));
+		Document update = new Document("$push", new Document(COMMANDES_ATTRIBUT, doc));
 		ReservationCollection.collection.updateOne(requestDoc, update);
 		return false;
 	}
@@ -180,11 +195,12 @@ public class ReservationCollection {
 	public static HashMap<String,Double> bestProfitability(){
 
 		List<Bson> list = Arrays.asList(
-				Aggregates.unwind("$Commandes"),
-				Aggregates.match(new Document("Commandes.Etat", "conclue")),
-				Aggregates.unwind("$Commandes.Plats"),
-				Aggregates.group("$Commandes.Plats", Accumulators.sum("nbPlats",1)),
-				Aggregates.lookup("Plats", "_id", "Nom" , "Plat")
+				Aggregates.unwind("$"+COMMANDES_ATTRIBUT),
+				Aggregates.match(new Document(COMMANDES_ATTRIBUT+"."+COMMANDES_ETAT_ATTRIBUT, "conclue")),
+				Aggregates.unwind("$"+COMMANDES_ATTRIBUT+"."+COMMANDES_PLATS_ATTRIBUT),
+				Aggregates.group("$"+COMMANDES_ATTRIBUT+"."+COMMANDES_PLATS_ATTRIBUT
+						, Accumulators.sum("nbPlats",1)),
+				Aggregates.lookup("Plats", "_id", PlatCollection.NOM_ATTRIBUT , "Plat")
 				);
 
 
@@ -218,8 +234,8 @@ public class ReservationCollection {
 
 
 		for(Document doc : res) {
-			dateArrivee = doc.getDate("DateArrivee");
-			dateDepart = doc.getDate("DateDepart");
+			dateArrivee = doc.getDate(DATE_ARRIVEE_ATTRIBUT);
+			dateDepart = doc.getDate(DATE_DEPART_ATTRIBUT);
 			if(dateArrivee != null && dateDepart != null) {
 				diff = dateDepart.getTime() - dateArrivee.getTime();
 				listDate.add(timeUnit.convert(diff,TimeUnit.MILLISECONDS));
@@ -228,7 +244,7 @@ public class ReservationCollection {
 
 		if(listDate.size() == 0)
 			return 0.0;
-		
+
 		Double average = listDate.stream().mapToDouble(num -> Double.parseDouble(num.toString())).average().getAsDouble();
 		return average;
 

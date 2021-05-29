@@ -5,7 +5,6 @@ import fr.ul.miage.dsw.projetgl.database.MatierePremiereCollection;
 public class MatierePremiere {
 
 	public String nom;
-	public Categorie categorie;
 	public Boolean enPoids;
 
 	public MatierePremiere(String nom) {
