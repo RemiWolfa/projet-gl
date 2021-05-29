@@ -34,34 +34,28 @@ public class Tools {
 
 	public static int getIntegerInput(int min, int max, int defaut){
 
-		try {
-			Scanner scan = new Scanner(System.in);
-			int i = scan.nextInt();
-			if(i<min || i>max) {
-				return defaut;
-			}
-			return i;
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Veuilez entrer une valeur de type integer entre "+min+" et "+max);
+		while (!scan.hasNextInt()) scan.next();
+		int i = scan.nextInt();
+		if(i<min || i>max) {
+			return defaut;
 		}
-		catch(NumberFormatException e) {
-			System.out.println(Text.ENTER_STRING);
-			return -1;
-		}
+		return i;
+
+
 	}
-	
+
 	public static double getDoubleInput(double min, double max, double defaut){
 
-		try {
-			Scanner scan = new Scanner(System.in);
-			double i = scan.nextDouble();
-			if(i<min || i>max) {
-				return defaut;
-			}
-			return i;
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Veuilez entrer une valeur de type double entre "+min+" et "+max);
+		while (!scan.hasNextDouble()) scan.next();
+		double i = scan.nextDouble();
+		if(i<min || i>max) {
+			return defaut;
 		}
-		catch(NumberFormatException e) {
-			System.out.println(Text.ENTER_STRING);
-			return -1;
-		}
+		return i;
 	}
 
 	public static String getStringInput() {
