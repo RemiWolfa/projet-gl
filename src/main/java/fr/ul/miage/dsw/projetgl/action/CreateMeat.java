@@ -20,8 +20,17 @@ public class CreateMeat implements UserAction{
 			System.out.println(Text.MEAT_EXIST);
 			return false;
 		}
+		
+		System.out.println("Entrez un prix:");
+		Double price=0.0;
+		try {
+			price = Tools.getDoubleInput(0, Double.MAX_VALUE, Integer.MAX_VALUE);
+		} catch (IncorrectParam e) {
+			System.out.println(e.getMessage());
+			execute();
+		}
 
-		Plat plat = new Plat(name);
+		Plat plat = new Plat(name, price);
 
 		String input; 
 		System.out.println(Text.ENTER_STUFF_NAME);

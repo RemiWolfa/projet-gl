@@ -16,10 +16,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 
-
-import fr.ul.miage.dsw.projetgl.database.CarteCollection;
-import fr.ul.miage.dsw.projetgl.database.PlatCollection;
-
 public class Tools {
 
 	public static Date skipTime(Date date) {
