@@ -32,7 +32,7 @@ public class Tools {
 		return date;
 	}
 
-	public static int getIntegerInput(int min, int max, int defaut) throws IncorrectParam{
+	public static int getIntegerInput(int min, int max, int defaut){
 
 		try {
 			Scanner scan = new Scanner(System.in);
@@ -43,11 +43,12 @@ public class Tools {
 			return i;
 		}
 		catch(NumberFormatException e) {
-			throw new IncorrectParam(Text.ENTER_STRING);
+			System.out.println(Text.ENTER_STRING);
+			return -1;
 		}
 	}
 	
-	public static double getDoubleInput(double min, double max, double defaut) throws IncorrectParam{
+	public static double getDoubleInput(double min, double max, double defaut){
 
 		try {
 			Scanner scan = new Scanner(System.in);
@@ -58,7 +59,8 @@ public class Tools {
 			return i;
 		}
 		catch(NumberFormatException e) {
-			throw new IncorrectParam(Text.ENTER_STRING);
+			System.out.println(Text.ENTER_STRING);
+			return -1;
 		}
 	}
 

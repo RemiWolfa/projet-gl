@@ -24,11 +24,9 @@ public class Main {
 		if(Utilisateur.connectedUser != null)
 			System.out.println("Utilisateur de type:"+Utilisateur.connectedUser.typeUser);
 		ServeurDashBoard.readCommand();*/
-		Scanner scan = new Scanner(System.in);
+		Scanner scan = new Scanner(System.in);		
+		int i = scan.nextInt();
 		
-		while(!scan.hasNextInt()) {
-			int i = scan.nextInt();
-		}
 		
 		
 

@@ -1,11 +1,11 @@
 package fr.ul.miage.dsw.projetgl.dashboard;
 
 import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.List;
 
 import fr.ul.miage.dsw.projetgl.Commande;
-import fr.ul.miage.dsw.projetgl.IncorrectParam;
 import fr.ul.miage.dsw.projetgl.MatierePremiere;
 import fr.ul.miage.dsw.projetgl.Plat;
 import fr.ul.miage.dsw.projetgl.Reservation;
@@ -27,13 +27,8 @@ public class ServeurDashBoard {
 		System.out.println("2. Afficher les clients");
 		System.out.println("3. Quitter");
 
-		int i=0;
-		try {
-			i = Tools.getIntegerInput(1,3,3);
-		} catch (IncorrectParam e) {
-			System.out.println(e.getMessage());
-			readCommand();
-		}
+		int i = Tools.getIntegerInput(1,3,3);
+
 		switch(i) {
 		case 1:
 			new ShowTableStates().execute();

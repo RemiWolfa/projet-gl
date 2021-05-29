@@ -1,6 +1,5 @@
 package fr.ul.miage.dsw.projetgl.dashboard;
 
-import fr.ul.miage.dsw.projetgl.IncorrectParam;
 import fr.ul.miage.dsw.projetgl.Tools;
 import fr.ul.miage.dsw.projetgl.action.CreateUser;
 import fr.ul.miage.dsw.projetgl.action.GetBestMeats;
@@ -19,13 +18,8 @@ public class DirecteurDashBoard {
 		System.out.println("5. Avoir la liste des plats les plus rentables");
 		System.out.println("6. Quitter");
 
-		int i=0;
-		try {
-			i = Tools.getIntegerInput(1,6,6);
-		} catch (IncorrectParam e) {
-			System.out.println(e.getMessage());
-			readCommand();
-		}
+		int i = Tools.getIntegerInput(1,6,6);
+
 		switch(i) {
 		case 1:
 			new CreateUser().execute();

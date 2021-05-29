@@ -2,7 +2,7 @@ package fr.ul.miage.dsw.projetgl.action;
 
 import java.util.ArrayList;
 
-import fr.ul.miage.dsw.projetgl.IncorrectParam;
+
 import fr.ul.miage.dsw.projetgl.Serveur;
 import fr.ul.miage.dsw.projetgl.Table;
 import fr.ul.miage.dsw.projetgl.Text;
@@ -23,13 +23,8 @@ public class AffectTable implements UserAction{
 		}
 		System.out.println((serveurs.size()+1)+". Retour");
 
-		int input =0 ;
-		try {
-			input = Tools.getIntegerInput(1, serveurs.size()+1,serveurs.size()+1);
-		} catch (IncorrectParam e) {
-			System.out.println(e.getMessage());
-			execute();
-		}
+		int input = Tools.getIntegerInput(1, serveurs.size()+1,serveurs.size()+1);
+
 		if(input-1 < 0 && input > serveurs.size())
 			return false;
 
@@ -39,13 +34,8 @@ public class AffectTable implements UserAction{
 
 	private boolean affectTable(Serveur serveur) {
 		System.out.println(Text.ENTER_TABLE_NUMBER);
-		int num=0;
-		try {
-			num = Tools.getIntegerInput(1, Integer.MAX_VALUE,Integer.MAX_VALUE);
-		} catch (IncorrectParam e) {
-			System.out.println(e.getMessage());
-			affectTable(serveur);
-		}
+		int num = Tools.getIntegerInput(1, Integer.MAX_VALUE,Integer.MAX_VALUE);
+
 
 		if(!TableCollection.exist(new Table(num))) {
 			System.out.println(Text.TABLE_NOT_EXIST);

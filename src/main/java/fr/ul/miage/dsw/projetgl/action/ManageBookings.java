@@ -1,10 +1,10 @@
 package fr.ul.miage.dsw.projetgl.action;
 
 import java.util.HashMap;
+
 import java.util.List;
 
 import fr.ul.miage.dsw.projetgl.Commande;
-import fr.ul.miage.dsw.projetgl.IncorrectParam;
 import fr.ul.miage.dsw.projetgl.MatierePremiere;
 import fr.ul.miage.dsw.projetgl.Plat;
 import fr.ul.miage.dsw.projetgl.Reservation;
@@ -27,15 +27,11 @@ public class ManageBookings implements UserAction{
 				i++;
 			}
 
-			try {
 				i = Tools.getIntegerInput(1,i-1,i);
 				Reservation reservation = list.get(i-1);
 				return modifyReservation(reservation);
 
-			} catch (IncorrectParam | ArrayIndexOutOfBoundsException  e) {
-				e.printStackTrace();
-				return false;
-			}
+			
 		}
 	
 	private boolean modifyReservation(Reservation reservation) {
@@ -43,13 +39,7 @@ public class ManageBookings implements UserAction{
 		System.out.println("1. Prendre une commande");
 		System.out.println("2. Retour");
 
-		int i=0;
-		try {
-			i = Tools.getIntegerInput(1,2,2);
-		} catch (IncorrectParam e) {
-			System.out.println(e.getMessage());
-			return false;
-		}
+		int i = Tools.getIntegerInput(1,2,2);
 		switch(i) {
 		case 1:
 			return createOrder(reservation);
