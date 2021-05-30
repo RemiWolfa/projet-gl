@@ -19,11 +19,11 @@ public class PlatTest {
 	@Test
 	@DisplayName("Vérifier Matiere première dans la base")
 	public void assertTrueMatierePremiere() {
-		Plat plat1 = new Plat("soupe");
+		Plat plat1 = new Plat("soupe",2.0);
 		plat1.save();
 		MatierePremiere matierePremiere = new MatierePremiere("poisson");
 		matierePremiere.save();
-		 assertTrue(plat1.ajouterMatierePremiere(matierePremiere));
+		 assertTrue(plat1.ajouterMatierePremiere(matierePremiere,10));
 
 	}
 	
@@ -31,7 +31,7 @@ public class PlatTest {
 	@DisplayName("Vérifier plat dans la base")
 	public void assertTruePlat() {
 		
-		Plat plat1 = new Plat("pizza");
+		Plat plat1 = new Plat("pizza",3.0);
 		plat1.save();
 		 assertTrue(PlatCollection.exist(plat1));
 
@@ -40,7 +40,7 @@ public class PlatTest {
 	@Test
 	public void assertFalsePlat() {
 		
-		Plat plat2 = new Plat("Hamburger");
+		Plat plat2 = new Plat("Hamburger",10.0);
 		
 		assertFalse(PlatCollection.exist(plat2));
 
@@ -49,7 +49,7 @@ public class PlatTest {
 	@Test
 	public void assertEqualsPlat() {
 		
-		Plat plat = new Plat("pizza");
+		Plat plat = new Plat("pizza",3.0);
 		plat.save();
 		assertEquals(plat,Plat.trouverPlat("pizza"));
 

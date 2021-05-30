@@ -33,6 +33,29 @@ public class ServeurTest {
 	}
 	
 	@Test
+	@DisplayName("Vérifier si la table se trouve dans la base")
+	public void assertTrueHasTable() {
+		Table t1 = new Table(2);
+		t1.save();
+		Serveur srv = new Serveur("0001","Alain");
+		srv.save();
+		srv.affecterTable(t1);
+		
+		assertTrue(srv.hasTable(t1.num));
+	}
+	
+	@Test
+	public void assertFalseHasTable() {
+		Table t2 = new Table(-1);	
+		Serveur srv = new Serveur("0","Alain");
+		assertFalse(srv.hasTable(t2.num));
+
+	}
+	
+	
+
+	
+	@Test
 	public void assertTrueServeur() {
 		
 		Serveur serveur = new Serveur("001","Tom");
