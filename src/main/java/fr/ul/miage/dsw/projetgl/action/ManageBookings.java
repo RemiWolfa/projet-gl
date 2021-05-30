@@ -29,12 +29,12 @@ public class ManageBookings implements UserAction{
 
 				i = Tools.getIntegerInput(1,i-1,i);
 				Reservation reservation = list.get(i-1);
-				return modifyReservation(reservation);
-
+				modifyReservation(reservation);
+				return true;
 			
 		}
 	
-	private boolean modifyReservation(Reservation reservation) {
+	private void modifyReservation(Reservation reservation) {
 		System.out.println("----------------");
 		System.out.println("1. Prendre une commande");
 		System.out.println("2. Retour");
@@ -42,10 +42,12 @@ public class ManageBookings implements UserAction{
 		int i = Tools.getIntegerInput(1,2,2);
 		switch(i) {
 		case 1:
-			return createOrder(reservation);
+			 createOrder(reservation);
+			 break;
 		default:
-			return false;
+			return;
 		}
+		modifyReservation(reservation);
 	}
 	
 	private boolean createOrder(Reservation reservation) {
