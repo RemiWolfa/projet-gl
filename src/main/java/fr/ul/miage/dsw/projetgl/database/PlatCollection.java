@@ -1,6 +1,7 @@
 package fr.ul.miage.dsw.projetgl.database;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.bson.Document;
@@ -26,7 +27,7 @@ public class PlatCollection {
 		Document platDocument = new Document();
 		platDocument.append(NOM_ATTRIBUT, plat.nom);
 		if(plat.matierePremieres != null)
-			platDocument.append(MP_ATTRIBUT, MatierePremiereCollection.getMatierePremiereNames(plat.matierePremieres));
+			platDocument.append(MP_ATTRIBUT, MatierePremiereCollection.getMatierePremiereNamesAndQuantiy(plat.matierePremieres));
 
 		PlatCollection.collection.insertOne(platDocument);
 		return true;
@@ -65,10 +66,10 @@ public class PlatCollection {
 
 	private static Plat getPlatFromDocument(Document document) {
 		Plat plat = new Plat(document.getString(NOM_ATTRIBUT), document.getDouble(PRIX_ATTRIBUT));
-		
-		ArrayList<String> list = (ArrayList<String>) document.get(MP_ATTRIBUT);
-		for(String nom : list) {
-			plat.ajouterMatierePremiere(new MatierePremiere(nom));
+		List<Document> docs = (List<Document>) document.get(MP_ATTRIBUT);
+		HashMap<String, Integer> map = MatierePremiereCollection.getMatiereNamesAndQuantityFromDocs(docs);
+		for(String nom : map.keySet()) {
+			plat.ajouterMatierePremiere(new MatierePremiere(nom), map.get(nom));
 		}
 		return plat;
 	}
@@ -98,9 +99,11 @@ public class PlatCollection {
 	}
 
 
-	public static ArrayList<String> getMatierePremieres(Plat plat) {
-		Document doc = PlatCollection.collection.find(new Document(NOM_ATTRIBUT, plat.nom)).first();
-		return (ArrayList<String>) doc.get(MP_ATTRIBUT);
+	public static HashMap<String, Integer> getMatierePremieres(Plat plat) {
+		Document document = PlatCollection.collection.find(new Document(NOM_ATTRIBUT, plat.nom)).first();
+		List<Document> docs = (List<Document>) document.get(MP_ATTRIBUT);
+		HashMap<String, Integer> map = MatierePremiereCollection.getMatiereNamesAndQuantityFromDocs(docs);
+		return map;
 	}
 
 }

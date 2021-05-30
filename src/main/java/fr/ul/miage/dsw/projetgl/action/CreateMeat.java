@@ -34,7 +34,11 @@ public class CreateMeat implements UserAction{
 				if(!MatierePremiereCollection.exist(mp)) {
 					createMatierePremiere(mp);
 				}
-				plat.ajouterMatierePremiere(mp);
+				
+				System.out.println(Text.ENTER_QUANTITY);
+				int quantity = Tools.getIntegerInput(0, Integer.MAX_VALUE, 1);
+				
+				plat.ajouterMatierePremiere(mp, quantity);
 				System.out.println(Text.ENTER_STUFF_NAME);
 			}
 		}
