@@ -23,7 +23,6 @@ import com.mongodb.client.model.Accumulators;
 import com.mongodb.client.model.Aggregates;
 
 import fr.ul.miage.dsw.projetgl.Commande;
-import fr.ul.miage.dsw.projetgl.MatierePremiere;
 import fr.ul.miage.dsw.projetgl.Plat;
 import fr.ul.miage.dsw.projetgl.Reservation;
 import fr.ul.miage.dsw.projetgl.Serveur;
@@ -45,6 +44,7 @@ public class ReservationCollection {
 	public static final String COMMANDES_DATE_ATTRIBUT = "Date";
 	public static final String COMMANDES_ETAT_ATTRIBUT = "Etat";
 	public static final String COMMANDES_PLATS_ATTRIBUT = "Plats";
+	public static final String COMMANDES_PRIORITY_ATTRIBUT = "Prioritaire";
 
 
 	public static MongoCollection<Document> collection;
@@ -93,8 +93,10 @@ public class ReservationCollection {
 		Document commandeDocument = new Document();
 		commandeDocument.append(COMMANDES_USERID_ATTRIBUT, commande.userId);
 		commandeDocument.append(COMMANDES_DATE_ATTRIBUT, commande.date);
+		commandeDocument.append(COMMANDES_PRIORITY_ATTRIBUT, commande.isPriority);
 		commandeDocument.append(COMMANDES_ETAT_ATTRIBUT, commande.etatCommande.toString());
 		commandeDocument.append(COMMANDES_PLATS_ATTRIBUT, PlatCollection.getPlatNames(commande.getPlats()));
+		
 
 		return commandeDocument;
 	}
@@ -103,6 +105,7 @@ public class ReservationCollection {
 		List<Bson> aggregates = Arrays.asList(//TODO
 				Aggregates.unwind("$"+COMMANDES_ATTRIBUT),
 				Aggregates.match(new Document(COMMANDES_ATTRIBUT+"."+COMMANDES_ETAT_ATTRIBUT, EtatCommande.passee.toString())),
+				Aggregates.sort(new Document(COMMANDES_ATTRIBUT+"."+COMMANDES_PRIORITY_ATTRIBUT, 1)),
 				Aggregates.sort(new Document(COMMANDES_ATTRIBUT+"."+COMMANDES_DATE_ATTRIBUT, 1))
 				);
 
