@@ -14,6 +14,7 @@ public class Commande {
 	public Date date;
 	private List<Plat> plats;
 	public EtatCommande etatCommande;
+	public boolean isPriority = false;
 	
 	public String userId;
 	

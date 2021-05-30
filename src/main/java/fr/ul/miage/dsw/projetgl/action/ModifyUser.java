@@ -20,7 +20,7 @@ public class ModifyUser implements UserAction{
 		
 		int input = Tools.getIntegerInput(1,users.size()+1,users.size()+1);
 
-		if(input-1 < 0 && input > users.size())
+		if(input-1 < 0 || input > users.size())
 			return false;
 		
 		System.out.println("modifier :"+users.get(input-1).nom);//TODO
