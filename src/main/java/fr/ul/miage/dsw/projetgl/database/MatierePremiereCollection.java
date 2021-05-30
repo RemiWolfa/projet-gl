@@ -1,11 +1,11 @@
 package fr.ul.miage.dsw.projetgl.database;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.bson.Document;
 
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 
 import fr.ul.miage.dsw.projetgl.MatierePremiere;
@@ -15,6 +15,7 @@ public class MatierePremiereCollection {
 	public static final String NOM_ATTRIBUT = "Nom";
 	public static final String ENPOIDS_ATTRIBUT = "EnPoids";
 	public static final String STOCK_ATTRIBUT = "Stock";
+	public static final String QUANTITY_ATTRIBUT = "Quantite";
 
 	public static MongoCollection<Document> collection;
 
@@ -64,18 +65,35 @@ public class MatierePremiereCollection {
 	}
 
 
-	public static ArrayList<String> getMatierePremiereNames(List<MatierePremiere> matierePremiere) {
-		ArrayList<String> names = new ArrayList<String>();
-		for(MatierePremiere mp : matierePremiere) {
-			names.add(mp.nom);
+	public static ArrayList<Document> getMatierePremiereNamesAndQuantiy(HashMap<MatierePremiere, Integer> matierePremieres) {
+		ArrayList<Document> docs = new ArrayList<Document>();
+		for(MatierePremiere mp : matierePremieres.keySet()) {
+			int quantity = matierePremieres.get(mp);
+			Document doc = new Document();
+			doc.append(NOM_ATTRIBUT, mp.nom);
+			doc.append(QUANTITY_ATTRIBUT, quantity);
+			docs.add(doc);
 		}
-		return names;
+		return docs;
 	}
 
 	public static void decrement(String nomMP, int quantity) {
 		Document docRequest=new Document (NOM_ATTRIBUT, nomMP);
 		Document update = new Document("$inc", new Document(STOCK_ATTRIBUT, -quantity));
 		MatierePremiereCollection.collection.updateOne(docRequest, update);
+	}
+
+	public static HashMap<String, Integer> getMatiereNamesAndQuantityFromDocs(List<Document> docs) {
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		if(docs == null)
+			return map;
+		
+		for(Document doc : docs) {
+			String name = doc.getString(NOM_ATTRIBUT);
+			int quantity = doc.getInteger(QUANTITY_ATTRIBUT);
+			map.put(name, quantity);
+		}
+		return map;
 	}
 
 }

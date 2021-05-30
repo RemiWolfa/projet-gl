@@ -2,8 +2,8 @@ package fr.ul.miage.dsw.projetgl.action;
 
 import java.util.ArrayList;
 
+
 import fr.ul.miage.dsw.projetgl.Commande;
-import fr.ul.miage.dsw.projetgl.IncorrectParam;
 import fr.ul.miage.dsw.projetgl.Plat;
 import fr.ul.miage.dsw.projetgl.Text;
 import fr.ul.miage.dsw.projetgl.Tools;
@@ -22,13 +22,8 @@ public class SendOrder implements UserAction{
 		}
 		System.out.println((commandes.size()+1)+". Retour");
 
-		int input=0;
-		try {
-			input = Tools.getIntegerInput();
-		} catch (IncorrectParam e) {
-			System.out.println(e.getMessage());
-			execute();
-		}
+		int input = Tools.getIntegerInput(1,commandes.size()+1,commandes.size()+1);
+
 		if(input-1 < 0 && input > commandes.size())
 			return false;
 
@@ -44,19 +39,14 @@ public class SendOrder implements UserAction{
 		System.out.println("----------------");
 		System.out.println("1. Commande prête");
 		System.out.println("2. Quitter");
-		int i=0;
-		try {
-			i = Tools.getIntegerInput();
-		} catch (IncorrectParam e) {
-			System.out.println(e.getMessage());
-			modifyOrder(commande);
-		}
+		int i = Tools.getIntegerInput(1,2,2);
 		switch(i) {
 		case 1:
 			if(commande.setToReady()) {
 				System.out.println(Text.ORDER_WILL_SENDED);
 			}else {
 				Tools.error(Text.ERROR_SAVE);
+				modifyOrder(commande);
 			}
 			break;
 		case 2:

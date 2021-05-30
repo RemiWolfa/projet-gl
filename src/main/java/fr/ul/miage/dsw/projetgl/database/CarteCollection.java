@@ -63,7 +63,7 @@ public class CarteCollection {
 					if(AggDocument.containsKey("Plat")) {
 						List<Document> documents = (List<Document>) AggDocument.get("Plat");
 						if(documents.size() > 0) {
-							Plat plat = new Plat(documents.get(0).getString(PlatCollection.NOM_ATTRIBUT));
+							Plat plat = new Plat(documents.get(0).getString(PlatCollection.NOM_ATTRIBUT), documents.get(0).getDouble(PlatCollection.PRIX_ATTRIBUT) );
 							plats.add(plat);
 						}
 					}

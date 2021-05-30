@@ -27,5 +27,8 @@ public class Text {
 	public static final String SELECT_STOCK = "De quelle matière souhaitez-vous modifier le stock ?";
 	public static final String ENTER_CATEGORIE = "Entrez une catégorie, si elle n'existe pas elle sera créée";
 	public static final String CREATE_CATEGORIE = "La catégorie a été créée";
+	public static final String ENTER_QUANTITY = "Entrez une quantité";
+	public static final String MODIFY_TABLE_STATE = "Modifiez l'état de la table";
+	public static final String TABLE_STATE_UPDATED = "L'état à été mit à jour";
 	
 }

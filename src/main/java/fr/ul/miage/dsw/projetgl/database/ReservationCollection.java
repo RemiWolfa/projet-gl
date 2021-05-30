@@ -23,6 +23,7 @@ import com.mongodb.client.model.Accumulators;
 import com.mongodb.client.model.Aggregates;
 
 import fr.ul.miage.dsw.projetgl.Commande;
+import fr.ul.miage.dsw.projetgl.MatierePremiere;
 import fr.ul.miage.dsw.projetgl.Plat;
 import fr.ul.miage.dsw.projetgl.Reservation;
 import fr.ul.miage.dsw.projetgl.Serveur;
@@ -184,9 +185,9 @@ public class ReservationCollection {
 
 	private static void decrementStock(Commande commande) {
 		for(Plat plat : commande.getPlats()) {
-			ArrayList<String> mps = PlatCollection.getMatierePremieres(plat);
-			for(String nomMP : mps) {
-				MatierePremiereCollection.decrement(nomMP,1);
+			HashMap<String, Integer> mps = PlatCollection.getMatierePremieres(plat);
+			for(String nomMP : mps.keySet()) {
+				MatierePremiereCollection.decrement(nomMP,mps.get(nomMP));
 			}
 		}
 	}

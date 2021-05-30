@@ -1,10 +1,10 @@
 package fr.ul.miage.dsw.projetgl.dashboard;
 
 import java.util.ArrayList;
+
 import java.util.Date;
 import java.util.HashMap;
 
-import fr.ul.miage.dsw.projetgl.IncorrectParam;
 import fr.ul.miage.dsw.projetgl.MatierePremiere;
 import fr.ul.miage.dsw.projetgl.Reservation;
 import fr.ul.miage.dsw.projetgl.Serveur;
@@ -28,13 +28,8 @@ public class MaitreHotelDashBoard {
 		System.out.println("3. Mettre à jour les stocks");
 		System.out.println("4. Quitter");
 
-		int i=0;
-		try {
-			i = Tools.getIntegerInput();
-		} catch (IncorrectParam e) {
-			System.out.println(e.getMessage());
-			readCommand();
-		}
+		int i = Tools.getIntegerInput(1,4,4);
+
 		switch(i) {
 		case 1:
 			new CreateBooking().execute();

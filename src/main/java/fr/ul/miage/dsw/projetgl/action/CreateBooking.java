@@ -2,7 +2,6 @@ package fr.ul.miage.dsw.projetgl.action;
 
 import java.util.Date;
 
-import fr.ul.miage.dsw.projetgl.IncorrectParam;
 import fr.ul.miage.dsw.projetgl.Reservation;
 import fr.ul.miage.dsw.projetgl.Table;
 import fr.ul.miage.dsw.projetgl.Text;
@@ -15,13 +14,8 @@ public class CreateBooking implements UserAction{
 		System.out.println("Date:");
 		Date date = Tools.getDateInput();
 		System.out.println(Text.ENTER_TABLE_NUMBER);
-		int numTable=0;;
-		try {
-			numTable = Tools.getIntegerInput();
-		} catch (IncorrectParam e) {
-			System.out.println(e.getMessage());
-			execute();
-		}
+		int numTable = Tools.getIntegerInput(1, Integer.MAX_VALUE,Integer.MAX_VALUE);
+
 		Reservation reservation = new Reservation(date);
 		reservation.table = new Table(numTable);//pas propre
 		if(reservation.save()) {
