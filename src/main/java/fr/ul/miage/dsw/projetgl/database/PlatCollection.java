@@ -26,6 +26,7 @@ public class PlatCollection {
 
 		Document platDocument = new Document();
 		platDocument.append(NOM_ATTRIBUT, plat.nom);
+		platDocument.append(PRIX_ATTRIBUT, plat.prix);
 		if(plat.matierePremieres != null)
 			platDocument.append(MP_ATTRIBUT, MatierePremiereCollection.getMatierePremiereNamesAndQuantiy(plat.matierePremieres));
 

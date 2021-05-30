@@ -24,7 +24,7 @@ public class SendOrder implements UserAction{
 
 		int input = Tools.getIntegerInput(1,commandes.size()+1,commandes.size()+1);
 
-		if(input-1 < 0 && input > commandes.size())
+		if(input-1 < 0 || input > commandes.size())
 			return false;
 
 		modifyOrder(commandes.get(input-1));
