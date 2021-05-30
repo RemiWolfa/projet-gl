@@ -1,6 +1,7 @@
 package fr.ul.miage.dsw.projetgl.dashboard;
 
-import fr.ul.miage.dsw.projetgl.IncorrectParam;
+
+
 import fr.ul.miage.dsw.projetgl.MatierePremiere;
 import fr.ul.miage.dsw.projetgl.Tools;
 import fr.ul.miage.dsw.projetgl.action.CreateMeat;
@@ -28,13 +29,8 @@ public class CuisinierDashBoard {
 		System.out.println("3. Créer un plat");
 		System.out.println("4. Quitter");
 
-		int i=0;
-		try {
-			i = Tools.getIntegerInput();
-		} catch (IncorrectParam e) {
-			System.out.println(e.getMessage());
-			readCommand();
-		}
+		int i = Tools.getIntegerInput(1,4,4);
+
 
 		switch(i) {
 

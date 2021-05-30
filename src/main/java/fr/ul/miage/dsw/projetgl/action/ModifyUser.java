@@ -2,7 +2,7 @@ package fr.ul.miage.dsw.projetgl.action;
 
 import java.util.ArrayList;
 
-import fr.ul.miage.dsw.projetgl.IncorrectParam;
+
 import fr.ul.miage.dsw.projetgl.Tools;
 import fr.ul.miage.dsw.projetgl.Utilisateur;
 import fr.ul.miage.dsw.projetgl.database.UserCollection;
@@ -18,13 +18,8 @@ public class ModifyUser implements UserAction{
 		}
 		System.out.println((users.size()+1)+". Retour");
 		
-		int input=0;
-		try {
-			input = Tools.getIntegerInput();
-		} catch (IncorrectParam e) {
-			System.out.println(e.getMessage());
-			execute();
-		}
+		int input = Tools.getIntegerInput(1,users.size()+1,users.size()+1);
+
 		if(input-1 < 0 && input > users.size())
 			return false;
 		

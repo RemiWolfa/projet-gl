@@ -11,14 +11,10 @@ public class App {
 
 	public static void main(String[] args) {
 		DataBase.connect();
-		try {
-			App.connect();
-		} catch (IncorrectParam e) {
-			System.out.println(Text.WRONG_ID_FORMAT);
-		}
+		App.connect();
 	}
 
-	private static void connect() throws IncorrectParam {
+	private static void connect(){
 		System.out.print( Text.WELCOME );
 
 		String  id = Tools.getStringInput();

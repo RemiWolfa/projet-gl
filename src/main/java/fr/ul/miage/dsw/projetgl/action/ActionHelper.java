@@ -1,10 +1,10 @@
 package fr.ul.miage.dsw.projetgl.action;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import fr.ul.miage.dsw.projetgl.Categorie;
-import fr.ul.miage.dsw.projetgl.IncorrectParam;
 import fr.ul.miage.dsw.projetgl.Plat;
 import fr.ul.miage.dsw.projetgl.Text;
 import fr.ul.miage.dsw.projetgl.Tools;
@@ -22,12 +22,7 @@ public class ActionHelper {
 		System.out.println("2. Par nom similaire");
 		System.out.println("3. Terminer");
 
-		int i=0;
-		try {
-			i = Tools.getIntegerInput();
-		} catch (IncorrectParam e) {
-			System.out.println(e.getMessage());
-		}
+			int i = Tools.getIntegerInput(1,3,3);
 
 		ArrayList<Plat> plats = new ArrayList<Plat>();
 
@@ -52,15 +47,14 @@ public class ActionHelper {
 		System.out.println((plats.size()+1)+". Retour");
 
 		try {
-			int input=Tools.getIntegerInput();
+			int input=Tools.getIntegerInput(1, plats.size()+1,plats.size()+1);
 
 			if(input-1 == plats.size()) {
 				return null;
 			}else {
 				return plats.get(input-1);
 			}
-		}catch(ArrayIndexOutOfBoundsException | IncorrectParam e) {
-			System.out.println(e.getMessage());
+		}catch(ArrayIndexOutOfBoundsException e) {
 			readPlat();
 
 		}
@@ -75,12 +69,7 @@ public class ActionHelper {
 		System.out.println("4. Par nom exact");
 		System.out.println("5. Terminer");
 
-		int i=0;
-		try {
-			i = Tools.getIntegerInput();
-		} catch (IncorrectParam e) {
-			System.out.println(e.getMessage());
-		}
+		int i = Tools.getIntegerInput(1,5,5);
 
 		List<Plat> plats = new ArrayList<Plat>();
 
@@ -112,15 +101,14 @@ public class ActionHelper {
 		System.out.println((plats.size()+1)+". Retour");
 
 		try {
-			int input=Tools.getIntegerInput();
+			int input=Tools.getIntegerInput(1,plats.size()+1,plats.size()+1);
 
 			if(input-1 == plats.size()) {
 				return null;
 			}else {
 				return plats.get(input-1);
 			}
-		}catch(ArrayIndexOutOfBoundsException | IncorrectParam e) {
-			System.out.println(e.getMessage());
+		}catch(ArrayIndexOutOfBoundsException e) {
 			readPlat();
 
 		}
@@ -137,15 +125,14 @@ public class ActionHelper {
 		}
 		
 		try {
-			int input=Tools.getIntegerInput();
+			int input=Tools.getIntegerInput(1, i-1,categories.size());
 
 			if(input-1 == categories.size()) {
 				return null;
 			}else {
 				return categories.get(input-1).plats;
 			}
-		}catch(ArrayIndexOutOfBoundsException | IncorrectParam e) {
-			System.out.println(e.getMessage());
+		}catch(ArrayIndexOutOfBoundsException e) {
 			readPlat();
 
 		}
@@ -161,12 +148,7 @@ public class ActionHelper {
 		System.out.println("4. Cuisinier");
 		System.out.println("5. Serveur");
 		int i=0;
-		try {
-			i = Tools.getIntegerInput();
-		} catch (IncorrectParam e) {
-			System.out.println(e.getMessage());
-			getSelectUserType();
-		}
+			i = Tools.getIntegerInput(1,5,6);
 
 		switch(i) {
 		case 1:

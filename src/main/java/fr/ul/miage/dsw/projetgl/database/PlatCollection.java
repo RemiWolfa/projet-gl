@@ -15,6 +15,7 @@ public class PlatCollection {
 	
 	public static final String NOM_ATTRIBUT = "Nom";
 	public static final String MP_ATTRIBUT = "MatierePremieres";
+	public static final String PRIX_ATTRIBUT = "Prix";
 
 	public static MongoCollection<Document> collection;
 
@@ -63,7 +64,7 @@ public class PlatCollection {
 
 
 	private static Plat getPlatFromDocument(Document document) {
-		Plat plat = new Plat(document.getString(NOM_ATTRIBUT));
+		Plat plat = new Plat(document.getString(NOM_ATTRIBUT), document.getDouble(PRIX_ATTRIBUT));
 		
 		ArrayList<String> list = (ArrayList<String>) document.get(MP_ATTRIBUT);
 		for(String nom : list) {
@@ -93,7 +94,7 @@ public class PlatCollection {
 		if(doc == null)
 			return null;
 		
-		return new Plat(doc.getString("Name"));
+		return new Plat(doc.getString("Name"), doc.getDouble("Price"));
 	}
 
 

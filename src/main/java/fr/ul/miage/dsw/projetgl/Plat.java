@@ -15,9 +15,10 @@ public class Plat{
 	public Double prix;
 
 
-	public Plat(String nom){
+	public Plat(String nom, Double prix){
 		this();
 		this.nom = nom;
+		this.prix = prix;
 	}
 	public Plat() {
 		this.matierePremieres = new ArrayList<MatierePremiere>();
@@ -66,8 +67,8 @@ public class Plat{
 		return null;//TODO
 	}
 
-	public static Boolean exist(String nom)  {
-		return PlatCollection.exist(new Plat(nom));
+	public static Boolean exist(String nom, Double prix)  {
+		return PlatCollection.exist(new Plat(nom, prix));
 	}
 
 }

@@ -1,5 +1,7 @@
 package fr.ul.miage.dsw.projetgl;
 
+import java.util.Scanner;
+
 import fr.ul.miage.dsw.projetgl.dashboard.ServeurDashBoard;
 import fr.ul.miage.dsw.projetgl.database.DataBase;
 import fr.ul.miage.dsw.projetgl.database.ReservationCollection;
@@ -9,7 +11,7 @@ import fr.ul.miage.dsw.projetgl.database.ReservationCollection;
 public class Main {
 
 	public static void main(String[] args) {
-		DataBase.connect();
+		/*DataBase.connect();
 
 		new Table(1).save();
 		Serveur serveur = new Serveur("0001", "Robert");
@@ -21,7 +23,11 @@ public class Main {
 		
 		if(Utilisateur.connectedUser != null)
 			System.out.println("Utilisateur de type:"+Utilisateur.connectedUser.typeUser);
-		ServeurDashBoard.readCommand();
+		ServeurDashBoard.readCommand();*/
+		Scanner scan = new Scanner(System.in);		
+		int i = scan.nextInt();
+		
+		
 		
 
 	}
