@@ -69,12 +69,14 @@ public class ManageBookings implements UserAction{
 		reservation.ajouterCommande(commande);
 		return commande.save();
 	}
+	
 	private static void putMp(Plat plat, HashMap<MatierePremiere, Integer> toUse) {
-		for(MatierePremiere mp : plat.matierePremieres) {
+		for(MatierePremiere mp : plat.matierePremieres.keySet()) {
+			int quantiy = plat.matierePremieres.get(mp);
 			if(toUse.containsKey(mp)) {
-				toUse.put(mp, 1+toUse.get(mp));
+				toUse.put(mp, quantiy+toUse.get(mp));
 			}else {
-				toUse.put(mp, 1);
+				toUse.put(mp, quantiy);
 			}
 		}
 	}

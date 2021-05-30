@@ -24,11 +24,11 @@ public class ActionHelper {
 
 			int i = Tools.getIntegerInput(1,3,3);
 
-		ArrayList<Plat> plats = new ArrayList<Plat>();
+		List<Plat> plats = new ArrayList<Plat>();
 
 		switch(i) {
 		case 1:
-			//TODO
+			plats = ActionHelper.getMeatsFromCategories();
 			break;
 		case 2:
 			System.out.println(Text.ENTER_NAME_PLAT);
