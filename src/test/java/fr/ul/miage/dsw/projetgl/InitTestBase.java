@@ -2,6 +2,9 @@ package fr.ul.miage.dsw.projetgl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import org.bson.Document;
+
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
@@ -33,8 +36,13 @@ import com.mongodb.client.MongoDatabase;
 					);
 
 			for(String collectionName : collectionsToCreate) {
-				System.out.println(collectionName);
 				database.createCollection(collectionName);
+			}
+		}
+		
+		private static void clearCollections(MongoDatabase database) {
+			for(String collection : collections) {
+				database.getCollection(collection).deleteMany(new Document());
 			}
 		}
 		
@@ -44,9 +52,8 @@ import com.mongodb.client.MongoDatabase;
 			mongoClient = MongoClients.create(CONNECTION_STRING);
 			System.out.println("before get base");
 	        database = mongoClient.getDatabase(DATABASE_NAME);
-	        System.out.println("ici");
 	        createCollectionsIfNotExist(database);
-	        System.out.println("là");
+	        clearCollections(database);
 	        TableCollection.collection = database.getCollection("TablesTest");
 	        UserCollection.collection= database.getCollection("UtilisateursTest"); 
 	        ReservationCollection.collection = database.getCollection("ReservationsTest");
