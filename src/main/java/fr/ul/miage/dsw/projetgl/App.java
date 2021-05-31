@@ -16,7 +16,7 @@ public class App {
 
 	//connexion jusqu'à ce que l'identifiant est bon
 	private static void connect(){
-		System.out.print( Text.WELCOME );
+		System.out.println( Text.WELCOME );
 
 		String  id = Tools.getStringInput();
 		Connexion co = new Connexion();
