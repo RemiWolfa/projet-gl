@@ -80,6 +80,10 @@ public class TableTest {
         Table table = new Table(1);
         Table table2 = new Table(2);
         Table table3 = new Table(3);
+        
+        table.save();
+        table2.save();
+        table3.save();
 
 
         ArrayList<Integer> num = new ArrayList<Integer>();
