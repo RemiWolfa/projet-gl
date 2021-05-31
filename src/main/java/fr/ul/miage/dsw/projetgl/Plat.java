@@ -1,8 +1,6 @@
 package fr.ul.miage.dsw.projetgl;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import fr.ul.miage.dsw.projetgl.database.MatierePremiereCollection;
 import fr.ul.miage.dsw.projetgl.database.PlatCollection;
@@ -65,11 +63,6 @@ public class Plat{
 
 	public static Plat trouverPlat(String nom) {
 		return PlatCollection.getPlatByName(nom);
-	}
-
-
-	public static Plat trouverPlat(Categorie categorie) {
-		return null;//TODO
 	}
 
 	public static Boolean exist(String nom, Double prix)  {

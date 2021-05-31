@@ -19,6 +19,11 @@ public class ManageBookings implements UserAction{
 
 	@Override
 	public boolean execute() {
+		if(!(Utilisateur.connectedUser instanceof Serveur)) {
+			System.out.println("Seul un serveur peut utiliser cette fonctionnalité");
+			return false;
+		}
+		
 		Serveur serveur = (Serveur) Utilisateur.connectedUser;
 		List<Reservation> list = ReservationCollection.getCurrentReservations(serveur);
 
