@@ -61,6 +61,8 @@ import com.mongodb.client.MongoDatabase;
 	        PlatCollection.collection = database.getCollection("PlatsTest");
 	        MatierePremiereCollection.collection = database.getCollection("MatierePremieresTest");
 	        CategorieCollection.collection = database.getCollection("CategoriesTest");
+	        
+	        PlatCollection.COLLECTION_NAME = "PlatsTest";
 		}
 
 	}

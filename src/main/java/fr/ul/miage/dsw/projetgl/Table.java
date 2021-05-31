@@ -30,6 +30,7 @@ public class Table {
 		if(!(o instanceof Table))
 			return false;
 		Table table = (Table) o;
+
 		return(table.num == this.num);
 	}
 
