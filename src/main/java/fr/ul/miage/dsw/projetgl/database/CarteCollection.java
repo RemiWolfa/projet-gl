@@ -8,7 +8,6 @@ import java.util.List;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
-import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Filters;
@@ -59,8 +58,6 @@ public class CarteCollection {
 
 		ArrayList<Plat> plats = new ArrayList<Plat>();
 
-		AggregateIterable<Document> i = CarteCollection.collection.aggregate(aggregates);
-		if(i == null) return plats;
 		CarteCollection.collection.aggregate(aggregates).forEach(
 				AggDocument -> {
 					if(AggDocument.containsKey("Plat")) {
