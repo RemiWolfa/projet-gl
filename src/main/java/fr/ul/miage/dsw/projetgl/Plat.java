@@ -26,8 +26,11 @@ public class Plat{
 
 	//retourne faux si la matiere n'existait pas (a été créée)
 	public boolean ajouterMatierePremiere(MatierePremiere matierePremiere, int quantity) {
-		boolean b = !MatierePremiereCollection.exist(matierePremiere);
-		MatierePremiereCollection.save(matierePremiere);
+		if(matierePremieres.containsKey(matierePremiere)) 
+				return false;
+		boolean b = MatierePremiereCollection.exist(matierePremiere);
+		if(!b) 		
+				MatierePremiereCollection.save(matierePremiere);
 		this.matierePremieres.put(matierePremiere, quantity);
 		return b;
 	}

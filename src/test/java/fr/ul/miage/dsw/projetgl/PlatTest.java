@@ -19,11 +19,23 @@ public class PlatTest {
 	@Test
 	@DisplayName("Vérifier Matiere première dans la base")
 	public void assertTrueMatierePremiere() {
-		Plat plat1 = new Plat("soupe",2.0);
+		Plat plat1 = new Plat("tajine",2.0);
 		plat1.save();
 		MatierePremiere matierePremiere = new MatierePremiere("poisson");
 		matierePremiere.save();
-		 assertTrue(plat1.ajouterMatierePremiere(matierePremiere,10));
+		assertTrue(plat1.ajouterMatierePremiere(matierePremiere,10));
+
+	}
+	
+	@Test
+	@DisplayName("Vérifier Matiere première dans la base")
+	public void assertFalseMatierePremiere() {
+		Plat plat1 = new Plat("couscous",20.0);
+		plat1.save();
+		MatierePremiere matierePremiere = new MatierePremiere("viande");
+		matierePremiere.save();
+		plat1.ajouterMatierePremiere(matierePremiere,10);
+		assertFalse(plat1.ajouterMatierePremiere(matierePremiere,10));
 
 	}
 	
@@ -38,6 +50,7 @@ public class PlatTest {
 	}
 	
 	@Test
+	@DisplayName("Test: trouver plat, cas 2: pas trouvé")
 	public void assertFalsePlat() {
 		
 		Plat plat2 = new Plat("Hamburger",10.0);
@@ -47,12 +60,25 @@ public class PlatTest {
 	}
 	
 	@Test
+	@DisplayName("Test: trouver plat, cas 1: trouvé")
 	public void assertEqualsPlat() {
 		
 		Plat plat = new Plat("pizza",3.0);
 		plat.save();
 		assertEquals(plat,Plat.trouverPlat("pizza"));
 
+	}
+	
+	
+
+	@Test
+	@DisplayName("Test: vérifier prix plat")
+	public void assertEqualsPricePlat() {
+		
+		Plat plat = new Plat("pattes",15.0);
+		plat.save();
+		Plat platSaved = PlatCollection.getPlatByName("pattes");
+		assertEquals(plat.prix,platSaved.prix);
 	}
 	
 	

@@ -106,14 +106,23 @@ public class TableTest {
 	
 	@Test
 	@DisplayName("Test pour la gestion des tables (desservir une table, dresser une table)")
-	public void assertEqualsEtatTable() {
-        Table table = new Table(1);
+	public void assertEqualsStateTable() {
+        Table table = new Table(5);
         table.setEtat(EtatTable.sale);
         table.save();
-        Table tableSaved = TableCollection.getTable(1);  
+        Table tableSaved = TableCollection.getTable(5);  
         assertEquals(table.etat,tableSaved.etat);
 	}
 
+	@Test
+	@DisplayName("Test pour la gestion des tables, modify etatTable")
+	public void assertEqualsModifyStateTable() {
+        Table table = new Table(7);
+        table.save();
+        table.setEtat(EtatTable.sale);
+        Table tableSaved = TableCollection.getTable(7);  
+        assertEquals(table.etat,tableSaved.etat);
+	}
 		
 		
 		
