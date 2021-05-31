@@ -36,8 +36,13 @@ public class TableCollection {
 		return TableCollection.collection.countDocuments(new Document(NUMERO_ATTRIBUT, table.num)) > 0;
 	}
 
-	public void getTables () {
-
+	public static Table getTable (int numero) {
+		Document requestDoc = new Document("Numero", numero);
+		Document tableDoc = TableCollection.collection.find(requestDoc).first();
+		Table table = new Table(tableDoc.getInteger(NUMERO_ATTRIBUT));
+		table.etat = EtatTable.valueOf(tableDoc.getString(ETAT_ATTRIBUT));
+		table.etage = tableDoc.getInteger(ETAGE_ATTRIBUT);
+		return table;
 	}
 
 	public static ArrayList<Integer> getTableNumbers(List<Table> tables){
