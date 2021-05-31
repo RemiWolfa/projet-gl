@@ -5,8 +5,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Date;
 
+import org.bson.Document;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import com.mongodb.client.FindIterable;
+
+import fr.ul.miage.dsw.projetgl.database.ReservationCollection;
 
 
 public class ReservationTest {
@@ -38,6 +44,15 @@ public class ReservationTest {
 		
  
 	}
+	
+	@Test
+	@DisplayName("Tester si le temps que les clients passent dans le restaurant est superieur à 0")
+	public void assertTrueReservationTime() {
+	assertTrue(ReservationCollection.averageReservationTime()>=0);
+	
+	}
+	
+	
 
 
 	

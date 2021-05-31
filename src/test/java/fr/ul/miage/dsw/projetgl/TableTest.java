@@ -1,16 +1,19 @@
 package fr.ul.miage.dsw.projetgl;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import fr.ul.miage.dsw.projetgl.database.TableCollection;
+import fr.ul.miage.dsw.projetgl.enumeration.EtatTable;
 
 public class TableTest {
 	
@@ -88,9 +91,27 @@ public class TableTest {
         listTable.add(table);
         listTable.add(table2);
         listTable.add(table3);
-        assertEquals(listTable,TableCollection.getTablesFromNumbers(num));
+        
+        List<Table> i = TableCollection.getTablesFromNumbers(num);
+        assertAll(() -> assertTrue(i.contains(table)),
+				() -> assertTrue(i.contains(table2)),
+				() -> assertTrue(i.contains(table3)));
 
 
     }
+	
+	@Test
+	@DisplayName("Test pour la gestion des tables (desservir une table, dresser une table)")
+	public void assertEqualsEtatTable() {
+        Table table = new Table(1);
+        table.setEtat(EtatTable.sale);
+        table.save();
+        Table tableSaved = TableCollection.getTable(1);  
+        assertEquals(table.etat,tableSaved.etat);
+	}
+
+		
+		
+		
 
 }
