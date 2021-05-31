@@ -25,5 +25,12 @@ public class Table {
 	public boolean save() {
 		return TableCollection.save(this);
 	}
+	
+	public boolean equals(Object o) {
+		if(!(o instanceof Table))
+			return false;
+		Table table = (Table) o;
+		return(table.num == this.num);
+	}
 
 }
