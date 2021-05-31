@@ -15,6 +15,7 @@ public class TableCollection {
 	public static final String NUMERO_ATTRIBUT = "Numero";
 	public static final String ETAGE_ATTRIBUT = "Etage";
 	public static final String ETAT_ATTRIBUT = "Etat";
+	public static final String NB_COUVERTS_ATTRIBUT = "NbCouverts";
 
 	public static MongoCollection<Document> collection;
 
@@ -23,8 +24,9 @@ public class TableCollection {
 			return false;
 		Document tableDocument = new Document();
 		tableDocument.append(NUMERO_ATTRIBUT, table.num);
-		tableDocument.append(ETAT_ATTRIBUT, table.etat);
+		tableDocument.append(ETAT_ATTRIBUT, table.etat.toString());
 		tableDocument.append(ETAGE_ATTRIBUT, table.etage);
+		tableDocument.append(NB_COUVERTS_ATTRIBUT, table.nbCouverts);
 
 		TableCollection.collection.insertOne(tableDocument);
 		return true;
@@ -34,8 +36,13 @@ public class TableCollection {
 		return TableCollection.collection.countDocuments(new Document(NUMERO_ATTRIBUT, table.num)) > 0;
 	}
 
-	public void getTables () {
-
+	public static Table getTable (int numero) {
+		Document requestDoc = new Document("Numero", numero);
+		Document tableDoc = TableCollection.collection.find(requestDoc).first();
+		Table table = new Table(tableDoc.getInteger(NUMERO_ATTRIBUT));
+		table.etat = EtatTable.valueOf(tableDoc.getString(ETAT_ATTRIBUT));
+		table.etage = tableDoc.getInteger(ETAGE_ATTRIBUT);
+		return table;
 	}
 
 	public static ArrayList<Integer> getTableNumbers(List<Table> tables){

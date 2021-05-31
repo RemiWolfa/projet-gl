@@ -143,14 +143,19 @@ public class ReservationCollection {
 
 		ReservationCollection.collection.find(docRequest).forEach(
 				ReservationDoc -> {
-					Reservation reservation = new Reservation(ReservationDoc.getDate(DATE_ARRIVEE_ATTRIBUT));
-					reservation.numReservation = ReservationDoc.getInteger(NUMERO_ATTRIBUT);
-					reservation.etatReservation = EtatReservation.valueOf(ReservationDoc.getString(ETAT_ATTRIBUT));
-					reservation.table = new Table(ReservationDoc.getInteger(TABLE_ATTRIBUT));
+					Reservation reservation = ReservationCollection.getReservation(ReservationDoc);
 					reservations.add(reservation);
 				});
 
 		return reservations;
+	}
+
+	private static Reservation getReservation(Document reservationDoc) {
+		Reservation reservation = new Reservation(reservationDoc.getDate(DATE_ARRIVEE_ATTRIBUT));
+		reservation.numReservation = reservationDoc.getInteger(NUMERO_ATTRIBUT);
+		reservation.etatReservation = EtatReservation.valueOf(reservationDoc.getString(ETAT_ATTRIBUT));
+		reservation.table = new Table(reservationDoc.getInteger(TABLE_ATTRIBUT));
+		return reservation;
 	}
 
 	public static boolean exist(Reservation reservation) {
@@ -168,7 +173,23 @@ public class ReservationCollection {
 		Document docRequest = new Document(NUMERO_ATTRIBUT, commande.reservationNum);
 		docRequest.append(COMMANDES_ATTRIBUT+"."+COMMANDES_DATE_ATTRIBUT, commande.date);
 
-		Document update = new Document("$set", new Document(COMMANDES_ATTRIBUT+".$."+COMMANDES_ETAT_ATTRIBUT, commande.etatCommande.toString()));
+		Document update = new Document("$set", new Document(COMMANDES_ATTRIBUT+".$."+COMMANDES_ETAT_ATTRIBUT, 
+				commande.etatCommande.toString()));
+
+		ReservationCollection.collection.updateOne(docRequest, update);
+		return true;
+	}
+	
+
+	public static boolean updateState(Reservation reservation) {
+		if(!exist(reservation.numReservation)) 
+			return false;
+
+		Document docRequest = new Document(NUMERO_ATTRIBUT, reservation.numReservation);
+		Document toUpdate = new Document(ETAT_ATTRIBUT, reservation.etatReservation.toString());
+		toUpdate.append(DATE_DEPART_ATTRIBUT, reservation.dateDepart);
+		
+		Document update = new Document("$set", toUpdate);
 
 		ReservationCollection.collection.updateOne(docRequest, update);
 		return true;
@@ -253,5 +274,35 @@ public class ReservationCollection {
 		return average;
 
 	}
+
+	public static List<Reservation> getCommingBooking() {
+		Date fromDate = Tools.skipTime(new Date());
+		Date toDate = Tools.skipTime(new Date());
+		toDate.setHours(23);
+		toDate.setMinutes(59);
+		
+		Document docRequest = new Document(ETAT_ATTRIBUT, EtatReservation.enAttente.toString());
+		
+		Document dateDocRequest = new Document();
+		dateDocRequest.append("$gte", fromDate);
+		dateDocRequest.append("$lt", toDate);
+		
+		docRequest.append(DATE_ARRIVEE_ATTRIBUT, dateDocRequest);
+		
+		List<Reservation> reservations = new ArrayList<Reservation>();
+		
+		ReservationCollection.collection.find(docRequest).forEach(
+				ReservationDoc -> {
+					Reservation reservation = ReservationCollection.getReservation(ReservationDoc);
+					reservations.add(reservation);
+				});
+		return reservations;
+	}
+
+	public static void delete(Reservation reservation) {
+		Document docRequest = new Document(NUMERO_ATTRIBUT, reservation.numReservation);
+		ReservationCollection.collection.deleteOne(docRequest);
+	}
+
 
 }

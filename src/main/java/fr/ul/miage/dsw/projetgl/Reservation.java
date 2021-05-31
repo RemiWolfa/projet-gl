@@ -29,6 +29,8 @@ public class Reservation {
 	
 	public void setEtat(EtatReservation etatReservation) {
 		this.etatReservation = etatReservation;
+		if(etatReservation == EtatReservation.terminee)
+			this.dateDepart = new Date();
 	}
 	
 	public void ajouterCommande(Commande commande) {
@@ -37,6 +39,14 @@ public class Reservation {
 	
 	public boolean save() {
 		return ReservationCollection.save(this);
+	}
+
+	public boolean updateState() {
+		return ReservationCollection.updateState(this);
+	}
+
+	public void delete() {
+		ReservationCollection.delete(this);
 	}
 	
 	
