@@ -2,6 +2,8 @@ package fr.ul.miage.dsw.projetgl;
 
 public class Text {
 	
+	//Pour modifier facilement les messages
+	
 	public static final String WRONG_ID_FORMAT = "Votre identifiant n'est pas conforme.";
 	public static final String WELCOME = "Bonjour ! Connectez vous avec votre identifiant pour commencer";
 	public static final String LOGIN_ERROR = "Erreur lors de la connexion, veuillez vérifier votre identifiant";
@@ -31,5 +33,6 @@ public class Text {
 	public static final String MODIFY_TABLE_STATE = "Modifiez l'état de la table";
 	public static final String TABLE_STATE_UPDATED = "L'état à été mit à jour";
 	public static final String ORDER_PRIORITY = "Commande prioritaire?";
+	public static final String SELECT_BOOKING = "Sélectionnez une reservation";
 	
 }

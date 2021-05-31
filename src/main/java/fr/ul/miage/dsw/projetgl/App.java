@@ -14,12 +14,13 @@ public class App {
 		App.connect();
 	}
 
+	//connexion jusqu'à ce que l'identifiant est bon
 	private static void connect(){
 		System.out.print( Text.WELCOME );
 
 		String  id = Tools.getStringInput();
 		Connexion co = new Connexion();
-		if(!co.checkParamConnexion(id) || !co.connexion(id)) {
+		if(!co.connexion(id)) {
 			Tools.error(Text.LOGIN_ERROR);
 			App.connect();
 			return;

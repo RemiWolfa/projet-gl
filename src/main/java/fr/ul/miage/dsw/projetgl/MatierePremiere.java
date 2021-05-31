@@ -5,7 +5,7 @@ import fr.ul.miage.dsw.projetgl.database.MatierePremiereCollection;
 public class MatierePremiere {
 
 	public String nom;
-	public Boolean enPoids;
+	public Boolean enPoids;//si oui, la quantité dans un plat est en gramme
 
 	public MatierePremiere(String nom) {
 		this.nom = nom;

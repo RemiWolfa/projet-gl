@@ -15,6 +15,7 @@ public class TableCollection {
 	public static final String NUMERO_ATTRIBUT = "Numero";
 	public static final String ETAGE_ATTRIBUT = "Etage";
 	public static final String ETAT_ATTRIBUT = "Etat";
+	public static final String NB_COUVERTS_ATTRIBUT = "NbCouverts";
 
 	public static MongoCollection<Document> collection;
 
@@ -23,8 +24,9 @@ public class TableCollection {
 			return false;
 		Document tableDocument = new Document();
 		tableDocument.append(NUMERO_ATTRIBUT, table.num);
-		tableDocument.append(ETAT_ATTRIBUT, table.etat);
+		tableDocument.append(ETAT_ATTRIBUT, table.etat.toString());
 		tableDocument.append(ETAGE_ATTRIBUT, table.etage);
+		tableDocument.append(NB_COUVERTS_ATTRIBUT, table.nbCouverts);
 
 		TableCollection.collection.insertOne(tableDocument);
 		return true;

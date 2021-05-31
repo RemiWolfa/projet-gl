@@ -13,6 +13,7 @@ import fr.ul.miage.dsw.projetgl.Text;
 import fr.ul.miage.dsw.projetgl.Tools;
 import fr.ul.miage.dsw.projetgl.Utilisateur;
 import fr.ul.miage.dsw.projetgl.database.ReservationCollection;
+import fr.ul.miage.dsw.projetgl.enumeration.EtatReservation;
 
 public class ManageBookings implements UserAction{
 
@@ -37,17 +38,48 @@ public class ManageBookings implements UserAction{
 	private void modifyReservation(Reservation reservation) {
 		System.out.println("----------------");
 		System.out.println("1. Prendre une commande");
-		System.out.println("2. Retour");
+		System.out.println("2. Changer l'état de la table");
+		System.out.println("3. Retour");
 
-		int i = Tools.getIntegerInput(1,2,2);
+		int i = Tools.getIntegerInput(1,3,3);
 		switch(i) {
 		case 1:
 			createOrder(reservation);
 			break;
+		case 2:
+			changeState(reservation);
 		default:
 			return;
 		}
 		modifyReservation(reservation);
+	}
+
+	private void changeState(Reservation reservation) {
+			System.out.println("Choisir l'état");
+			System.out.println("1. Entrée");
+			System.out.println("2. Plat");
+			System.out.println("3. Dessert");
+			System.out.println("4. Terminé");
+			System.out.println("5. Annuler");
+			
+			int i = Tools.getIntegerInput(1, 5, 5);
+			switch(i) {
+				case 1 :
+					reservation.setEtat(EtatReservation.entree);
+					break;
+				case 2 :
+					reservation.setEtat(EtatReservation.principal);
+					break;
+				case 3 :
+					reservation.setEtat(EtatReservation.dessert);
+					break;
+				case 4 :
+					reservation.setEtat(EtatReservation.terminee);
+					break;
+				default:
+					return;
+			}
+			reservation.updateState();
 	}
 
 	private boolean createOrder(Reservation reservation) {
