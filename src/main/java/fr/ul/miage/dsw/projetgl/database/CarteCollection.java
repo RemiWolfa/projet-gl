@@ -53,10 +53,12 @@ public class CarteCollection {
 		List<Bson> aggregates = Arrays.asList(//TODO
 				Aggregates.match(Filters.eq(DATE_ATTRIBUT, Tools.skipTime(new Date()))),
 				Aggregates.unwind("$"+PLATS_ATTRIBUT),
-				Aggregates.lookup("Plats", PLATS_ATTRIBUT, "Nom", "Plat")
+				Aggregates.lookup(PlatCollection.COLLECTION_NAME, PLATS_ATTRIBUT, "Nom", "Plat")
 				);
 
 		ArrayList<Plat> plats = new ArrayList<Plat>();
+		
+		
 
 		CarteCollection.collection.aggregate(aggregates).forEach(
 				AggDocument -> {

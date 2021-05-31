@@ -42,6 +42,7 @@ public class Carte {
 	}
 
 	public boolean hasPlat(Plat plat) {
+		System.out.print("size:"+this.plats.size());
 		return this.plats.contains(plat);
 	}
 	

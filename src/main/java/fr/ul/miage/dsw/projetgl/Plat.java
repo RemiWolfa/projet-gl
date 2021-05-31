@@ -53,6 +53,7 @@ public class Plat{
 		if(!(o instanceof Plat))
 			return false;
 
+		
 		Plat plat = (Plat)o;
 		return plat.nom.equalsIgnoreCase(this.nom);
 

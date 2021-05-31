@@ -17,6 +17,8 @@ public class PlatCollection {
 	public static final String NOM_ATTRIBUT = "Nom";
 	public static final String MP_ATTRIBUT = "MatierePremieres";
 	public static final String PRIX_ATTRIBUT = "Prix";
+	
+	public static String COLLECTION_NAME = "Plats";
 
 	public static MongoCollection<Document> collection;
 
