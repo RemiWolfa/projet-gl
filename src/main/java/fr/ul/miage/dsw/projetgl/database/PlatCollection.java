@@ -96,7 +96,7 @@ public class PlatCollection {
 		if(doc == null)
 			return null;
 		
-		return new Plat(doc.getString("Name"), doc.getDouble("Price"));
+		return new Plat(doc.getString(NOM_ATTRIBUT), doc.getDouble(PRIX_ATTRIBUT));
 	}
 
 
