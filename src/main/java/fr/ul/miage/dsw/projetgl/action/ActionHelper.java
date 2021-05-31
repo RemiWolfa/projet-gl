@@ -16,6 +16,9 @@ import fr.ul.miage.dsw.projetgl.enumeration.TypeUtilisateur;
 
 public class ActionHelper {
 	
+	//NOTE : les fonctions readPlat et readPlatWithMenu devrait être factoriser
+	
+	//chercher un plat, sans utiliser la carte
 	public static Plat readPlat() {
 		System.out.println("Rechercher plats dans : ");
 		System.out.println("1. Catégorie");
@@ -127,11 +130,11 @@ public class ActionHelper {
 		try {
 			int input=Tools.getIntegerInput(1, i-1,categories.size());
 
-			if(input-1 == categories.size()) {
+			if(input-1 == categories.size())
 				return null;
-			}else {
-				return categories.get(input-1).plats;
-			}
+			
+				
+			return categories.get(input-1).plats;
 		}catch(ArrayIndexOutOfBoundsException e) {
 			readPlat();
 
