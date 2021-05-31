@@ -77,8 +77,10 @@ public class TableCollection {
 	}
 
 	public static boolean updateState(Table table) {
-		// TODO méthode à remplir
-		return false;
+		Document requestDoc = new Document(NUMERO_ATTRIBUT, table.num);
+		Document updateDoc = new Document("$set", new Document(ETAT_ATTRIBUT, table.etat.toString()));
+		TableCollection.collection.updateOne(requestDoc, updateDoc);
+		return true;
 	}
 
 	public static List<Table> getAllTables() {
